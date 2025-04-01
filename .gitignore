@@ -10,6 +10,12 @@
 .svn/
 migrate_working_dir/
 
+#generated
+*.config.dart
+*.freezed.dart
+*.g.dart
+*.gr.dart
+
 # IntelliJ related
 *.iml
 *.ipr
