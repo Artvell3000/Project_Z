@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class PinCodeInputScreen extends StatefulWidget {
-  const PinCodeInputScreen({super.key, required this.toVerify});
-  final void Function() toVerify;
+class PinCodeInputRow extends StatefulWidget {
+  const PinCodeInputRow({super.key, required this.toVerify});
+  final void Function(String code) toVerify;
 
   @override
-  _PinCodeInputScreenState createState() => _PinCodeInputScreenState();
+  _PinCodeInputRowState createState() => _PinCodeInputRowState();
 }
 
-class _PinCodeInputScreenState extends State<PinCodeInputScreen> {
+class _PinCodeInputRowState extends State<PinCodeInputRow> {
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
   final List<TextEditingController> _controllers = List.generate(6, (index) => TextEditingController());
 
@@ -27,19 +27,23 @@ class _PinCodeInputScreenState extends State<PinCodeInputScreen> {
   void _checkAllFieldsFilled() {
     final allFilled = _controllers.every((controller) => controller.text.isNotEmpty);
     if (allFilled) {
-      widget.toVerify();
+      StringBuffer code = StringBuffer();
+      for(final el in _controllers){
+        code.write(el.text);
+      }
+      widget.toVerify(code.toString());
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
       children: List.generate(6, (index){
         return Container(
-          margin: const EdgeInsets.only(right: 2),
-          width: 40,
-          height: 40,
+          width: 50,
+          height: 50,
           child: TextField(
             controller: _controllers[index],
             focusNode: _focusNodes[index],

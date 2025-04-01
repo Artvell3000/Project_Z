@@ -9,7 +9,7 @@
 // import 'package:project_z/shared/consts/text_style_for_elevation_button.dart';
 // import 'package:project_z/shared/consts/text_style_title.dart';
 //
-// import 'auth_widget.dart';
+// import 'widgets/pin_code_input_row.dart';
 //
 // final phoneMask = MaskTextInputFormatter(
 //   mask: '+998 (##) ### ## ##',

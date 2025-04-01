@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_z/app/app.dart';
 import 'core/di/di.dart';
 import 'core/network/api/mock/mock_api_service.dart';
 import 'core/network/api/service/api_service.dart';
+import 'features/auth/presentation/bloc/auth_bloc.dart';
 
 void configureTestDependencies() {
   getIt.unregister<ApiService>();
@@ -24,7 +26,10 @@ void main() {
     DeviceOrientation.portraitDown,
   ]).then((_) {
     runApp(
-        MyApp()
+        BlocProvider(
+          create: (context) => AuthBloc(),
+          child: MyApp(),
+        )
     );
   });
 }

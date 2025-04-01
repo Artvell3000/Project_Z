@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_z/core/domain/entity/entity.dart';
 import 'package:project_z/core/routing/router.dart';
+import 'package:project_z/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:project_z/flutter_app_icons.dart';
 
 class ProductCard extends StatelessWidget {
@@ -132,7 +134,8 @@ class ProductCard extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () async {
                           //todo auth
-                          AutoRouter.of(context).push(ProductRoute(productId: info.id));
+                          BlocProvider.of<AuthBloc>(context).add(const AuthEvent.startAuth());
+                          //AutoRouter.of(context).push(ProductRoute(productId: info.id));
 
                         },
                         style: ElevatedButton.styleFrom(
