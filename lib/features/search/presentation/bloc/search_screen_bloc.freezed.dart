@@ -18,13 +18,13 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$SearchScreenEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(double? from, double? to,
-            List<Category>? categories, String? status)
+    required TResult Function(
+            double? from, double? to, Category? categories, String? status)
         loading,
     required TResult Function(
             List<Product> products,
             int quantity,
-            List<Category> enabled,
+            Category? enabled,
             Map<Category, List<Category>> struct,
             String? status)
         loaded,
@@ -33,30 +33,22 @@ mixin _$SearchScreenEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(double? from, double? to, List<Category>? categories,
-            String? status)?
-        loading,
     TResult? Function(
-            List<Product> products,
-            int quantity,
-            List<Category> enabled,
-            Map<Category, List<Category>> struct,
-            String? status)?
+            double? from, double? to, Category? categories, String? status)?
+        loading,
+    TResult? Function(List<Product> products, int quantity, Category? enabled,
+            Map<Category, List<Category>> struct, String? status)?
         loaded,
     TResult? Function(String error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(double? from, double? to, List<Category>? categories,
-            String? status)?
-        loading,
     TResult Function(
-            List<Product> products,
-            int quantity,
-            List<Category> enabled,
-            Map<Category, List<Category>> struct,
-            String? status)?
+            double? from, double? to, Category? categories, String? status)?
+        loading,
+    TResult Function(List<Product> products, int quantity, Category? enabled,
+            Map<Category, List<Category>> struct, String? status)?
         loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -113,8 +105,9 @@ abstract class _$$LoadingSearchImplCopyWith<$Res> {
           _$LoadingSearchImpl value, $Res Function(_$LoadingSearchImpl) then) =
       __$$LoadingSearchImplCopyWithImpl<$Res>;
   @useResult
-  $Res call(
-      {double? from, double? to, List<Category>? categories, String? status});
+  $Res call({double? from, double? to, Category? categories, String? status});
+
+  $CategoryCopyWith<$Res>? get categories;
 }
 
 /// @nodoc
@@ -145,38 +138,42 @@ class __$$LoadingSearchImplCopyWithImpl<$Res>
           : to // ignore: cast_nullable_to_non_nullable
               as double?,
       categories: freezed == categories
-          ? _value._categories
+          ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as List<Category>?,
+              as Category?,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
+
+  /// Create a copy of SearchScreenEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res>? get categories {
+    if (_value.categories == null) {
+      return null;
+    }
+
+    return $CategoryCopyWith<$Res>(_value.categories!, (value) {
+      return _then(_value.copyWith(categories: value));
+    });
+  }
 }
 
 /// @nodoc
 
 class _$LoadingSearchImpl implements _LoadingSearch {
-  const _$LoadingSearchImpl(
-      {this.from, this.to, final List<Category>? categories, this.status})
-      : _categories = categories;
+  const _$LoadingSearchImpl({this.from, this.to, this.categories, this.status});
 
   @override
   final double? from;
   @override
   final double? to;
-  final List<Category>? _categories;
   @override
-  List<Category>? get categories {
-    final value = _categories;
-    if (value == null) return null;
-    if (_categories is EqualUnmodifiableListView) return _categories;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final Category? categories;
   @override
   final String? status;
 
@@ -192,14 +189,13 @@ class _$LoadingSearchImpl implements _LoadingSearch {
             other is _$LoadingSearchImpl &&
             (identical(other.from, from) || other.from == from) &&
             (identical(other.to, to) || other.to == to) &&
-            const DeepCollectionEquality()
-                .equals(other._categories, _categories) &&
+            (identical(other.categories, categories) ||
+                other.categories == categories) &&
             (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, from, to,
-      const DeepCollectionEquality().hash(_categories), status);
+  int get hashCode => Object.hash(runtimeType, from, to, categories, status);
 
   /// Create a copy of SearchScreenEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -212,13 +208,13 @@ class _$LoadingSearchImpl implements _LoadingSearch {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(double? from, double? to,
-            List<Category>? categories, String? status)
+    required TResult Function(
+            double? from, double? to, Category? categories, String? status)
         loading,
     required TResult Function(
             List<Product> products,
             int quantity,
-            List<Category> enabled,
+            Category? enabled,
             Map<Category, List<Category>> struct,
             String? status)
         loaded,
@@ -230,15 +226,11 @@ class _$LoadingSearchImpl implements _LoadingSearch {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(double? from, double? to, List<Category>? categories,
-            String? status)?
-        loading,
     TResult? Function(
-            List<Product> products,
-            int quantity,
-            List<Category> enabled,
-            Map<Category, List<Category>> struct,
-            String? status)?
+            double? from, double? to, Category? categories, String? status)?
+        loading,
+    TResult? Function(List<Product> products, int quantity, Category? enabled,
+            Map<Category, List<Category>> struct, String? status)?
         loaded,
     TResult? Function(String error)? error,
   }) {
@@ -248,15 +240,11 @@ class _$LoadingSearchImpl implements _LoadingSearch {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(double? from, double? to, List<Category>? categories,
-            String? status)?
-        loading,
     TResult Function(
-            List<Product> products,
-            int quantity,
-            List<Category> enabled,
-            Map<Category, List<Category>> struct,
-            String? status)?
+            double? from, double? to, Category? categories, String? status)?
+        loading,
+    TResult Function(List<Product> products, int quantity, Category? enabled,
+            Map<Category, List<Category>> struct, String? status)?
         loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -306,12 +294,12 @@ abstract class _LoadingSearch implements SearchScreenEvent {
   const factory _LoadingSearch(
       {final double? from,
       final double? to,
-      final List<Category>? categories,
+      final Category? categories,
       final String? status}) = _$LoadingSearchImpl;
 
   double? get from;
   double? get to;
-  List<Category>? get categories;
+  Category? get categories;
   String? get status;
 
   /// Create a copy of SearchScreenEvent
@@ -330,9 +318,11 @@ abstract class _$$LoadedSearchImplCopyWith<$Res> {
   $Res call(
       {List<Product> products,
       int quantity,
-      List<Category> enabled,
+      Category? enabled,
       Map<Category, List<Category>> struct,
       String? status});
+
+  $CategoryCopyWith<$Res>? get enabled;
 }
 
 /// @nodoc
@@ -350,7 +340,7 @@ class __$$LoadedSearchImplCopyWithImpl<$Res>
   $Res call({
     Object? products = null,
     Object? quantity = null,
-    Object? enabled = null,
+    Object? enabled = freezed,
     Object? struct = null,
     Object? status = freezed,
   }) {
@@ -363,10 +353,10 @@ class __$$LoadedSearchImplCopyWithImpl<$Res>
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int,
-      enabled: null == enabled
-          ? _value._enabled
+      enabled: freezed == enabled
+          ? _value.enabled
           : enabled // ignore: cast_nullable_to_non_nullable
-              as List<Category>,
+              as Category?,
       struct: null == struct
           ? _value._struct
           : struct // ignore: cast_nullable_to_non_nullable
@@ -377,6 +367,20 @@ class __$$LoadedSearchImplCopyWithImpl<$Res>
               as String?,
     ));
   }
+
+  /// Create a copy of SearchScreenEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res>? get enabled {
+    if (_value.enabled == null) {
+      return null;
+    }
+
+    return $CategoryCopyWith<$Res>(_value.enabled!, (value) {
+      return _then(_value.copyWith(enabled: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -385,11 +389,10 @@ class _$LoadedSearchImpl implements _LoadedSearch {
   const _$LoadedSearchImpl(
       {required final List<Product> products,
       required this.quantity,
-      required final List<Category> enabled,
+      this.enabled,
       required final Map<Category, List<Category>> struct,
       required this.status})
       : _products = products,
-        _enabled = enabled,
         _struct = struct;
 
   final List<Product> _products;
@@ -402,14 +405,8 @@ class _$LoadedSearchImpl implements _LoadedSearch {
 
   @override
   final int quantity;
-  final List<Category> _enabled;
   @override
-  List<Category> get enabled {
-    if (_enabled is EqualUnmodifiableListView) return _enabled;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_enabled);
-  }
-
+  final Category? enabled;
   final Map<Category, List<Category>> _struct;
   @override
   Map<Category, List<Category>> get struct {
@@ -434,7 +431,7 @@ class _$LoadedSearchImpl implements _LoadedSearch {
             const DeepCollectionEquality().equals(other._products, _products) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
-            const DeepCollectionEquality().equals(other._enabled, _enabled) &&
+            (identical(other.enabled, enabled) || other.enabled == enabled) &&
             const DeepCollectionEquality().equals(other._struct, _struct) &&
             (identical(other.status, status) || other.status == status));
   }
@@ -444,7 +441,7 @@ class _$LoadedSearchImpl implements _LoadedSearch {
       runtimeType,
       const DeepCollectionEquality().hash(_products),
       quantity,
-      const DeepCollectionEquality().hash(_enabled),
+      enabled,
       const DeepCollectionEquality().hash(_struct),
       status);
 
@@ -459,13 +456,13 @@ class _$LoadedSearchImpl implements _LoadedSearch {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(double? from, double? to,
-            List<Category>? categories, String? status)
+    required TResult Function(
+            double? from, double? to, Category? categories, String? status)
         loading,
     required TResult Function(
             List<Product> products,
             int quantity,
-            List<Category> enabled,
+            Category? enabled,
             Map<Category, List<Category>> struct,
             String? status)
         loaded,
@@ -477,15 +474,11 @@ class _$LoadedSearchImpl implements _LoadedSearch {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(double? from, double? to, List<Category>? categories,
-            String? status)?
-        loading,
     TResult? Function(
-            List<Product> products,
-            int quantity,
-            List<Category> enabled,
-            Map<Category, List<Category>> struct,
-            String? status)?
+            double? from, double? to, Category? categories, String? status)?
+        loading,
+    TResult? Function(List<Product> products, int quantity, Category? enabled,
+            Map<Category, List<Category>> struct, String? status)?
         loaded,
     TResult? Function(String error)? error,
   }) {
@@ -495,15 +488,11 @@ class _$LoadedSearchImpl implements _LoadedSearch {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(double? from, double? to, List<Category>? categories,
-            String? status)?
-        loading,
     TResult Function(
-            List<Product> products,
-            int quantity,
-            List<Category> enabled,
-            Map<Category, List<Category>> struct,
-            String? status)?
+            double? from, double? to, Category? categories, String? status)?
+        loading,
+    TResult Function(List<Product> products, int quantity, Category? enabled,
+            Map<Category, List<Category>> struct, String? status)?
         loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -553,13 +542,13 @@ abstract class _LoadedSearch implements SearchScreenEvent {
   const factory _LoadedSearch(
       {required final List<Product> products,
       required final int quantity,
-      required final List<Category> enabled,
+      final Category? enabled,
       required final Map<Category, List<Category>> struct,
       required final String? status}) = _$LoadedSearchImpl;
 
   List<Product> get products;
   int get quantity;
-  List<Category> get enabled;
+  Category? get enabled;
   Map<Category, List<Category>> get struct;
   String? get status;
 
@@ -595,7 +584,7 @@ class __$$ErrorSearchImplCopyWithImpl<$Res>
     Object? error = null,
   }) {
     return _then(_$ErrorSearchImpl(
-      error: null == error
+      null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
@@ -606,7 +595,7 @@ class __$$ErrorSearchImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ErrorSearchImpl implements _ErrorSearch {
-  const _$ErrorSearchImpl({required this.error});
+  const _$ErrorSearchImpl(this.error);
 
   @override
   final String error;
@@ -638,13 +627,13 @@ class _$ErrorSearchImpl implements _ErrorSearch {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(double? from, double? to,
-            List<Category>? categories, String? status)
+    required TResult Function(
+            double? from, double? to, Category? categories, String? status)
         loading,
     required TResult Function(
             List<Product> products,
             int quantity,
-            List<Category> enabled,
+            Category? enabled,
             Map<Category, List<Category>> struct,
             String? status)
         loaded,
@@ -656,15 +645,11 @@ class _$ErrorSearchImpl implements _ErrorSearch {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(double? from, double? to, List<Category>? categories,
-            String? status)?
-        loading,
     TResult? Function(
-            List<Product> products,
-            int quantity,
-            List<Category> enabled,
-            Map<Category, List<Category>> struct,
-            String? status)?
+            double? from, double? to, Category? categories, String? status)?
+        loading,
+    TResult? Function(List<Product> products, int quantity, Category? enabled,
+            Map<Category, List<Category>> struct, String? status)?
         loaded,
     TResult? Function(String error)? error,
   }) {
@@ -674,15 +659,11 @@ class _$ErrorSearchImpl implements _ErrorSearch {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(double? from, double? to, List<Category>? categories,
-            String? status)?
-        loading,
     TResult Function(
-            List<Product> products,
-            int quantity,
-            List<Category> enabled,
-            Map<Category, List<Category>> struct,
-            String? status)?
+            double? from, double? to, Category? categories, String? status)?
+        loading,
+    TResult Function(List<Product> products, int quantity, Category? enabled,
+            Map<Category, List<Category>> struct, String? status)?
         loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -729,7 +710,7 @@ class _$ErrorSearchImpl implements _ErrorSearch {
 }
 
 abstract class _ErrorSearch implements SearchScreenEvent {
-  const factory _ErrorSearch({required final String error}) = _$ErrorSearchImpl;
+  const factory _ErrorSearch(final String error) = _$ErrorSearchImpl;
 
   String get error;
 
@@ -748,7 +729,7 @@ mixin _$SearchScreenState {
     required TResult Function(
             List<Product> products,
             int quantity,
-            List<Category> enabled,
+            Category? enabled,
             Map<Category, List<Category>> struct,
             String? status)
         loaded,
@@ -758,12 +739,8 @@ mixin _$SearchScreenState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(
-            List<Product> products,
-            int quantity,
-            List<Category> enabled,
-            Map<Category, List<Category>> struct,
-            String? status)?
+    TResult? Function(List<Product> products, int quantity, Category? enabled,
+            Map<Category, List<Category>> struct, String? status)?
         loaded,
     TResult? Function(String error)? error,
   }) =>
@@ -771,12 +748,8 @@ mixin _$SearchScreenState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(
-            List<Product> products,
-            int quantity,
-            List<Category> enabled,
-            Map<Category, List<Category>> struct,
-            String? status)?
+    TResult Function(List<Product> products, int quantity, Category? enabled,
+            Map<Category, List<Category>> struct, String? status)?
         loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -872,7 +845,7 @@ class _$LoadingStateImpl implements _LoadingState {
     required TResult Function(
             List<Product> products,
             int quantity,
-            List<Category> enabled,
+            Category? enabled,
             Map<Category, List<Category>> struct,
             String? status)
         loaded,
@@ -885,12 +858,8 @@ class _$LoadingStateImpl implements _LoadingState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(
-            List<Product> products,
-            int quantity,
-            List<Category> enabled,
-            Map<Category, List<Category>> struct,
-            String? status)?
+    TResult? Function(List<Product> products, int quantity, Category? enabled,
+            Map<Category, List<Category>> struct, String? status)?
         loaded,
     TResult? Function(String error)? error,
   }) {
@@ -901,12 +870,8 @@ class _$LoadingStateImpl implements _LoadingState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(
-            List<Product> products,
-            int quantity,
-            List<Category> enabled,
-            Map<Category, List<Category>> struct,
-            String? status)?
+    TResult Function(List<Product> products, int quantity, Category? enabled,
+            Map<Category, List<Category>> struct, String? status)?
         loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -965,9 +930,11 @@ abstract class _$$LoadedStateImplCopyWith<$Res> {
   $Res call(
       {List<Product> products,
       int quantity,
-      List<Category> enabled,
+      Category? enabled,
       Map<Category, List<Category>> struct,
       String? status});
+
+  $CategoryCopyWith<$Res>? get enabled;
 }
 
 /// @nodoc
@@ -985,7 +952,7 @@ class __$$LoadedStateImplCopyWithImpl<$Res>
   $Res call({
     Object? products = null,
     Object? quantity = null,
-    Object? enabled = null,
+    Object? enabled = freezed,
     Object? struct = null,
     Object? status = freezed,
   }) {
@@ -998,10 +965,10 @@ class __$$LoadedStateImplCopyWithImpl<$Res>
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int,
-      enabled: null == enabled
-          ? _value._enabled
+      enabled: freezed == enabled
+          ? _value.enabled
           : enabled // ignore: cast_nullable_to_non_nullable
-              as List<Category>,
+              as Category?,
       struct: null == struct
           ? _value._struct
           : struct // ignore: cast_nullable_to_non_nullable
@@ -1012,6 +979,20 @@ class __$$LoadedStateImplCopyWithImpl<$Res>
               as String?,
     ));
   }
+
+  /// Create a copy of SearchScreenState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res>? get enabled {
+    if (_value.enabled == null) {
+      return null;
+    }
+
+    return $CategoryCopyWith<$Res>(_value.enabled!, (value) {
+      return _then(_value.copyWith(enabled: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -1020,11 +1001,10 @@ class _$LoadedStateImpl implements _LoadedState {
   const _$LoadedStateImpl(
       {required final List<Product> products,
       required this.quantity,
-      required final List<Category> enabled,
+      this.enabled,
       required final Map<Category, List<Category>> struct,
       this.status})
       : _products = products,
-        _enabled = enabled,
         _struct = struct;
 
   final List<Product> _products;
@@ -1037,14 +1017,8 @@ class _$LoadedStateImpl implements _LoadedState {
 
   @override
   final int quantity;
-  final List<Category> _enabled;
   @override
-  List<Category> get enabled {
-    if (_enabled is EqualUnmodifiableListView) return _enabled;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_enabled);
-  }
-
+  final Category? enabled;
   final Map<Category, List<Category>> _struct;
   @override
   Map<Category, List<Category>> get struct {
@@ -1069,7 +1043,7 @@ class _$LoadedStateImpl implements _LoadedState {
             const DeepCollectionEquality().equals(other._products, _products) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
-            const DeepCollectionEquality().equals(other._enabled, _enabled) &&
+            (identical(other.enabled, enabled) || other.enabled == enabled) &&
             const DeepCollectionEquality().equals(other._struct, _struct) &&
             (identical(other.status, status) || other.status == status));
   }
@@ -1079,7 +1053,7 @@ class _$LoadedStateImpl implements _LoadedState {
       runtimeType,
       const DeepCollectionEquality().hash(_products),
       quantity,
-      const DeepCollectionEquality().hash(_enabled),
+      enabled,
       const DeepCollectionEquality().hash(_struct),
       status);
 
@@ -1098,7 +1072,7 @@ class _$LoadedStateImpl implements _LoadedState {
     required TResult Function(
             List<Product> products,
             int quantity,
-            List<Category> enabled,
+            Category? enabled,
             Map<Category, List<Category>> struct,
             String? status)
         loaded,
@@ -1111,12 +1085,8 @@ class _$LoadedStateImpl implements _LoadedState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(
-            List<Product> products,
-            int quantity,
-            List<Category> enabled,
-            Map<Category, List<Category>> struct,
-            String? status)?
+    TResult? Function(List<Product> products, int quantity, Category? enabled,
+            Map<Category, List<Category>> struct, String? status)?
         loaded,
     TResult? Function(String error)? error,
   }) {
@@ -1127,12 +1097,8 @@ class _$LoadedStateImpl implements _LoadedState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(
-            List<Product> products,
-            int quantity,
-            List<Category> enabled,
-            Map<Category, List<Category>> struct,
-            String? status)?
+    TResult Function(List<Product> products, int quantity, Category? enabled,
+            Map<Category, List<Category>> struct, String? status)?
         loaded,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -1182,13 +1148,13 @@ abstract class _LoadedState implements SearchScreenState {
   const factory _LoadedState(
       {required final List<Product> products,
       required final int quantity,
-      required final List<Category> enabled,
+      final Category? enabled,
       required final Map<Category, List<Category>> struct,
       final String? status}) = _$LoadedStateImpl;
 
   List<Product> get products;
   int get quantity;
-  List<Category> get enabled;
+  Category? get enabled;
   Map<Category, List<Category>> get struct;
   String? get status;
 
@@ -1271,7 +1237,7 @@ class _$ErrorStateImpl implements _ErrorState {
     required TResult Function(
             List<Product> products,
             int quantity,
-            List<Category> enabled,
+            Category? enabled,
             Map<Category, List<Category>> struct,
             String? status)
         loaded,
@@ -1284,12 +1250,8 @@ class _$ErrorStateImpl implements _ErrorState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(
-            List<Product> products,
-            int quantity,
-            List<Category> enabled,
-            Map<Category, List<Category>> struct,
-            String? status)?
+    TResult? Function(List<Product> products, int quantity, Category? enabled,
+            Map<Category, List<Category>> struct, String? status)?
         loaded,
     TResult? Function(String error)? error,
   }) {
@@ -1300,12 +1262,8 @@ class _$ErrorStateImpl implements _ErrorState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(
-            List<Product> products,
-            int quantity,
-            List<Category> enabled,
-            Map<Category, List<Category>> struct,
-            String? status)?
+    TResult Function(List<Product> products, int quantity, Category? enabled,
+            Map<Category, List<Category>> struct, String? status)?
         loaded,
     TResult Function(String error)? error,
     required TResult orElse(),

@@ -43,11 +43,11 @@ class SearchScreen extends StatelessWidget {
                         return Center(child: Text(message));
                       },
                       loading: () => const Center(child: CircularProgressIndicator(),),
-                      loaded: (result,  quantity, List<e.Category> enabledC, Map<e.Category, List<e.Category>> struct, status) {
+                      loaded: (result,  quantity, e.Category? enabledC, Map<e.Category, List<e.Category>> struct, status) {
                         if(startWithBottomSheet && !showedStartBottomSheet){
                           WidgetsBinding.instance.addPostFrameCallback((_) {
                             showedStartBottomSheet = true;
-                            showBottomDrawer(context, [], struct);
+                            showBottomDrawer(context, null, struct);
                           });
                         }
 

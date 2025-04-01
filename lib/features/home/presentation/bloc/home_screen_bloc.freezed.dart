@@ -328,7 +328,7 @@ class __$$ErrorEventImplCopyWithImpl<$Res>
     Object? error = null,
   }) {
     return _then(_$ErrorEventImpl(
-      error: null == error
+      null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
@@ -339,7 +339,7 @@ class __$$ErrorEventImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ErrorEventImpl implements _ErrorEvent {
-  const _$ErrorEventImpl({required this.error});
+  const _$ErrorEventImpl(this.error);
 
   @override
   final String error;
@@ -438,7 +438,7 @@ class _$ErrorEventImpl implements _ErrorEvent {
 }
 
 abstract class _ErrorEvent implements HomeScreenEvent {
-  const factory _ErrorEvent({required final String error}) = _$ErrorEventImpl;
+  const factory _ErrorEvent(final String error) = _$ErrorEventImpl;
 
   String get error;
 

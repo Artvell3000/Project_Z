@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
 
   void onTapMoreNewProducts(BuildContext context) {
     AutoRouter.of(context).push(SearchRoute(
-      initFilter: const SearchFilter(status: newProductStatus)
+        initFilter: const SearchFilter(status: newProductStatus)
     ));
   }
 
@@ -42,7 +42,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>getIt<HomeScreenBloc>(),
+      create: (context) => getIt<HomeScreenBloc>(),
       child: ZScaffold(
         children: [
           NewsWidget(
@@ -53,14 +53,14 @@ class HomeScreen extends StatelessWidget {
             onTapMoreCategories: () => onTapMoreCategories(context),
           ),
           NewProductsWidget(
-            onTapMoreNewProducts:()=> onTapMoreNewProducts(context),
+            onTapMoreNewProducts: () => onTapMoreNewProducts(context),
           ),
           NewsWidget(
             onTap: onTapNewsWidget,
             currentNews: 1,
           ),
           SpecialOffersWidget(
-            onTapMoreSpecialOffers:()=> onTapMoreSpecialOffers(context),
+            onTapMoreSpecialOffers: () => onTapMoreSpecialOffers(context),
           ),
           MessageWidget(),
           Padding(

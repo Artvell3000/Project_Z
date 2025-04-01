@@ -9,7 +9,7 @@ class HomeScreenEvent with _$HomeScreenEvent {
     required List<Product> specialOffer,
   }) = _LoadedEvent;
 
-  const factory HomeScreenEvent.error({
-    required String error,
-  }) = _ErrorEvent;
+  const factory HomeScreenEvent.error(
+    String error,
+  ) = _ErrorEvent;
 }

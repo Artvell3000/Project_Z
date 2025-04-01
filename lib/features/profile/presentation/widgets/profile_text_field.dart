@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project_z/core/domain/entity/profile/profile.dart';
+import 'package:project_z/data/data_entity/custom_user_json.dart';
 import 'package:project_z/features/profile/presentation/bloc/profile_screen_bloc.dart';
 
 class ProfileTextField extends StatefulWidget {
@@ -9,12 +9,13 @@ class ProfileTextField extends StatefulWidget {
     required this.label,
     required this.context,
     this.isDistrictSelector = false,
-    this.districts, required this.profile,
+    this.districts,
+    required this.profile,
   });
 
   final BuildContext context;
   final String label;
-  final Profile profile;
+  final CustomUserJson profile;
 
   final bool isDistrictSelector;
   final List<String>? districts;
@@ -33,17 +34,17 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
   void initState() {
     super.initState();
 
-    controller.text = (widget.label == 'Tuman') ? (widget.profile.district ?? '') : (widget.profile.city ?? '');
+    controller.text = (widget.label == 'Tuman')
+        ? (widget.profile.district ?? '')
+        : (widget.profile.town ?? '');
 
     _focusNode.addListener(() {
       if (!_focusNode.hasFocus) {
         setState(() => _showDropdown = false);
         BlocProvider.of<ProfileScreenBloc>(widget.context).add(
-          ProfileScreenEvent.refresh(
-              (widget.label == 'Tuman') ? widget.profile.copyWith(district: controller.text)
-                  : widget.profile.copyWith(city: controller.text)
-          )
-        );
+            ProfileScreenEvent.refresh((widget.label == 'Tuman')
+                ? widget.profile.copyWith(district: controller.text)
+                : widget.profile.copyWith(town: controller.text)));
       }
     });
     if (widget.districts != null) {
@@ -62,11 +63,11 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
     if (query.isEmpty) {
       _filteredDistricts.addAll(widget.districts ?? []);
     } else {
-      _filteredDistricts.addAll(
-          widget.districts?.where((district) =>
-              district.toLowerCase().contains(query.toLowerCase())
-          ).toList() ?? []
-      );
+      _filteredDistricts.addAll(widget.districts
+              ?.where((district) =>
+                  district.toLowerCase().contains(query.toLowerCase()))
+              .toList() ??
+          []);
     }
     setState(() {});
   }
@@ -115,17 +116,17 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
                   ),
                   suffixIcon: widget.isDistrictSelector
                       ? IconButton(
-                    icon: Icon(
-                      _showDropdown
-                          ? Icons.arrow_drop_up
-                          : Icons.arrow_drop_down,
-                      color: Colors.grey[600],
-                    ),
-                    onPressed: () {
-                      setState(() => _showDropdown = !_showDropdown);
-                    },
-                    padding: EdgeInsets.zero,
-                  )
+                          icon: Icon(
+                            _showDropdown
+                                ? Icons.arrow_drop_up
+                                : Icons.arrow_drop_down,
+                            color: Colors.grey[600],
+                          ),
+                          onPressed: () {
+                            setState(() => _showDropdown = !_showDropdown);
+                          },
+                          padding: EdgeInsets.zero,
+                        )
                       : null,
                 ),
                 style: const TextStyle(
@@ -135,18 +136,20 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
                 ),
                 onChanged: widget.isDistrictSelector
                     ? (value) {
-                  _filterDistricts(value);
-                  setState(() => _showDropdown = true);
-                }
+                        _filterDistricts(value);
+                        setState(() => _showDropdown = true);
+                      }
                     : null,
                 onTap: widget.isDistrictSelector
                     ? () {
-                  setState(() => _showDropdown = true);
-                }
+                        setState(() => _showDropdown = true);
+                      }
                     : null,
               ),
             ),
-            if (widget.isDistrictSelector && _showDropdown && _filteredDistricts.isNotEmpty)
+            if (widget.isDistrictSelector &&
+                _showDropdown &&
+                _filteredDistricts.isNotEmpty)
               Positioned(
                 top: 40,
                 left: 0,
@@ -168,7 +171,8 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
                       shrinkWrap: true,
                       itemCount: _filteredDistricts.length,
                       itemBuilder: (context, index) {
-                        final isSelected = controller.text == _filteredDistricts[index];
+                        final isSelected =
+                            controller.text == _filteredDistricts[index];
                         return InkWell(
                           onTap: () {
                             controller.text = _filteredDistricts[index];
@@ -183,11 +187,11 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
                             decoration: BoxDecoration(
                               border: index != _filteredDistricts.length - 1
                                   ? const Border(
-                                bottom: BorderSide(
-                                  color: Color.fromRGBO(230, 230, 230, 1),
-                                  width: 1,
-                                ),
-                              )
+                                      bottom: BorderSide(
+                                        color: Color.fromRGBO(230, 230, 230, 1),
+                                        width: 1,
+                                      ),
+                                    )
                                   : null,
                             ),
                             child: Row(

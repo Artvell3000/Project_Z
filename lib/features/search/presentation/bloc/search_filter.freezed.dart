@@ -16,9 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SearchFilter {
-  double? get from => throw _privateConstructorUsedError;
-  double? get to => throw _privateConstructorUsedError;
-  List<Category>? get enabled => throw _privateConstructorUsedError;
+  Category? get enabled => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
 
   /// Create a copy of SearchFilter
@@ -34,8 +32,9 @@ abstract class $SearchFilterCopyWith<$Res> {
           SearchFilter value, $Res Function(SearchFilter) then) =
       _$SearchFilterCopyWithImpl<$Res, SearchFilter>;
   @useResult
-  $Res call(
-      {double? from, double? to, List<Category>? enabled, String? status});
+  $Res call({Category? enabled, String? status});
+
+  $CategoryCopyWith<$Res>? get enabled;
 }
 
 /// @nodoc
@@ -53,29 +52,33 @@ class _$SearchFilterCopyWithImpl<$Res, $Val extends SearchFilter>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? from = freezed,
-    Object? to = freezed,
     Object? enabled = freezed,
     Object? status = freezed,
   }) {
     return _then(_value.copyWith(
-      from: freezed == from
-          ? _value.from
-          : from // ignore: cast_nullable_to_non_nullable
-              as double?,
-      to: freezed == to
-          ? _value.to
-          : to // ignore: cast_nullable_to_non_nullable
-              as double?,
       enabled: freezed == enabled
           ? _value.enabled
           : enabled // ignore: cast_nullable_to_non_nullable
-              as List<Category>?,
+              as Category?,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
+  }
+
+  /// Create a copy of SearchFilter
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryCopyWith<$Res>? get enabled {
+    if (_value.enabled == null) {
+      return null;
+    }
+
+    return $CategoryCopyWith<$Res>(_value.enabled!, (value) {
+      return _then(_value.copyWith(enabled: value) as $Val);
+    });
   }
 }
 
@@ -87,8 +90,10 @@ abstract class _$$SearchFilterImplCopyWith<$Res>
       __$$SearchFilterImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {double? from, double? to, List<Category>? enabled, String? status});
+  $Res call({Category? enabled, String? status});
+
+  @override
+  $CategoryCopyWith<$Res>? get enabled;
 }
 
 /// @nodoc
@@ -104,24 +109,14 @@ class __$$SearchFilterImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? from = freezed,
-    Object? to = freezed,
     Object? enabled = freezed,
     Object? status = freezed,
   }) {
     return _then(_$SearchFilterImpl(
-      from: freezed == from
-          ? _value.from
-          : from // ignore: cast_nullable_to_non_nullable
-              as double?,
-      to: freezed == to
-          ? _value.to
-          : to // ignore: cast_nullable_to_non_nullable
-              as double?,
       enabled: freezed == enabled
-          ? _value._enabled
+          ? _value.enabled
           : enabled // ignore: cast_nullable_to_non_nullable
-              as List<Category>?,
+              as Category?,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -133,30 +128,16 @@ class __$$SearchFilterImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SearchFilterImpl implements _SearchFilter {
-  const _$SearchFilterImpl(
-      {this.from, this.to, final List<Category>? enabled, this.status})
-      : _enabled = enabled;
+  const _$SearchFilterImpl({this.enabled, this.status});
 
   @override
-  final double? from;
-  @override
-  final double? to;
-  final List<Category>? _enabled;
-  @override
-  List<Category>? get enabled {
-    final value = _enabled;
-    if (value == null) return null;
-    if (_enabled is EqualUnmodifiableListView) return _enabled;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final Category? enabled;
   @override
   final String? status;
 
   @override
   String toString() {
-    return 'SearchFilter(from: $from, to: $to, enabled: $enabled, status: $status)';
+    return 'SearchFilter(enabled: $enabled, status: $status)';
   }
 
   @override
@@ -164,15 +145,12 @@ class _$SearchFilterImpl implements _SearchFilter {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SearchFilterImpl &&
-            (identical(other.from, from) || other.from == from) &&
-            (identical(other.to, to) || other.to == to) &&
-            const DeepCollectionEquality().equals(other._enabled, _enabled) &&
+            (identical(other.enabled, enabled) || other.enabled == enabled) &&
             (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, from, to,
-      const DeepCollectionEquality().hash(_enabled), status);
+  int get hashCode => Object.hash(runtimeType, enabled, status);
 
   /// Create a copy of SearchFilter
   /// with the given fields replaced by the non-null parameter values.
@@ -184,18 +162,11 @@ class _$SearchFilterImpl implements _SearchFilter {
 }
 
 abstract class _SearchFilter implements SearchFilter {
-  const factory _SearchFilter(
-      {final double? from,
-      final double? to,
-      final List<Category>? enabled,
-      final String? status}) = _$SearchFilterImpl;
+  const factory _SearchFilter({final Category? enabled, final String? status}) =
+      _$SearchFilterImpl;
 
   @override
-  double? get from;
-  @override
-  double? get to;
-  @override
-  List<Category>? get enabled;
+  Category? get enabled;
   @override
   String? get status;
 

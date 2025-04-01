@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 import 'package:project_z/core/di/di.dart';
-import 'package:project_z/core/network/api/api_service.dart';
 import 'package:project_z/features/product/presentation/bloc/product_screen_bloc.dart';
 import 'package:project_z/features/product/presentation/widgets/widgets.dart';
 import 'package:project_z/shared/consts/text_style_for_elevation_button.dart';

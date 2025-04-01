@@ -1,6 +1,7 @@
-import 'package:project_z/core/domain/entity/profile/profile.dart';
+import 'package:project_z/data/data_entity/custom_user_json.dart';
 
-abstract interface class IProfileRepository{
-  Future<Profile> find();
-  Future<void> save(Profile profile);
+abstract interface class IUserRepository{
+  CustomUserJson get user;
+  Future<CustomUserJson> find();
+  Future<void> save(CustomUserJson profile);
 }

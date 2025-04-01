@@ -2,9 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
-import 'package:project_z/core/bloc/search/search_bloc.dart';
 import 'package:project_z/core/domain/entity/entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:project_z/core/network/api/service/api_service.dart';
 import 'package:project_z/features/search/presentation/bloc/search_filter.dart';
 
 part 'search_screen_event.dart';
@@ -13,8 +13,8 @@ part 'search_screen_bloc.freezed.dart';
 
 @injectable
 class SearchScreenBloc extends Bloc<SearchScreenEvent, SearchScreenState> {
-  late String error;
-  final SearchBloc bloc;
+  late ApiService api;
+  late Map<Category,List<Category>> struct;
   bool isInitialized = false;
   SearchFilter? initFilter;
 
@@ -28,31 +28,56 @@ class SearchScreenBloc extends Bloc<SearchScreenEvent, SearchScreenState> {
     return q;
   }
 
-  SearchScreenBloc(this.bloc, {this.initFilter}) : super(const SearchScreenState.loading()) {
+  Map<Category,List<Category>> _getStruct(List<Category> list){
+    if(isInitialized) return struct;
+    final result = <Category,List<Category>>{};
+    final subcategories = <Category>[];
+    final idCategory = <int,Category>{};
+    for(final el in list){
+      if(el.subcategoryId == null){
+        result[el] = [];
+        idCategory[el.id] = el;
+      }else{
+        subcategories.add(el);
+      }
+    }
+
+    for(final el in subcategories){
+      try{
+        result[idCategory[el.subcategoryId!]!]!.add(el);
+      }catch(e){
+        Logger().e('[_getStruct] $e');
+      }
+    }
+    struct = result;
+    return result;
+  }
+
+  SearchScreenBloc(this.api, {this.initFilter}) : super(const SearchScreenState.loading()) {
     on<SearchScreenEvent>((event, emit) {
       event.when(
-          loading: (from, to, enabled, status){
+          loading: (from, to, enabled, status) async {
             emit(const SearchScreenState.loading());
             if(!isInitialized) return;
+            try{
+              final response = await api.searchProducts(
+                  maxPrice: to?.toString(),
+                  minPrice: from?.toString(),
+                  subcategory: enabled?.id.toString(),
+                  status: status
+              );
 
-            // Logger().i('[enabled] $enabled');
-            // Logger().i('[from] $from');
-            // Logger().i('[to] $to');
-            final result = bloc.searchByCategoryPriceStatus(
-                from: from,
-                to: to,
-                categories: enabled,
-                status: initFilter?.status
-            );
-            // Logger().i('[result] ${result.length}');
-            add(SearchScreenEvent.loaded(
-                products: result,
-                quantity: _calcQuantity(result),
-                enabled: enabled ?? [],
-                struct: bloc.struct,
-                status: status
-            )
-            );
+              add(SearchScreenEvent.loaded(
+                  products: response.results,
+                  quantity: _calcQuantity(response.results),
+                  enabled: enabled,
+                  struct: struct,
+                  status: status
+              )
+              );
+            } catch(e){
+              add(SearchScreenEvent.error(e.toString()));
+            }
           },
           loaded: (result, quantity, enabled, struct, status){
             emit(SearchScreenState.loaded(
@@ -68,38 +93,27 @@ class SearchScreenBloc extends Bloc<SearchScreenEvent, SearchScreenState> {
           }
       );
     });
-    initListeners();
+    initData();
   }
 
-  Future<void> initListeners() async {
-    bloc.stream.listen((state){
-      state.mapOrNull(
-          loaded: (data){
+  Future<void> initData() async {
+    try{
+      final categories = await api.getCategories();
+      struct = _getStruct(categories.results);
 
-            if(!isInitialized){
-              isInitialized = true;
-              if(initFilter!=null){
-                add(SearchScreenEvent.loading(
-                  to: initFilter?.to,
-                  from: initFilter?.from,
-                  categories: initFilter?.enabled,
-                ));
-              }
-            }
-
-            add(SearchScreenEvent.loaded(
-                products: data.products.results,
-                quantity: _calcQuantity(data.products.results),
-                enabled: [],
-                struct: bloc.struct,
-                status: null
-            ));
-          },
-          error: (data){
-            add(SearchScreenEvent.error(error: data.message));
-          }
-      );
-    });
+      final products = (await api.searchProducts(
+        status: initFilter?.status,
+        subcategory: initFilter?.enabled?.name,
+      )).results;
+      isInitialized = true;
+      add(SearchScreenEvent.loaded(
+          products: products, 
+          quantity: _calcQuantity(products), 
+          struct: struct, 
+          status: null));
+    }catch(e){
+      add(SearchScreenEvent.error(e.toString()));
+    }
   }
 
 }

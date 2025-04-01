@@ -16,12 +16,6 @@ class _MyAppState extends State<MyApp> {
     appRouter = AppRouter();
     return MaterialApp.router(
       theme: ThemeData(
-          // pageTransitionsTheme: const PageTransitionsTheme(
-          //   builders: {
-          //     TargetPlatform.android: NoAnimationPageTransitionsBuilder(),
-          //     TargetPlatform.iOS: NoAnimationPageTransitionsBuilder(),
-          //   },
-          // ),
           fontFamily: 'Neometric',
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
@@ -34,18 +28,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-// class NoAnimationPageTransitionsBuilder extends PageTransitionsBuilder {
-//   const NoAnimationPageTransitionsBuilder();
-//
-//   @override
-//   Widget buildTransitions<T>(
-//       PageRoute<T> route,
-//       BuildContext context,
-//       Animation<double> animation,
-//       Animation<double> secondaryAnimation,
-//       Widget child,
-//       ) {
-//     return child; // Возвращает child без анимаций
-//   }
-// }

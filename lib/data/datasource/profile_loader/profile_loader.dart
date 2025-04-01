@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-import 'package:project_z/core/domain/entity/profile/profile.dart';
+import 'package:project_z/data/data_entity/custom_user_json.dart';
 
 
 class ProfileJsonLoader {
@@ -12,19 +12,19 @@ class ProfileJsonLoader {
     final file = File('${directory.path}/$_fileName');
 
     if (!await file.exists()) {
-      return await file.writeAsString(jsonEncode(const Profile().toJson()));
+      return await file.writeAsString(jsonEncode(const CustomUserJson().toJson()));
     }
     return file;
   }
 
-  static Future<void> updateProfile(Profile newProfile) async {
+  static Future<void> updateProfile(CustomUserJson newProfile) async {
     final file = await _getProfileFile();
     await file.writeAsString(jsonEncode(newProfile.toJson()));
   }
 
-  static Future<Profile> loadProfile() async {
+  static Future<CustomUserJson> loadProfile() async {
     final file = await _getProfileFile();
     final contents = await file.readAsString();
-    return Profile.fromJson(jsonDecode(contents));
+    return CustomUserJson.fromJson(jsonDecode(contents));
   }
 }

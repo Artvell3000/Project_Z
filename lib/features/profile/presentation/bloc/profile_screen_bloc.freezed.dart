@@ -18,22 +18,22 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ProfileScreenEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Profile profile) loaded,
-    required TResult Function(Profile profile) refresh,
+    required TResult Function(CustomUserJson profile) loaded,
+    required TResult Function(CustomUserJson profile) refresh,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Profile profile)? loaded,
-    TResult? Function(Profile profile)? refresh,
+    TResult? Function(CustomUserJson profile)? loaded,
+    TResult? Function(CustomUserJson profile)? refresh,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Profile profile)? loaded,
-    TResult Function(Profile profile)? refresh,
+    TResult Function(CustomUserJson profile)? loaded,
+    TResult Function(CustomUserJson profile)? refresh,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -90,9 +90,9 @@ abstract class _$$LoadProfileScreenEventImplCopyWith<$Res> {
           $Res Function(_$LoadProfileScreenEventImpl) then) =
       __$$LoadProfileScreenEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Profile profile});
+  $Res call({CustomUserJson profile});
 
-  $ProfileCopyWith<$Res> get profile;
+  $CustomUserJsonCopyWith<$Res> get profile;
 }
 
 /// @nodoc
@@ -115,7 +115,7 @@ class __$$LoadProfileScreenEventImplCopyWithImpl<$Res>
       null == profile
           ? _value.profile
           : profile // ignore: cast_nullable_to_non_nullable
-              as Profile,
+              as CustomUserJson,
     ));
   }
 
@@ -123,8 +123,8 @@ class __$$LoadProfileScreenEventImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ProfileCopyWith<$Res> get profile {
-    return $ProfileCopyWith<$Res>(_value.profile, (value) {
+  $CustomUserJsonCopyWith<$Res> get profile {
+    return $CustomUserJsonCopyWith<$Res>(_value.profile, (value) {
       return _then(_value.copyWith(profile: value));
     });
   }
@@ -136,7 +136,7 @@ class _$LoadProfileScreenEventImpl implements _LoadProfileScreenEvent {
   const _$LoadProfileScreenEventImpl(this.profile);
 
   @override
-  final Profile profile;
+  final CustomUserJson profile;
 
   @override
   String toString() {
@@ -166,8 +166,8 @@ class _$LoadProfileScreenEventImpl implements _LoadProfileScreenEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Profile profile) loaded,
-    required TResult Function(Profile profile) refresh,
+    required TResult Function(CustomUserJson profile) loaded,
+    required TResult Function(CustomUserJson profile) refresh,
     required TResult Function(String message) error,
   }) {
     return loaded(profile);
@@ -176,8 +176,8 @@ class _$LoadProfileScreenEventImpl implements _LoadProfileScreenEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Profile profile)? loaded,
-    TResult? Function(Profile profile)? refresh,
+    TResult? Function(CustomUserJson profile)? loaded,
+    TResult? Function(CustomUserJson profile)? refresh,
     TResult? Function(String message)? error,
   }) {
     return loaded?.call(profile);
@@ -186,8 +186,8 @@ class _$LoadProfileScreenEventImpl implements _LoadProfileScreenEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Profile profile)? loaded,
-    TResult Function(Profile profile)? refresh,
+    TResult Function(CustomUserJson profile)? loaded,
+    TResult Function(CustomUserJson profile)? refresh,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -233,10 +233,10 @@ class _$LoadProfileScreenEventImpl implements _LoadProfileScreenEvent {
 }
 
 abstract class _LoadProfileScreenEvent implements ProfileScreenEvent {
-  const factory _LoadProfileScreenEvent(final Profile profile) =
+  const factory _LoadProfileScreenEvent(final CustomUserJson profile) =
       _$LoadProfileScreenEventImpl;
 
-  Profile get profile;
+  CustomUserJson get profile;
 
   /// Create a copy of ProfileScreenEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -252,9 +252,9 @@ abstract class _$$RefreshProfileScreenEventImplCopyWith<$Res> {
           $Res Function(_$RefreshProfileScreenEventImpl) then) =
       __$$RefreshProfileScreenEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Profile profile});
+  $Res call({CustomUserJson profile});
 
-  $ProfileCopyWith<$Res> get profile;
+  $CustomUserJsonCopyWith<$Res> get profile;
 }
 
 /// @nodoc
@@ -278,7 +278,7 @@ class __$$RefreshProfileScreenEventImplCopyWithImpl<$Res>
       null == profile
           ? _value.profile
           : profile // ignore: cast_nullable_to_non_nullable
-              as Profile,
+              as CustomUserJson,
     ));
   }
 
@@ -286,8 +286,8 @@ class __$$RefreshProfileScreenEventImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ProfileCopyWith<$Res> get profile {
-    return $ProfileCopyWith<$Res>(_value.profile, (value) {
+  $CustomUserJsonCopyWith<$Res> get profile {
+    return $CustomUserJsonCopyWith<$Res>(_value.profile, (value) {
       return _then(_value.copyWith(profile: value));
     });
   }
@@ -299,7 +299,7 @@ class _$RefreshProfileScreenEventImpl implements _RefreshProfileScreenEvent {
   const _$RefreshProfileScreenEventImpl(this.profile);
 
   @override
-  final Profile profile;
+  final CustomUserJson profile;
 
   @override
   String toString() {
@@ -329,8 +329,8 @@ class _$RefreshProfileScreenEventImpl implements _RefreshProfileScreenEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Profile profile) loaded,
-    required TResult Function(Profile profile) refresh,
+    required TResult Function(CustomUserJson profile) loaded,
+    required TResult Function(CustomUserJson profile) refresh,
     required TResult Function(String message) error,
   }) {
     return refresh(profile);
@@ -339,8 +339,8 @@ class _$RefreshProfileScreenEventImpl implements _RefreshProfileScreenEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Profile profile)? loaded,
-    TResult? Function(Profile profile)? refresh,
+    TResult? Function(CustomUserJson profile)? loaded,
+    TResult? Function(CustomUserJson profile)? refresh,
     TResult? Function(String message)? error,
   }) {
     return refresh?.call(profile);
@@ -349,8 +349,8 @@ class _$RefreshProfileScreenEventImpl implements _RefreshProfileScreenEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Profile profile)? loaded,
-    TResult Function(Profile profile)? refresh,
+    TResult Function(CustomUserJson profile)? loaded,
+    TResult Function(CustomUserJson profile)? refresh,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -396,10 +396,10 @@ class _$RefreshProfileScreenEventImpl implements _RefreshProfileScreenEvent {
 }
 
 abstract class _RefreshProfileScreenEvent implements ProfileScreenEvent {
-  const factory _RefreshProfileScreenEvent(final Profile profile) =
+  const factory _RefreshProfileScreenEvent(final CustomUserJson profile) =
       _$RefreshProfileScreenEventImpl;
 
-  Profile get profile;
+  CustomUserJson get profile;
 
   /// Create a copy of ProfileScreenEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -480,8 +480,8 @@ class _$ErrorProfileScreenEventImpl implements _ErrorProfileScreenEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Profile profile) loaded,
-    required TResult Function(Profile profile) refresh,
+    required TResult Function(CustomUserJson profile) loaded,
+    required TResult Function(CustomUserJson profile) refresh,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -490,8 +490,8 @@ class _$ErrorProfileScreenEventImpl implements _ErrorProfileScreenEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Profile profile)? loaded,
-    TResult? Function(Profile profile)? refresh,
+    TResult? Function(CustomUserJson profile)? loaded,
+    TResult? Function(CustomUserJson profile)? refresh,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -500,8 +500,8 @@ class _$ErrorProfileScreenEventImpl implements _ErrorProfileScreenEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Profile profile)? loaded,
-    TResult Function(Profile profile)? refresh,
+    TResult Function(CustomUserJson profile)? loaded,
+    TResult Function(CustomUserJson profile)? refresh,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -564,21 +564,21 @@ mixin _$ProfileScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(Profile profile) loaded,
+    required TResult Function(CustomUserJson profile) loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(Profile profile)? loaded,
+    TResult? Function(CustomUserJson profile)? loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(Profile profile)? loaded,
+    TResult Function(CustomUserJson profile)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -674,7 +674,7 @@ class _$LoadingProfileScreenStateImpl implements _LoadingProfileScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(Profile profile) loaded,
+    required TResult Function(CustomUserJson profile) loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -684,7 +684,7 @@ class _$LoadingProfileScreenStateImpl implements _LoadingProfileScreenState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(Profile profile)? loaded,
+    TResult? Function(CustomUserJson profile)? loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -694,7 +694,7 @@ class _$LoadingProfileScreenStateImpl implements _LoadingProfileScreenState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(Profile profile)? loaded,
+    TResult Function(CustomUserJson profile)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -750,9 +750,9 @@ abstract class _$$LoadedProfileScreenStateImplCopyWith<$Res> {
           $Res Function(_$LoadedProfileScreenStateImpl) then) =
       __$$LoadedProfileScreenStateImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Profile profile});
+  $Res call({CustomUserJson profile});
 
-  $ProfileCopyWith<$Res> get profile;
+  $CustomUserJsonCopyWith<$Res> get profile;
 }
 
 /// @nodoc
@@ -776,7 +776,7 @@ class __$$LoadedProfileScreenStateImplCopyWithImpl<$Res>
       null == profile
           ? _value.profile
           : profile // ignore: cast_nullable_to_non_nullable
-              as Profile,
+              as CustomUserJson,
     ));
   }
 
@@ -784,8 +784,8 @@ class __$$LoadedProfileScreenStateImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ProfileCopyWith<$Res> get profile {
-    return $ProfileCopyWith<$Res>(_value.profile, (value) {
+  $CustomUserJsonCopyWith<$Res> get profile {
+    return $CustomUserJsonCopyWith<$Res>(_value.profile, (value) {
       return _then(_value.copyWith(profile: value));
     });
   }
@@ -797,7 +797,7 @@ class _$LoadedProfileScreenStateImpl implements _LoadedProfileScreenState {
   const _$LoadedProfileScreenStateImpl(this.profile);
 
   @override
-  final Profile profile;
+  final CustomUserJson profile;
 
   @override
   String toString() {
@@ -828,7 +828,7 @@ class _$LoadedProfileScreenStateImpl implements _LoadedProfileScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(Profile profile) loaded,
+    required TResult Function(CustomUserJson profile) loaded,
     required TResult Function(String message) error,
   }) {
     return loaded(profile);
@@ -838,7 +838,7 @@ class _$LoadedProfileScreenStateImpl implements _LoadedProfileScreenState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(Profile profile)? loaded,
+    TResult? Function(CustomUserJson profile)? loaded,
     TResult? Function(String message)? error,
   }) {
     return loaded?.call(profile);
@@ -848,7 +848,7 @@ class _$LoadedProfileScreenStateImpl implements _LoadedProfileScreenState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(Profile profile)? loaded,
+    TResult Function(CustomUserJson profile)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -894,10 +894,10 @@ class _$LoadedProfileScreenStateImpl implements _LoadedProfileScreenState {
 }
 
 abstract class _LoadedProfileScreenState implements ProfileScreenState {
-  const factory _LoadedProfileScreenState(final Profile profile) =
+  const factory _LoadedProfileScreenState(final CustomUserJson profile) =
       _$LoadedProfileScreenStateImpl;
 
-  Profile get profile;
+  CustomUserJson get profile;
 
   /// Create a copy of ProfileScreenState
   /// with the given fields replaced by the non-null parameter values.
@@ -979,7 +979,7 @@ class _$ErrorProfileScreenStateImpl implements _ErrorProfileScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(Profile profile) loaded,
+    required TResult Function(CustomUserJson profile) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -989,7 +989,7 @@ class _$ErrorProfileScreenStateImpl implements _ErrorProfileScreenState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(Profile profile)? loaded,
+    TResult? Function(CustomUserJson profile)? loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -999,7 +999,7 @@ class _$ErrorProfileScreenStateImpl implements _ErrorProfileScreenState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(Profile profile)? loaded,
+    TResult Function(CustomUserJson profile)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

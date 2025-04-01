@@ -2,13 +2,13 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_z/core/di/di.dart';
+import 'package:project_z/data/data_entity/custom_user_json.dart';
 import 'package:project_z/features/product/presentation/widgets/widgets.dart';
 import 'package:project_z/features/profile/presentation/bloc/profile_screen_bloc.dart';
 import 'package:project_z/features/profile/presentation/widgets/widgets.dart';
 import 'package:project_z/flutter_app_icons.dart';
 import 'package:project_z/shared/scaffolds/z_scaffold.dart';
 
-import '../../../../core/domain/entity/profile/profile.dart';
 
 @RoutePage()
 class ProfileScreen extends StatelessWidget {
@@ -94,7 +94,7 @@ class ProfileScreen extends StatelessWidget {
                                   padding: const EdgeInsets.only(top: 10),
                                   child: ProfilePhoneTextField(
                                     context: context,
-                                    profile: profile,
+                                    user: profile,
                                   ),
                                 );
                               },
@@ -114,9 +114,9 @@ class ProfileScreen extends StatelessWidget {
                     loading: () => const Center(
                           child: CircularProgressIndicator(),
                         ),
-                    loaded: (profile) {
+                    loaded: (user) {
                       return AddGeoContainer(
-                        profile: profile,
+                        user: user,
                       );
                     },
                     error: (message) => Center(
@@ -130,9 +130,8 @@ class ProfileScreen extends StatelessWidget {
 }
 
 class AddGeoContainer extends StatefulWidget {
-  const AddGeoContainer({super.key, required this.profile});
-
-  final Profile profile;
+  const AddGeoContainer({super.key, required this.user});
+  final CustomUserJson user;
 
   @override
   State<AddGeoContainer> createState() => _AddGeoContainerState();
@@ -144,7 +143,7 @@ class _AddGeoContainerState extends State<AddGeoContainer> {
   @override
   Widget build(BuildContext context) {
     bool showTextFields =
-        widget.profile.city != null || widget.profile.district != null || hasClickedAddGeo;
+        widget.user.town != null || widget.user.district != null || hasClickedAddGeo;
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Container(
@@ -189,7 +188,7 @@ class _AddGeoContainerState extends State<AddGeoContainer> {
                     : Column(
                         children: [
                           ProfileTextField(
-                            profile: widget.profile,
+                            profile: widget.user,
                             label: 'Viloyat / Shahar',
                             isDistrictSelector: true,
                             districts: const [
@@ -213,7 +212,7 @@ class _AddGeoContainerState extends State<AddGeoContainer> {
                           Padding(
                             padding: const EdgeInsets.only(top: 10),
                             child: ProfileTextField(
-                              profile: widget.profile,
+                              profile: widget.user,
                               label: 'Tuman',
                               isDistrictSelector: true,
                               districts: const [

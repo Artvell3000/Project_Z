@@ -2,12 +2,12 @@ import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
 import 'package:project_z/constants/product/status.dart';
-import 'package:project_z/core/bloc/news/news_bloc.dart';
-import 'package:project_z/core/bloc/search/search_bloc.dart';
 import 'package:project_z/core/domain/entity/category/category.dart';
 import 'package:project_z/core/domain/entity/entity.dart';
 import 'package:project_z/core/domain/entity/news/news.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:project_z/core/network/api/service/api_service.dart';
+
 
 part 'home_screen_event.dart';
 
@@ -17,23 +17,23 @@ part 'home_screen_bloc.freezed.dart';
 
 @injectable
 class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
-  final SearchBloc searchBloc;
-  final NewsBloc newsBloc;
+  final ApiService api;
 
-  List<Category>? categories;
-  List<News>? news;
-  List<Product>? newProducts;
-  List<Product>? specialOffer;
-  String? error;
+  late List<Category> categories;
+  late List<News> news;
+  late List<Product> newProducts;
+  late List<Product> specialOffer;
+  late String error;
 
-  HomeScreenBloc(this.searchBloc, this.newsBloc)
+  HomeScreenBloc(this.api)
       : super(const HomeScreenState.loading()) {
     Logger().i('[HomeScreenBloc] init');
     on<HomeScreenEvent>((event, emit) async {
       event.map(
           loaded: (data) {
+            final mainCategories = data.categories.where((c) => c.subcategoryId == null).toList();
             emit(HomeScreenState.loaded(
-                categories: data.categories,
+                categories: mainCategories,
                 news: data.news,
                 newProducts: data.newProducts,
                 specialOffer: data.specialOffer,
@@ -44,58 +44,18 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
           });
     });
 
-    initListeners();
+    loadData();
   }
 
-  void initListeners() {
-    newsBloc.stream.listen((state) {
-      state.mapOrNull(loaded: (data) {
-        if (error != null) {
-          Logger().i('[HomeScreenBloc : error] ${error!}');
-          return;
-        }
-        news = data.news.results;
-        if (categories != null) {
-          add(HomeScreenEvent.loaded(
-              categories: categories!.where((e) => e.subcategoryId==null).toList(),
-              news: news!,
-              newProducts: newProducts!,
-              specialOffer: specialOffer!));
-        }
-      }, error: (data) {
-        error = data.message;
-        if (error != null){
-          Logger().i('[HomeScreenBloc : error] ${error!}');
-        }
-        add(HomeScreenEvent.error(error: error!));
-      });
-    });
-    searchBloc.stream.listen((state) {
-      state.mapOrNull(loaded: (data) {
-        if (error != null){
-          Logger().i('[HomeScreenBloc : error] ${error!}');
-          return;
-        }
-        categories = data.categories.results;
-        //Logger().i('[data.products]${data.products}');
-        newProducts = searchBloc.searchByStatus(newProductStatus);
-        //Logger().i('[newProducts]${newProducts}');
-        specialOffer = searchBloc.searchByStatus(specialOfferStatus);
-        //Logger().i('[specialOffer]${specialOffer}');
-        if (news != null) {
-          add(HomeScreenEvent.loaded(
-              categories: categories!.where((e) => e.subcategoryId==null).toList(),
-              news: news!,
-              newProducts: newProducts!,
-              specialOffer: specialOffer!));
-        }
-      }, error: (data) {
-        error = data.message;
-        if (error != null){
-          Logger().i('[HomeScreenBloc : error] ${error!}');
-        }
-        add(HomeScreenEvent.error(error: error!));
-      });
-    });
+  Future<void> loadData() async {
+    try{
+      newProducts = (await api.searchProducts(status: newProductStatus)).results;
+      specialOffer = (await api.searchProducts(status: specialOfferStatus)).results;
+      categories = (await api.getCategories()).results;
+      news = (await api.getNews()).results;
+      add(HomeScreenEvent.loaded(categories: categories, news: news, newProducts: newProducts, specialOffer: specialOffer));
+    } catch(e){
+      add(HomeScreenEvent.error(e.toString()));
+    }
   }
 }

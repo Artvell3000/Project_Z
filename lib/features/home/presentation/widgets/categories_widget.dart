@@ -59,7 +59,7 @@ class CategoriesWidget extends StatelessWidget {
                         return GestureDetector(
                           onTap: (){
                             AutoRouter.of(context).push(
-                              SearchRoute(initFilter: SearchFilter(enabled: [categories[index]]))
+                              SearchRoute(initFilter: SearchFilter(enabled: categories[index]))
                             );
                           },
                           child: CategoryCard(

@@ -4,8 +4,8 @@ import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:project_z/constants/product/status.dart';
-import 'package:project_z/core/bloc/search/search_bloc.dart';
 import 'package:project_z/core/domain/entity/entity.dart';
+import 'package:project_z/core/network/api/service/api_service.dart';
 
 part 'product_screen_event.dart';
 
@@ -16,9 +16,11 @@ part 'product_screen_bloc.freezed.dart';
 @injectable
 class ProductScreenBloc extends Bloc<ProductScreenEvent, ProductScreenState> {
   final int id;
-  final SearchBloc bloc;
+  final ApiService api;
+  late Product product;
+  late List<Product> newProducts;
 
-  ProductScreenBloc(this.id, this.bloc) : super(const ProductScreenState.loading()) {
+  ProductScreenBloc(this.id, this.api) : super(const ProductScreenState.loading()) {
     on<ProductScreenEvent>((event, emit) {
       event.when(
           loading: () {
@@ -32,25 +34,16 @@ class ProductScreenBloc extends Bloc<ProductScreenEvent, ProductScreenState> {
             emit(ProductScreenState.errorProducts(productError: message));
           },);
     });
-    initListeners();
+    loadData();
   }
 
-  Future<void> initListeners() async {
-    bloc.stream.listen((state){
-      state.mapOrNull(
-          loaded: (data){
-            final product = bloc.searchById(id);
-            if(product == null){
-              add(const ProductScreenEvent.productError('NOT FOUND'));
-            }
-            final newProducts = bloc.searchByStatus(newProductStatus);
-            
-            add(ProductScreenEvent.productLoaded(product!, newProducts));
-          }, 
-          error: (data){
-            add(ProductScreenEvent.productError(data.message));
-          }
-      );
-    });
+  Future<void> loadData() async {
+    try{
+      product = (await api.searchProducts()).results.first;
+      newProducts = (await api.searchProducts(status: newProductStatus)).results;
+      add(ProductScreenEvent.productLoaded(product, newProducts));
+    } catch(e){
+      add(ProductScreenEvent.productError(e.toString()));
+    }
   }
 }
