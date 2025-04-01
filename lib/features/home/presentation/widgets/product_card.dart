@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:project_z/core/domain/entity/entity.dart';
 import 'package:project_z/core/routing/router.dart';
-import 'package:project_z/features/shell_widget/show_auth_function.dart';
 import 'package:project_z/flutter_app_icons.dart';
 
 class ProductCard extends StatelessWidget {
@@ -131,9 +130,9 @@ class ProductCard extends StatelessWidget {
                     Expanded(
                       flex: 100,
                       child: ElevatedButton(
-                        onPressed: () {
-
-                          //ShowAuthFunction.body(context);
+                        onPressed: () async {
+                          //todo auth
+                          AutoRouter.of(context).push(ProductRoute(productId: info.id));
 
                         },
                         style: ElevatedButton.styleFrom(
