@@ -14,7 +14,10 @@ import 'package:project_z/shared/app_bar/app_bar_builder.dart' as shared;
 const loadingWidget = SizedBox(
   width: 320,
   height: 320,
-  child: CircularProgressIndicator(),
+  child: Center(child: SizedBox(
+    height: 100,
+      width: 100,
+      child: CircularProgressIndicator())),
 );
 
 @RoutePage()
@@ -44,29 +47,32 @@ class _ProjectZShellScreenState extends State<ProjectZShellScreen> {
                 ),
                 state.when(
                     hide: () => const SizedBox(),
-                    addData: (fullUsername, username) =>  AuthShell(
+                    inputData: (fullUsername, username) =>  AuthShell(
                       child: AuthAddDataWidget(
-                        initFullName: "",
-                        initPhone: "",
-                        onPhoneEntered: (phone){
-
-                        },
-                        onFullNameEntered: (fullName){
-
-                        },
-                        onClickButton: (){
-                          BlocProvider.of<AuthBloc>(context).add(const AuthEvent.verifyCode('', ''));
+                        initFullName: fullUsername ?? '',
+                        initPhone: username ?? '',
+                        onClickButtonWhenEnteredData: (fullName, phone){
+                          BlocProvider.of<AuthBloc>(context).add(AuthEvent.sendCode(phone));
                         },
                       ),
                     ),
+
                     sendingCode: () => const AuthShell(child: loadingWidget),
                     verifyingCode: () => const AuthShell(child: loadingWidget),
-                    wasSendCode: (response) => const AuthShell(child: AuthVerifyCodeWidget()),
+
+                    inputCode: (username, code) => AuthShell(child: AuthVerifyCodeWidget(
+                      onClickSendWhenEnteredCode: (code){
+                        BlocProvider.of<AuthBloc>(context).add(AuthEvent.verifyCode(
+                          username, code
+                        ));
+                      },
+                    )),
+
                     successVerifyCode: (response) => const SizedBox(),
                     unsuccessVerifyCode: () => const SizedBox(),
                     loaded: (user) => const SizedBox(),
                     notLoaded: () => const SizedBox(),
-                    loading: () => const AuthShell(child: loadingWidget),
+                    loading: () => const SizedBox(),
                     error: (message) =>const SizedBox(),
                 ),
               ],

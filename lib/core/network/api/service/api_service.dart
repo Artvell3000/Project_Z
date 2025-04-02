@@ -1,6 +1,6 @@
-import 'package:dio/dio.dart';
-import 'package:project_z/core/domain/entity/custom_user/custom_user.dart';
+import 'package:dio/dio.dart' hide Headers;
 import 'package:project_z/core/domain/entity/entity.dart';
+import 'package:project_z/core/network/api/request_models/request_models.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'api_service.g.dart';
@@ -18,11 +18,17 @@ abstract class ApiService {
   @GET('/products/')
   Future<ProductList> getProducts();
 
-  // @POST('auth/send-code/')
-  // Future<SendCodeResponse> sendVerificationCode(@Body() SendCodeRequest request,);
-  //
-  // @POST('/auth/verify-code/')
-  // Future<VerifyCodeResponse> verifyCode(@Body() VerifyCodeRequest request,);
+  @POST('auth/send-code/')
+  @Headers({
+    'Content-Type': 'application/json'
+  })
+  Future<SendCodeResponse> sendVerificationCode(@Body() SendCodeRequest request,);
+
+  @Headers({
+    'Content-Type': 'application/json'
+  })
+  @POST('/auth/verify-code/')
+  Future<VerifyCodeResponse> verifyCode(@Body() VerifyCodeRequest request,);
 
   @GET('/products/')
   Future<ProductList> searchProducts({
@@ -40,7 +46,7 @@ abstract class ApiService {
   Future<Product> getProductById(@Path('id') int productId,);
 
   @GET('auth/users/me/')
-  Future<UserList> getCurrentUser(
-      @Header('token') String token,
+  Future<CustomUser> getCurrentUser(
+      @Header('Authorization') String token,
       );
 }

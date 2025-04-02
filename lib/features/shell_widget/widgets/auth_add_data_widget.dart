@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 import 'package:project_z/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:project_z/shared/consts/text_field_style.dart';
 import 'package:project_z/shared/consts/text_style_for_elevation_button.dart';
@@ -11,14 +12,10 @@ class AuthAddDataWidget extends StatefulWidget {
       {super.key,
       required this.initPhone,
       required this.initFullName,
-      required this.onPhoneEntered,
-      required this.onFullNameEntered,
-      required this.onClickButton});
+      required this.onClickButtonWhenEnteredData});
 
   final String initPhone, initFullName;
-  final void Function(String phone) onPhoneEntered;
-  final void Function(String fullName) onFullNameEntered;
-  final void Function() onClickButton;
+  final void Function(String name, String phone) onClickButtonWhenEnteredData;
 
   @override
   State<AuthAddDataWidget> createState() => _AuthAddDataWidgetState();
@@ -27,6 +24,13 @@ class AuthAddDataWidget extends StatefulWidget {
 class _AuthAddDataWidgetState extends State<AuthAddDataWidget> {
   final _controllerFullName = TextEditingController();
   final _controllerPhone = TextEditingController();
+
+  bool isUzbekPhoneNumber(String phone) {
+    final RegExp regExp = RegExp(
+        r'^\+998\s\(\d{2}\)\s\d{3}\s\d{2}\s\d{2}$'
+    );
+    return regExp.hasMatch(phone);
+  }
 
   @override
   void dispose() {
@@ -73,11 +77,9 @@ class _AuthAddDataWidgetState extends State<AuthAddDataWidget> {
                 children: [
                   const Text('Ism va familiya', style: textStyleForLabel),
                   TextField(
-                    onEditingComplete: () {
-                      if (_controllerFullName.text.length > 5) {
-                        widget.onFullNameEntered(_controllerFullName.text);
-                      }
-                    },
+                    // onEditingComplete: () {
+                    //   isFullNameEntered = _controllerFullName.text.length > 5;
+                    // },
                     controller: _controllerFullName..text = widget.initFullName,
                     style: textStyleForTextFieldStyle,
                     decoration: textFieldDecoration,
@@ -89,11 +91,9 @@ class _AuthAddDataWidgetState extends State<AuthAddDataWidget> {
                   TextField(
                     keyboardType: TextInputType.phone,
                     inputFormatters: [phoneMask],
-                    onEditingComplete: () {
-                      if (_controllerPhone.text.length == 19) {
-                        widget.onPhoneEntered(_controllerPhone.text);
-                      }
-                    },
+                    // onEditingComplete: () {
+                    //   isPhoneEntered = (_controllerPhone.text.length == 19);
+                    // },
                     controller: _controllerPhone..text = widget.initPhone,
                     style: textStyleForTextFieldStyle,
                     decoration: textFieldDecoration,
@@ -101,7 +101,17 @@ class _AuthAddDataWidgetState extends State<AuthAddDataWidget> {
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: ElevatedButton(
-                        onPressed: widget.onClickButton,
+                        onPressed: (){
+                          Logger().i('[_controllerFullName.text] ${_controllerFullName.text}');
+                          Logger().i('[_controllerPhone.text] ${_controllerPhone.text}');
+
+                          if(_controllerFullName.text.length > 5 && isUzbekPhoneNumber(_controllerPhone.text)) {
+                            widget.onClickButtonWhenEnteredData(
+                            _controllerFullName.text,
+                            _controllerPhone.text,
+                          );
+                          }
+                        },
                         child: const Center(
                             child: Text('Ro\'yxatdan o\'tish',
                                 style: textStyleForElevationButton))),

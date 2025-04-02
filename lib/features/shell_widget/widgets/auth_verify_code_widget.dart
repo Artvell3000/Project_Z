@@ -7,13 +7,17 @@ import 'package:project_z/shared/consts/text_style_for_elevation_button.dart';
 import 'package:project_z/shared/consts/text_style_title.dart';
 
 class AuthVerifyCodeWidget extends StatefulWidget {
-  const AuthVerifyCodeWidget({super.key});
+  const AuthVerifyCodeWidget({super.key, required this.onClickSendWhenEnteredCode});
+  final void Function(String code) onClickSendWhenEnteredCode;
 
   @override
   State<AuthVerifyCodeWidget> createState() => _AuthVerifyCodeWidgetState();
 }
 
 class _AuthVerifyCodeWidgetState extends State<AuthVerifyCodeWidget> {
+  String inputCode = '';
+
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -68,7 +72,7 @@ class _AuthVerifyCodeWidgetState extends State<AuthVerifyCodeWidget> {
             padding: const EdgeInsets.only(top: 10),
             child: PinCodeInputRow(
               toVerify: (code) {
-
+                inputCode = code;
               },
             ),
           ),
@@ -116,7 +120,9 @@ class _AuthVerifyCodeWidgetState extends State<AuthVerifyCodeWidget> {
                 padding:
                 EdgeInsets.zero,
               ),
-              onPressed: () {},
+              onPressed: () {
+                if(inputCode.length == 6)widget.onClickSendWhenEnteredCode(inputCode);
+              },
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 12),
