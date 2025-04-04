@@ -14,8 +14,9 @@ part 'auth_bloc.freezed.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final ApiService api = ApiService(Dio());
 
-  late String token;
-  late String refreshToken;
+  String? _token;
+  String? _refreshToken;
+  String? _username;
   CustomUser? _user;
   CustomUser? get user{
     return _user;
@@ -46,10 +47,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           try{
             final VerifyCodeResponse response;
             response = await api.verifyCode(VerifyCodeRequest(username: d.username, code: d.code));
+            _token = response.accessToken;
+            _refreshToken = response.accessToken;
             final user = (await api.getCurrentUser('Bearer ${response.accessToken}'));
+
             Logger().d('[response] $response');
             Logger().d('[user] $user');
-            //emit(const AuthState.hide());
+
+            emit(const AuthState.hide());
           } catch(e){
             emit(AuthState.error(error: e.toString()));
           }
@@ -62,5 +67,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         },
       );
     });
+  }
+
+
+  void _hideAuth(){
+
   }
 }

@@ -2,11 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_z/core/routing/router.dart';
-import 'package:project_z/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:project_z/features/shell_widget/under_app_bar_widget.dart';
-import 'package:project_z/features/shell_widget/widgets/auth_add_data_widget.dart';
-import 'package:project_z/features/shell_widget/widgets/auth_shell.dart';
-import 'package:project_z/features/shell_widget/widgets/auth_verify_code_widget.dart';
+import 'package:project_z/features/shell_widget/presentation/bloc/auth/auth_bloc.dart';
+import 'package:project_z/features/shell_widget/presentation/widgets/widgets.dart';
 import 'package:project_z/flutter_app_icons.dart';
 import 'package:project_z/shared/app_bar/app_bar_builder.dart' as shared;
 

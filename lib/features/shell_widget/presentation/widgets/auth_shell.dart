@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project_z/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:project_z/features/shell_widget/presentation/bloc/auth/auth_bloc.dart';
 
 class AuthShell extends StatelessWidget {
   const AuthShell({super.key, required this.child});

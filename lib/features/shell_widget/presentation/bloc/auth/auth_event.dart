@@ -12,6 +12,6 @@ class AuthEvent with _$AuthEvent {
   const factory AuthEvent.load() = _LoadedAuthEvent;
 
   const factory AuthEvent.error(
-    String error,
-  ) = _ErrorAuthEvent;
+      String error,
+      ) = _ErrorAuthEvent;
 }
