@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:project_z/core/domain/repositories/token_repository.dart';
 import 'package:project_z/core/network/api/service/api_service.dart';
+import 'package:project_z/data/repositories/tokens_from_json_repository.dart';
 import 'package:project_z/features/product/presentation/bloc/product_screen_bloc.dart';
 import 'package:project_z/features/search/presentation/bloc/search_filter.dart';
 import 'package:project_z/features/search/presentation/bloc/search_screen_bloc.dart';
@@ -24,6 +26,7 @@ void configureDependencies() {
   getIt.registerFactoryParam<ProductScreenBloc, int, void>(
         (id,_) => ProductScreenBloc(id, getIt<ApiService>()),
   );
+  //getIt.registerSingleton<ITokenRepository>(TokensFromJsonRepository());
 }
 
 @module
@@ -33,4 +36,7 @@ abstract class AppModule {
 
   @singleton
   ApiService get apiService => ApiService(dio);
+
+  @singleton
+  ITokenRepository get iTokenRepository => TokensFromJsonRepository();
 }

@@ -1,38 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project_z/data/data_entity/custom_user_json.dart';
+import 'package:project_z/core/domain/entity/custom_user/custom_user.dart';
 import 'package:project_z/features/profile/presentation/bloc/profile_screen_bloc.dart';
+import 'package:project_z/shared/functions/checker_phone.dart';
 
 class ProfilePhoneTextField extends StatelessWidget {
   ProfilePhoneTextField({
     super.key,
     required BuildContext context,
-    required this.user
+    required this.phone, required this.onPhoneEntered
   }){
-    _controllerFirstNum.text = user.username?.substring(0,5) ?? '+998';
-    _controllerLastNum.text = user.username?.substring(5,19) ?? '';
+    _controllerFirstNum.text = (phone == '')? '+998' : phone.substring(0,5);
+    _controllerLastNum.text = (phone == '')? '' : phone.substring(5,19);
     _focusNodeFirst.addListener((){
-      BlocProvider.of<ProfileScreenBloc>(context).add(
-        ProfileScreenEvent.refresh(user.copyWith(
-          username: _controllerFirstNum.text
-        ))
-      );
+      final result = _controllerFirstNum.text + _controllerLastNum.text;
+      if(CheckerPhone.isUzPhoneNumber(result)){
+        onPhoneEntered(result);
+      }
     });
 
     _focusNodeLast.addListener((){
-      BlocProvider.of<ProfileScreenBloc>(context).add(
-          ProfileScreenEvent.refresh(user.copyWith(
-              username: _controllerLastNum.text
-          ))
-      );
+      final result = _controllerFirstNum.text + _controllerLastNum.text;
+      if(CheckerPhone.isUzPhoneNumber(result)){
+        onPhoneEntered(result);
+      }
     });
   }
 
+  final void Function(String phone) onPhoneEntered;
   final TextEditingController _controllerLastNum = TextEditingController();
   final TextEditingController _controllerFirstNum = TextEditingController();
   final FocusNode _focusNodeFirst = FocusNode();
   final FocusNode _focusNodeLast = FocusNode();
-  final CustomUserJson user;
+  final String phone;
 
 
   @override
@@ -89,8 +89,6 @@ class ProfilePhoneTextField extends StatelessWidget {
                   ),
                 ),
               ),
-
-
             ],
           ),
         ),

@@ -57,20 +57,24 @@ class _ProjectZShellScreenState extends State<ProjectZShellScreen> {
                     sendingCode: () => const AuthShell(child: loadingWidget),
                     verifyingCode: () => const AuthShell(child: loadingWidget),
 
-                    inputCode: (username, code) => AuthShell(child: AuthVerifyCodeWidget(
+                    inputCode: (username) => AuthShell(child: AuthVerifyCodeWidget(
                       onClickSendWhenEnteredCode: (code){
                         BlocProvider.of<AuthBloc>(context).add(AuthEvent.verifyCode(
                           username, code
                         ));
                       },
                     )),
-
-                    successVerifyCode: (response) => const SizedBox(),
-                    unsuccessVerifyCode: () => const SizedBox(),
+                    unsuccessVerifyCode: (username) => AuthShell(child: AuthVerifyCodeWidget(
+                      onClickSendWhenEnteredCode: (code){
+                        BlocProvider.of<AuthBloc>(context).add(AuthEvent.verifyCode(
+                            username, code
+                        ));
+                      },
+                    )),
                     loaded: (user) => const SizedBox(),
                     notLoaded: () => const SizedBox(),
                     loading: () => const SizedBox(),
-                    error: (message) =>const SizedBox(),
+                    error: (message) =>AuthShell(child: Center(child: Text(message))),
                 ),
               ],
             );

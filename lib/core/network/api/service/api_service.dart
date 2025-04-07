@@ -19,16 +19,16 @@ abstract class ApiService {
   Future<ProductList> getProducts();
 
   @POST('auth/send-code/')
-  @Headers({
-    'Content-Type': 'application/json'
-  })
-  Future<SendCodeResponse> sendVerificationCode(@Body() SendCodeRequest request,);
+  @Headers({'Content-Type': 'application/json'})
+  Future<SendCodeResponse> sendVerificationCode(
+    @Body() SendCodeRequest request,
+  );
 
-  @Headers({
-    'Content-Type': 'application/json'
-  })
+  @Headers({'Content-Type': 'application/json'})
   @POST('/auth/verify-code/')
-  Future<VerifyCodeResponse> verifyCode(@Body() VerifyCodeRequest request,);
+  Future<VerifyCodeResponse> verifyCode(
+    @Body() VerifyCodeRequest request,
+  );
 
   @GET('/products/')
   Future<ProductList> searchProducts({
@@ -43,10 +43,21 @@ abstract class ApiService {
   });
 
   @GET('products/{id}/')
-  Future<Product> getProductById(@Path('id') int productId,);
+  Future<Product> getProductById(
+    @Path('id') int productId,
+  );
 
   @GET('auth/users/me/')
   Future<CustomUser> getCurrentUser(
-      @Header('Authorization') String token,
-      );
+    @Header('Authorization') String token,
+  );
+
+  @PUT('auth/users/me/')
+  @Headers({
+    'Content-Type': 'application/json',
+  })
+  Future<CustomUser> updateCurrentUser(
+    @Header('Authorization') String token,
+    @Body() CustomUser user,
+  );
 }

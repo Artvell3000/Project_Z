@@ -2,7 +2,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_z/core/di/di.dart';
-import 'package:project_z/data/data_entity/custom_user_json.dart';
+import 'package:project_z/core/domain/entity/custom_user/custom_user.dart';
 import 'package:project_z/features/product/presentation/widgets/widgets.dart';
 import 'package:project_z/features/profile/presentation/bloc/profile_screen_bloc.dart';
 import 'package:project_z/features/profile/presentation/widgets/widgets.dart';
@@ -13,6 +13,11 @@ import 'package:project_z/shared/scaffolds/z_scaffold.dart';
 @RoutePage()
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
+
+  final loadingWidget = const SizedBox(
+      width: double.infinity,
+      height: 200,
+      child: Center(child: CircularProgressIndicator()));
 
   @override
   Widget build(BuildContext context) {
@@ -65,15 +70,16 @@ class ProfileScreen extends StatelessWidget {
                         builder:
                             (BuildContext context, ProfileScreenState state) {
                           return state.when(
-                              loading: () => const Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
+                              loading: () => loadingWidget,
                               loaded: (profile) {
                                 return Padding(
                                   padding: const EdgeInsets.only(top: 13),
                                   child: ProfileSurnameTextField(
                                     context: context,
-                                    profile: profile,
+                                    name: profile?.fullName ?? '',
+                                    onFullNameEntered: (name){
+                                      //todo------------------------------------------------------------------------
+                                    },
                                   ),
                                 );
                               },
@@ -94,7 +100,10 @@ class ProfileScreen extends StatelessWidget {
                                   padding: const EdgeInsets.only(top: 10),
                                   child: ProfilePhoneTextField(
                                     context: context,
-                                    user: profile,
+                                    phone: profile?.username ?? '',
+                                    onPhoneEntered: (phone){
+                                      //todo ------------------------------------------------------------------------------
+                                    },
                                   ),
                                 );
                               },
@@ -111,12 +120,17 @@ class ProfileScreen extends StatelessWidget {
             BlocBuilder<ProfileScreenBloc, ProfileScreenState>(
               builder: (context, state) {
                 return state.when(
-                    loading: () => const Center(
-                          child: CircularProgressIndicator(),
-                        ),
+                    loading: () => loadingWidget,
                     loaded: (user) {
                       return AddGeoContainer(
-                        user: user,
+                        town: user?.town ?? '',
+                        district: user?.district ?? '',
+                        onDistinctEntered: (distinct){
+                          //todo---------------------------------------------------------------------------
+                        },
+                        onTownEntered: (town){
+
+                        },
                       );
                     },
                     error: (message) => Center(
@@ -130,8 +144,11 @@ class ProfileScreen extends StatelessWidget {
 }
 
 class AddGeoContainer extends StatefulWidget {
-  const AddGeoContainer({super.key, required this.user});
-  final CustomUserJson user;
+  const AddGeoContainer({super.key, required this.town, required this.district, required this.onTownEntered, required this.onDistinctEntered, });
+  final String town;
+  final String district;
+  final void Function(String town) onTownEntered;
+  final void Function(String distinct) onDistinctEntered;
 
   @override
   State<AddGeoContainer> createState() => _AddGeoContainerState();
@@ -143,7 +160,7 @@ class _AddGeoContainerState extends State<AddGeoContainer> {
   @override
   Widget build(BuildContext context) {
     bool showTextFields =
-        widget.user.town != null || widget.user.district != null || hasClickedAddGeo;
+        widget.town != '' || widget.district != '' || hasClickedAddGeo;
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Container(
@@ -174,6 +191,7 @@ class _AddGeoContainerState extends State<AddGeoContainer> {
                         child: ElevatedButton(
                             onPressed: () {
                               setState(() {
+                                //todo аунтификация -----------------------------------------------------------
                                 hasClickedAddGeo = true;
                               });
                             },
@@ -188,7 +206,8 @@ class _AddGeoContainerState extends State<AddGeoContainer> {
                     : Column(
                         children: [
                           ProfileTextField(
-                            profile: widget.user,
+                            town: widget.town,
+                            onEntered: widget.onTownEntered,
                             label: 'Viloyat / Shahar',
                             isDistrictSelector: true,
                             districts: const [
@@ -212,7 +231,8 @@ class _AddGeoContainerState extends State<AddGeoContainer> {
                           Padding(
                             padding: const EdgeInsets.only(top: 10),
                             child: ProfileTextField(
-                              profile: widget.user,
+                              district: widget.district,
+                              onEntered: widget.onDistinctEntered,
                               label: 'Tuman',
                               isDistrictSelector: true,
                               districts: const [

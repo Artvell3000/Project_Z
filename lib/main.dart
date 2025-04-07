@@ -16,7 +16,7 @@ void main() {
   configureDependencies();
 
   //MOCK
-  configureTestDependencies();
+  //configureTestDependencies();
   //MOCK
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +26,7 @@ void main() {
   ]).then((_) {
     runApp(
         BlocProvider(
-          create: (context) => AuthBloc(),
+          create: (context) => getIt<AuthBloc>(),
           child: MyApp(),
         )
     );

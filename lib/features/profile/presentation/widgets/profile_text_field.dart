@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project_z/data/data_entity/custom_user_json.dart';
 import 'package:project_z/features/profile/presentation/bloc/profile_screen_bloc.dart';
 
 class ProfileTextField extends StatefulWidget {
-  ProfileTextField({
+  const ProfileTextField({
     super.key,
     required this.label,
     required this.context,
     this.isDistrictSelector = false,
-    this.districts,
-    required this.profile,
-  });
+    this.districts, this.district, this.town,
+    required this.onEntered,
 
+  });
   final BuildContext context;
   final String label;
-  final CustomUserJson profile;
+  final String? district;
+  final String? town;
 
   final bool isDistrictSelector;
   final List<String>? districts;
+
+  final void Function(String entered) onEntered;
 
   @override
   State<ProfileTextField> createState() => _ProfileTextFieldState();
@@ -35,16 +37,13 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
     super.initState();
 
     controller.text = (widget.label == 'Tuman')
-        ? (widget.profile.district ?? '')
-        : (widget.profile.town ?? '');
+        ? (widget.district ?? '')
+        : (widget.town ?? '');
 
     _focusNode.addListener(() {
       if (!_focusNode.hasFocus) {
         setState(() => _showDropdown = false);
-        BlocProvider.of<ProfileScreenBloc>(widget.context).add(
-            ProfileScreenEvent.refresh((widget.label == 'Tuman')
-                ? widget.profile.copyWith(district: controller.text)
-                : widget.profile.copyWith(town: controller.text)));
+        widget.onEntered(controller.text);
       }
     });
     if (widget.districts != null) {

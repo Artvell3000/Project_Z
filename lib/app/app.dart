@@ -15,6 +15,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     appRouter = AppRouter();
     return MaterialApp.router(
+      //todo перенести тему в отдельный файл
       theme: ThemeData(
           fontFamily: 'Neometric',
           elevatedButtonTheme: ElevatedButtonThemeData(

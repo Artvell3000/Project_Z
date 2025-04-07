@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project_z/data/data_entity/custom_user_json.dart';
-import 'package:project_z/features/profile/presentation/bloc/profile_screen_bloc.dart';
 
 class ProfileSurnameTextField extends StatelessWidget {
   ProfileSurnameTextField({
     super.key,
     required BuildContext context,
-    required this.profile
+    required this.name, required this.onFullNameEntered
   }){
-    _controller.text = profile.fullName ?? '';
+    _controller.text = name;
     _focusNode.addListener((){
       if(!_focusNode.hasFocus){
-        BlocProvider.of<ProfileScreenBloc>(context).add(
-          ProfileScreenEvent.refresh(
-            profile.copyWith(fullName: _controller.text)
-          )
-        );
+        if(_controller.text.length > 5){
+          onFullNameEntered(_controller.text);
+        }
       }
     });
   }
-  final CustomUserJson profile;
+  final String name;
+  final void Function(String name) onFullNameEntered;
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
 
