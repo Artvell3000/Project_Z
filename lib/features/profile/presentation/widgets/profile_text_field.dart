@@ -8,10 +8,12 @@ class ProfileTextField extends StatefulWidget {
     required this.label,
     required this.context,
     this.isDistrictSelector = false,
-    this.districts, this.district, this.town,
+    this.districts,
+    this.district,
+    this.town,
     required this.onEntered,
-
   });
+
   final BuildContext context;
   final String label;
   final String? district;
@@ -36,9 +38,7 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
   void initState() {
     super.initState();
 
-    controller.text = (widget.label == 'Tuman')
-        ? (widget.district ?? '')
-        : (widget.town ?? '');
+    controller.text = (widget.label == 'Tuman') ? (widget.district ?? '') : (widget.town ?? '');
 
     _focusNode.addListener(() {
       if (!_focusNode.hasFocus) {
@@ -62,11 +62,8 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
     if (query.isEmpty) {
       _filteredDistricts.addAll(widget.districts ?? []);
     } else {
-      _filteredDistricts.addAll(widget.districts
-              ?.where((district) =>
-                  district.toLowerCase().contains(query.toLowerCase()))
-              .toList() ??
-          []);
+      _filteredDistricts.addAll(
+          widget.districts?.where((district) => district.toLowerCase().contains(query.toLowerCase())).toList() ?? []);
     }
     setState(() {});
   }
@@ -116,9 +113,7 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
                   suffixIcon: widget.isDistrictSelector
                       ? IconButton(
                           icon: Icon(
-                            _showDropdown
-                                ? Icons.arrow_drop_up
-                                : Icons.arrow_drop_down,
+                            _showDropdown ? Icons.arrow_drop_up : Icons.arrow_drop_down,
                             color: Colors.grey[600],
                           ),
                           onPressed: () {
@@ -146,9 +141,7 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
                     : null,
               ),
             ),
-            if (widget.isDistrictSelector &&
-                _showDropdown &&
-                _filteredDistricts.isNotEmpty)
+            if (widget.isDistrictSelector && _showDropdown && _filteredDistricts.isNotEmpty)
               Positioned(
                 top: 40,
                 left: 0,
@@ -170,8 +163,7 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
                       shrinkWrap: true,
                       itemCount: _filteredDistricts.length,
                       itemBuilder: (context, index) {
-                        final isSelected =
-                            controller.text == _filteredDistricts[index];
+                        final isSelected = controller.text == _filteredDistricts[index];
                         return InkWell(
                           onTap: () {
                             controller.text = _filteredDistricts[index];

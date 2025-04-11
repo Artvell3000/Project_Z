@@ -9,9 +9,9 @@ class SpecialOffersWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProductsWithStatusPreview(
-        onTapMoreProducts: onTapMoreSpecialOffers,
-        title: 'Mahsus taklif.',
-        status: 'mahsus_taklif',
+      onTapMoreProducts: onTapMoreSpecialOffers,
+      title: 'Mahsus taklif.',
+      status: 'mahsus_taklif',
     );
   }
 }

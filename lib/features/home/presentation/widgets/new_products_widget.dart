@@ -9,11 +9,9 @@ class NewProductsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProductsWithStatusPreview(
-        onTapMoreProducts: onTapMoreNewProducts,
-        title: 'Yangi mahsulotlar.',
-        status: 'yangilik',
+      onTapMoreProducts: onTapMoreNewProducts,
+      title: 'Yangi mahsulotlar.',
+      status: 'yangilik',
     );
   }
 }
-
-

@@ -8,6 +8,7 @@ import 'package:project_z/shared/consts/text_style_title.dart';
 
 class AuthVerifyCodeWidget extends StatefulWidget {
   const AuthVerifyCodeWidget({super.key, required this.onClickSendWhenEnteredCode});
+
   final void Function(String code) onClickSendWhenEnteredCode;
 
   @override
@@ -16,7 +17,6 @@ class AuthVerifyCodeWidget extends StatefulWidget {
 
 class _AuthVerifyCodeWidgetState extends State<AuthVerifyCodeWidget> {
   String inputCode = '';
-
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +54,7 @@ class _AuthVerifyCodeWidgetState extends State<AuthVerifyCodeWidget> {
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.close_rounded,
-                    size: 30, color: Color.fromRGBO(16, 53, 91, 1)),
+                icon: const Icon(Icons.close_rounded, size: 30, color: Color.fromRGBO(16, 53, 91, 1)),
                 onPressed: () => BlocProvider.of<AuthBloc>(context).add(const AuthEvent.hide()),
               ),
             ],
@@ -82,8 +81,7 @@ class _AuthVerifyCodeWidgetState extends State<AuthVerifyCodeWidget> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 side: const BorderSide(
-                  color:
-                  Color.fromRGBO(197, 197, 197, 1),
+                  color: Color.fromRGBO(197, 197, 197, 1),
                   width: 1,
                 ),
                 shape: RoundedRectangleBorder(
@@ -114,14 +112,12 @@ class _AuthVerifyCodeWidgetState extends State<AuthVerifyCodeWidget> {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
-                  borderRadius:
-                  BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                padding:
-                EdgeInsets.zero,
+                padding: EdgeInsets.zero,
               ),
               onPressed: () {
-                if(inputCode.length == 6)widget.onClickSendWhenEnteredCode(inputCode);
+                if (inputCode.length == 6) widget.onClickSendWhenEnteredCode(inputCode);
               },
               child: Container(
                 width: double.infinity,

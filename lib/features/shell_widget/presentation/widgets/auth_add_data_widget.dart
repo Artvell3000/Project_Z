@@ -9,10 +9,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class AuthAddDataWidget extends StatefulWidget {
   const AuthAddDataWidget(
-      {super.key,
-      required this.initPhone,
-      required this.initFullName,
-      required this.onClickButtonWhenEnteredData});
+      {super.key, required this.initPhone, required this.initFullName, required this.onClickButtonWhenEnteredData});
 
   final String initPhone, initFullName;
   final void Function(String name, String phone) onClickButtonWhenEnteredData;
@@ -26,9 +23,7 @@ class _AuthAddDataWidgetState extends State<AuthAddDataWidget> {
   final _controllerPhone = TextEditingController();
 
   bool isUzbekPhoneNumber(String phone) {
-    final RegExp regExp = RegExp(
-        r'^\+998\s\(\d{2}\)\s\d{3}\s\d{2}\s\d{2}$'
-    );
+    final RegExp regExp = RegExp(r'^\+998\s\(\d{2}\)\s\d{3}\s\d{2}\s\d{2}$');
     return regExp.hasMatch(phone);
   }
 
@@ -49,16 +44,13 @@ class _AuthAddDataWidgetState extends State<AuthAddDataWidget> {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text("Telefon raqamingizni kiriting",
-                  style: titleTextStyle),
+              const Text("Telefon raqamingizni kiriting", style: titleTextStyle),
               Padding(
                 padding: const EdgeInsets.only(left: 30),
                 child: IconButton(
-                  icon: const Icon(Icons.close_rounded,
-                      size: 30, color: Color.fromRGBO(16, 53, 91, 1)),
+                  icon: const Icon(Icons.close_rounded, size: 30, color: Color.fromRGBO(16, 53, 91, 1)),
                   onPressed: () {
-                    BlocProvider.of<AuthBloc>(context)
-                        .add(const AuthEvent.hide());
+                    BlocProvider.of<AuthBloc>(context).add(const AuthEvent.hide());
                   },
                 ),
               ),
@@ -101,20 +93,18 @@ class _AuthAddDataWidgetState extends State<AuthAddDataWidget> {
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: ElevatedButton(
-                        onPressed: (){
+                        onPressed: () {
                           Logger().i('[_controllerFullName.text] ${_controllerFullName.text}');
                           Logger().i('[_controllerPhone.text] ${_controllerPhone.text}');
 
-                          if(_controllerFullName.text.length > 5 && isUzbekPhoneNumber(_controllerPhone.text)) {
+                          if (_controllerFullName.text.length > 5 && isUzbekPhoneNumber(_controllerPhone.text)) {
                             widget.onClickButtonWhenEnteredData(
-                            _controllerFullName.text,
-                            _controllerPhone.text,
-                          );
+                              _controllerFullName.text,
+                              _controllerPhone.text,
+                            );
                           }
                         },
-                        child: const Center(
-                            child: Text('Ro\'yxatdan o\'tish',
-                                style: textStyleForElevationButton))),
+                        child: const Center(child: Text('Ro\'yxatdan o\'tish', style: textStyleForElevationButton))),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 12),

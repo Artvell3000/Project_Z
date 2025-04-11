@@ -58,15 +58,8 @@ class ProductsWithStatusPreview extends StatelessWidget {
                           if (index >= used.length) {
                             return const SizedBox();
                           }
-                          return GestureDetector(
-                            onTap: () {
-                              AutoRouter.of(context).push(ProductRoute(
-                                productId: used[index].id,
-                              ));
-                            },
-                            child: ProductCard(
-                              info: used[index],
-                            ),
+                          return ProductCard(
+                            info: used[index],
                           );
                         },
                       ),

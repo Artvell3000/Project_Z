@@ -4,13 +4,15 @@ import 'package:project_z/features/shell_widget/presentation/bloc/auth/auth_bloc
 
 class AuthShell extends StatelessWidget {
   const AuthShell({super.key, required this.child});
+
   final Widget child;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         GestureDetector(
-          onTap: (){
+          onTap: () {
             BlocProvider.of<AuthBloc>(context).add(const AuthEvent.hide());
           },
           child: const ColoredBox(color: Color.fromRGBO(125, 125, 125, 0.5), child: SizedBox.expand()),

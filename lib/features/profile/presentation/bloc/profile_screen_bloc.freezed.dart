@@ -19,6 +19,8 @@ mixin _$ProfileScreenEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function(CustomUser? user) loadNewUser,
+    required TResult Function(String message) loadNewUserWithError,
     required TResult Function(String name) refreshFullName,
     required TResult Function(String username) refreshUsername,
     required TResult Function(String town) refreshTown,
@@ -28,6 +30,8 @@ mixin _$ProfileScreenEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
+    TResult? Function(CustomUser? user)? loadNewUser,
+    TResult? Function(String message)? loadNewUserWithError,
     TResult? Function(String name)? refreshFullName,
     TResult? Function(String username)? refreshUsername,
     TResult? Function(String town)? refreshTown,
@@ -37,6 +41,8 @@ mixin _$ProfileScreenEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function(CustomUser? user)? loadNewUser,
+    TResult Function(String message)? loadNewUserWithError,
     TResult Function(String name)? refreshFullName,
     TResult Function(String username)? refreshUsername,
     TResult Function(String town)? refreshTown,
@@ -47,6 +53,9 @@ mixin _$ProfileScreenEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_InitEvent value) init,
+    required TResult Function(_LoadNewUserEvent value) loadNewUser,
+    required TResult Function(_LoadNewUserWithErrorEvent value)
+        loadNewUserWithError,
     required TResult Function(_RefreshFullNameEvent value) refreshFullName,
     required TResult Function(_RefreshUsernameEvent value) refreshUsername,
     required TResult Function(_RefreshTownEvent value) refreshTown,
@@ -56,6 +65,8 @@ mixin _$ProfileScreenEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_InitEvent value)? init,
+    TResult? Function(_LoadNewUserEvent value)? loadNewUser,
+    TResult? Function(_LoadNewUserWithErrorEvent value)? loadNewUserWithError,
     TResult? Function(_RefreshFullNameEvent value)? refreshFullName,
     TResult? Function(_RefreshUsernameEvent value)? refreshUsername,
     TResult? Function(_RefreshTownEvent value)? refreshTown,
@@ -65,6 +76,8 @@ mixin _$ProfileScreenEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitEvent value)? init,
+    TResult Function(_LoadNewUserEvent value)? loadNewUser,
+    TResult Function(_LoadNewUserWithErrorEvent value)? loadNewUserWithError,
     TResult Function(_RefreshFullNameEvent value)? refreshFullName,
     TResult Function(_RefreshUsernameEvent value)? refreshUsername,
     TResult Function(_RefreshTownEvent value)? refreshTown,
@@ -137,6 +150,8 @@ class _$InitEventImpl implements _InitEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function(CustomUser? user) loadNewUser,
+    required TResult Function(String message) loadNewUserWithError,
     required TResult Function(String name) refreshFullName,
     required TResult Function(String username) refreshUsername,
     required TResult Function(String town) refreshTown,
@@ -149,6 +164,8 @@ class _$InitEventImpl implements _InitEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
+    TResult? Function(CustomUser? user)? loadNewUser,
+    TResult? Function(String message)? loadNewUserWithError,
     TResult? Function(String name)? refreshFullName,
     TResult? Function(String username)? refreshUsername,
     TResult? Function(String town)? refreshTown,
@@ -161,6 +178,8 @@ class _$InitEventImpl implements _InitEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function(CustomUser? user)? loadNewUser,
+    TResult Function(String message)? loadNewUserWithError,
     TResult Function(String name)? refreshFullName,
     TResult Function(String username)? refreshUsername,
     TResult Function(String town)? refreshTown,
@@ -177,6 +196,9 @@ class _$InitEventImpl implements _InitEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_InitEvent value) init,
+    required TResult Function(_LoadNewUserEvent value) loadNewUser,
+    required TResult Function(_LoadNewUserWithErrorEvent value)
+        loadNewUserWithError,
     required TResult Function(_RefreshFullNameEvent value) refreshFullName,
     required TResult Function(_RefreshUsernameEvent value) refreshUsername,
     required TResult Function(_RefreshTownEvent value) refreshTown,
@@ -189,6 +211,8 @@ class _$InitEventImpl implements _InitEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_InitEvent value)? init,
+    TResult? Function(_LoadNewUserEvent value)? loadNewUser,
+    TResult? Function(_LoadNewUserWithErrorEvent value)? loadNewUserWithError,
     TResult? Function(_RefreshFullNameEvent value)? refreshFullName,
     TResult? Function(_RefreshUsernameEvent value)? refreshUsername,
     TResult? Function(_RefreshTownEvent value)? refreshTown,
@@ -201,6 +225,8 @@ class _$InitEventImpl implements _InitEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitEvent value)? init,
+    TResult Function(_LoadNewUserEvent value)? loadNewUser,
+    TResult Function(_LoadNewUserWithErrorEvent value)? loadNewUserWithError,
     TResult Function(_RefreshFullNameEvent value)? refreshFullName,
     TResult Function(_RefreshUsernameEvent value)? refreshUsername,
     TResult Function(_RefreshTownEvent value)? refreshTown,
@@ -216,6 +242,371 @@ class _$InitEventImpl implements _InitEvent {
 
 abstract class _InitEvent implements ProfileScreenEvent {
   const factory _InitEvent() = _$InitEventImpl;
+}
+
+/// @nodoc
+abstract class _$$LoadNewUserEventImplCopyWith<$Res> {
+  factory _$$LoadNewUserEventImplCopyWith(_$LoadNewUserEventImpl value,
+          $Res Function(_$LoadNewUserEventImpl) then) =
+      __$$LoadNewUserEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({CustomUser? user});
+
+  $CustomUserCopyWith<$Res>? get user;
+}
+
+/// @nodoc
+class __$$LoadNewUserEventImplCopyWithImpl<$Res>
+    extends _$ProfileScreenEventCopyWithImpl<$Res, _$LoadNewUserEventImpl>
+    implements _$$LoadNewUserEventImplCopyWith<$Res> {
+  __$$LoadNewUserEventImplCopyWithImpl(_$LoadNewUserEventImpl _value,
+      $Res Function(_$LoadNewUserEventImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ProfileScreenEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = freezed,
+  }) {
+    return _then(_$LoadNewUserEventImpl(
+      freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as CustomUser?,
+    ));
+  }
+
+  /// Create a copy of ProfileScreenEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CustomUserCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $CustomUserCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$LoadNewUserEventImpl implements _LoadNewUserEvent {
+  const _$LoadNewUserEventImpl(this.user);
+
+  @override
+  final CustomUser? user;
+
+  @override
+  String toString() {
+    return 'ProfileScreenEvent.loadNewUser(user: $user)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LoadNewUserEventImpl &&
+            (identical(other.user, user) || other.user == user));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, user);
+
+  /// Create a copy of ProfileScreenEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadNewUserEventImplCopyWith<_$LoadNewUserEventImpl> get copyWith =>
+      __$$LoadNewUserEventImplCopyWithImpl<_$LoadNewUserEventImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function(CustomUser? user) loadNewUser,
+    required TResult Function(String message) loadNewUserWithError,
+    required TResult Function(String name) refreshFullName,
+    required TResult Function(String username) refreshUsername,
+    required TResult Function(String town) refreshTown,
+    required TResult Function(String district) refreshDistrict,
+  }) {
+    return loadNewUser(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function(CustomUser? user)? loadNewUser,
+    TResult? Function(String message)? loadNewUserWithError,
+    TResult? Function(String name)? refreshFullName,
+    TResult? Function(String username)? refreshUsername,
+    TResult? Function(String town)? refreshTown,
+    TResult? Function(String district)? refreshDistrict,
+  }) {
+    return loadNewUser?.call(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function(CustomUser? user)? loadNewUser,
+    TResult Function(String message)? loadNewUserWithError,
+    TResult Function(String name)? refreshFullName,
+    TResult Function(String username)? refreshUsername,
+    TResult Function(String town)? refreshTown,
+    TResult Function(String district)? refreshDistrict,
+    required TResult orElse(),
+  }) {
+    if (loadNewUser != null) {
+      return loadNewUser(user);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InitEvent value) init,
+    required TResult Function(_LoadNewUserEvent value) loadNewUser,
+    required TResult Function(_LoadNewUserWithErrorEvent value)
+        loadNewUserWithError,
+    required TResult Function(_RefreshFullNameEvent value) refreshFullName,
+    required TResult Function(_RefreshUsernameEvent value) refreshUsername,
+    required TResult Function(_RefreshTownEvent value) refreshTown,
+    required TResult Function(_RefreshDistrictEvent value) refreshDistrict,
+  }) {
+    return loadNewUser(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_InitEvent value)? init,
+    TResult? Function(_LoadNewUserEvent value)? loadNewUser,
+    TResult? Function(_LoadNewUserWithErrorEvent value)? loadNewUserWithError,
+    TResult? Function(_RefreshFullNameEvent value)? refreshFullName,
+    TResult? Function(_RefreshUsernameEvent value)? refreshUsername,
+    TResult? Function(_RefreshTownEvent value)? refreshTown,
+    TResult? Function(_RefreshDistrictEvent value)? refreshDistrict,
+  }) {
+    return loadNewUser?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InitEvent value)? init,
+    TResult Function(_LoadNewUserEvent value)? loadNewUser,
+    TResult Function(_LoadNewUserWithErrorEvent value)? loadNewUserWithError,
+    TResult Function(_RefreshFullNameEvent value)? refreshFullName,
+    TResult Function(_RefreshUsernameEvent value)? refreshUsername,
+    TResult Function(_RefreshTownEvent value)? refreshTown,
+    TResult Function(_RefreshDistrictEvent value)? refreshDistrict,
+    required TResult orElse(),
+  }) {
+    if (loadNewUser != null) {
+      return loadNewUser(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LoadNewUserEvent implements ProfileScreenEvent {
+  const factory _LoadNewUserEvent(final CustomUser? user) =
+      _$LoadNewUserEventImpl;
+
+  CustomUser? get user;
+
+  /// Create a copy of ProfileScreenEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LoadNewUserEventImplCopyWith<_$LoadNewUserEventImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$LoadNewUserWithErrorEventImplCopyWith<$Res> {
+  factory _$$LoadNewUserWithErrorEventImplCopyWith(
+          _$LoadNewUserWithErrorEventImpl value,
+          $Res Function(_$LoadNewUserWithErrorEventImpl) then) =
+      __$$LoadNewUserWithErrorEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$LoadNewUserWithErrorEventImplCopyWithImpl<$Res>
+    extends _$ProfileScreenEventCopyWithImpl<$Res,
+        _$LoadNewUserWithErrorEventImpl>
+    implements _$$LoadNewUserWithErrorEventImplCopyWith<$Res> {
+  __$$LoadNewUserWithErrorEventImplCopyWithImpl(
+      _$LoadNewUserWithErrorEventImpl _value,
+      $Res Function(_$LoadNewUserWithErrorEventImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ProfileScreenEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$LoadNewUserWithErrorEventImpl(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$LoadNewUserWithErrorEventImpl implements _LoadNewUserWithErrorEvent {
+  const _$LoadNewUserWithErrorEventImpl(this.message);
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'ProfileScreenEvent.loadNewUserWithError(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LoadNewUserWithErrorEventImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of ProfileScreenEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadNewUserWithErrorEventImplCopyWith<_$LoadNewUserWithErrorEventImpl>
+      get copyWith => __$$LoadNewUserWithErrorEventImplCopyWithImpl<
+          _$LoadNewUserWithErrorEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function(CustomUser? user) loadNewUser,
+    required TResult Function(String message) loadNewUserWithError,
+    required TResult Function(String name) refreshFullName,
+    required TResult Function(String username) refreshUsername,
+    required TResult Function(String town) refreshTown,
+    required TResult Function(String district) refreshDistrict,
+  }) {
+    return loadNewUserWithError(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function(CustomUser? user)? loadNewUser,
+    TResult? Function(String message)? loadNewUserWithError,
+    TResult? Function(String name)? refreshFullName,
+    TResult? Function(String username)? refreshUsername,
+    TResult? Function(String town)? refreshTown,
+    TResult? Function(String district)? refreshDistrict,
+  }) {
+    return loadNewUserWithError?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function(CustomUser? user)? loadNewUser,
+    TResult Function(String message)? loadNewUserWithError,
+    TResult Function(String name)? refreshFullName,
+    TResult Function(String username)? refreshUsername,
+    TResult Function(String town)? refreshTown,
+    TResult Function(String district)? refreshDistrict,
+    required TResult orElse(),
+  }) {
+    if (loadNewUserWithError != null) {
+      return loadNewUserWithError(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InitEvent value) init,
+    required TResult Function(_LoadNewUserEvent value) loadNewUser,
+    required TResult Function(_LoadNewUserWithErrorEvent value)
+        loadNewUserWithError,
+    required TResult Function(_RefreshFullNameEvent value) refreshFullName,
+    required TResult Function(_RefreshUsernameEvent value) refreshUsername,
+    required TResult Function(_RefreshTownEvent value) refreshTown,
+    required TResult Function(_RefreshDistrictEvent value) refreshDistrict,
+  }) {
+    return loadNewUserWithError(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_InitEvent value)? init,
+    TResult? Function(_LoadNewUserEvent value)? loadNewUser,
+    TResult? Function(_LoadNewUserWithErrorEvent value)? loadNewUserWithError,
+    TResult? Function(_RefreshFullNameEvent value)? refreshFullName,
+    TResult? Function(_RefreshUsernameEvent value)? refreshUsername,
+    TResult? Function(_RefreshTownEvent value)? refreshTown,
+    TResult? Function(_RefreshDistrictEvent value)? refreshDistrict,
+  }) {
+    return loadNewUserWithError?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InitEvent value)? init,
+    TResult Function(_LoadNewUserEvent value)? loadNewUser,
+    TResult Function(_LoadNewUserWithErrorEvent value)? loadNewUserWithError,
+    TResult Function(_RefreshFullNameEvent value)? refreshFullName,
+    TResult Function(_RefreshUsernameEvent value)? refreshUsername,
+    TResult Function(_RefreshTownEvent value)? refreshTown,
+    TResult Function(_RefreshDistrictEvent value)? refreshDistrict,
+    required TResult orElse(),
+  }) {
+    if (loadNewUserWithError != null) {
+      return loadNewUserWithError(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LoadNewUserWithErrorEvent implements ProfileScreenEvent {
+  const factory _LoadNewUserWithErrorEvent(final String message) =
+      _$LoadNewUserWithErrorEventImpl;
+
+  String get message;
+
+  /// Create a copy of ProfileScreenEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LoadNewUserWithErrorEventImplCopyWith<_$LoadNewUserWithErrorEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -289,6 +680,8 @@ class _$RefreshFullNameEventImpl implements _RefreshFullNameEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function(CustomUser? user) loadNewUser,
+    required TResult Function(String message) loadNewUserWithError,
     required TResult Function(String name) refreshFullName,
     required TResult Function(String username) refreshUsername,
     required TResult Function(String town) refreshTown,
@@ -301,6 +694,8 @@ class _$RefreshFullNameEventImpl implements _RefreshFullNameEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
+    TResult? Function(CustomUser? user)? loadNewUser,
+    TResult? Function(String message)? loadNewUserWithError,
     TResult? Function(String name)? refreshFullName,
     TResult? Function(String username)? refreshUsername,
     TResult? Function(String town)? refreshTown,
@@ -313,6 +708,8 @@ class _$RefreshFullNameEventImpl implements _RefreshFullNameEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function(CustomUser? user)? loadNewUser,
+    TResult Function(String message)? loadNewUserWithError,
     TResult Function(String name)? refreshFullName,
     TResult Function(String username)? refreshUsername,
     TResult Function(String town)? refreshTown,
@@ -329,6 +726,9 @@ class _$RefreshFullNameEventImpl implements _RefreshFullNameEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_InitEvent value) init,
+    required TResult Function(_LoadNewUserEvent value) loadNewUser,
+    required TResult Function(_LoadNewUserWithErrorEvent value)
+        loadNewUserWithError,
     required TResult Function(_RefreshFullNameEvent value) refreshFullName,
     required TResult Function(_RefreshUsernameEvent value) refreshUsername,
     required TResult Function(_RefreshTownEvent value) refreshTown,
@@ -341,6 +741,8 @@ class _$RefreshFullNameEventImpl implements _RefreshFullNameEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_InitEvent value)? init,
+    TResult? Function(_LoadNewUserEvent value)? loadNewUser,
+    TResult? Function(_LoadNewUserWithErrorEvent value)? loadNewUserWithError,
     TResult? Function(_RefreshFullNameEvent value)? refreshFullName,
     TResult? Function(_RefreshUsernameEvent value)? refreshUsername,
     TResult? Function(_RefreshTownEvent value)? refreshTown,
@@ -353,6 +755,8 @@ class _$RefreshFullNameEventImpl implements _RefreshFullNameEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitEvent value)? init,
+    TResult Function(_LoadNewUserEvent value)? loadNewUser,
+    TResult Function(_LoadNewUserWithErrorEvent value)? loadNewUserWithError,
     TResult Function(_RefreshFullNameEvent value)? refreshFullName,
     TResult Function(_RefreshUsernameEvent value)? refreshUsername,
     TResult Function(_RefreshTownEvent value)? refreshTown,
@@ -451,6 +855,8 @@ class _$RefreshUsernameEventImpl implements _RefreshUsernameEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function(CustomUser? user) loadNewUser,
+    required TResult Function(String message) loadNewUserWithError,
     required TResult Function(String name) refreshFullName,
     required TResult Function(String username) refreshUsername,
     required TResult Function(String town) refreshTown,
@@ -463,6 +869,8 @@ class _$RefreshUsernameEventImpl implements _RefreshUsernameEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
+    TResult? Function(CustomUser? user)? loadNewUser,
+    TResult? Function(String message)? loadNewUserWithError,
     TResult? Function(String name)? refreshFullName,
     TResult? Function(String username)? refreshUsername,
     TResult? Function(String town)? refreshTown,
@@ -475,6 +883,8 @@ class _$RefreshUsernameEventImpl implements _RefreshUsernameEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function(CustomUser? user)? loadNewUser,
+    TResult Function(String message)? loadNewUserWithError,
     TResult Function(String name)? refreshFullName,
     TResult Function(String username)? refreshUsername,
     TResult Function(String town)? refreshTown,
@@ -491,6 +901,9 @@ class _$RefreshUsernameEventImpl implements _RefreshUsernameEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_InitEvent value) init,
+    required TResult Function(_LoadNewUserEvent value) loadNewUser,
+    required TResult Function(_LoadNewUserWithErrorEvent value)
+        loadNewUserWithError,
     required TResult Function(_RefreshFullNameEvent value) refreshFullName,
     required TResult Function(_RefreshUsernameEvent value) refreshUsername,
     required TResult Function(_RefreshTownEvent value) refreshTown,
@@ -503,6 +916,8 @@ class _$RefreshUsernameEventImpl implements _RefreshUsernameEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_InitEvent value)? init,
+    TResult? Function(_LoadNewUserEvent value)? loadNewUser,
+    TResult? Function(_LoadNewUserWithErrorEvent value)? loadNewUserWithError,
     TResult? Function(_RefreshFullNameEvent value)? refreshFullName,
     TResult? Function(_RefreshUsernameEvent value)? refreshUsername,
     TResult? Function(_RefreshTownEvent value)? refreshTown,
@@ -515,6 +930,8 @@ class _$RefreshUsernameEventImpl implements _RefreshUsernameEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitEvent value)? init,
+    TResult Function(_LoadNewUserEvent value)? loadNewUser,
+    TResult Function(_LoadNewUserWithErrorEvent value)? loadNewUserWithError,
     TResult Function(_RefreshFullNameEvent value)? refreshFullName,
     TResult Function(_RefreshUsernameEvent value)? refreshUsername,
     TResult Function(_RefreshTownEvent value)? refreshTown,
@@ -611,6 +1028,8 @@ class _$RefreshTownEventImpl implements _RefreshTownEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function(CustomUser? user) loadNewUser,
+    required TResult Function(String message) loadNewUserWithError,
     required TResult Function(String name) refreshFullName,
     required TResult Function(String username) refreshUsername,
     required TResult Function(String town) refreshTown,
@@ -623,6 +1042,8 @@ class _$RefreshTownEventImpl implements _RefreshTownEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
+    TResult? Function(CustomUser? user)? loadNewUser,
+    TResult? Function(String message)? loadNewUserWithError,
     TResult? Function(String name)? refreshFullName,
     TResult? Function(String username)? refreshUsername,
     TResult? Function(String town)? refreshTown,
@@ -635,6 +1056,8 @@ class _$RefreshTownEventImpl implements _RefreshTownEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function(CustomUser? user)? loadNewUser,
+    TResult Function(String message)? loadNewUserWithError,
     TResult Function(String name)? refreshFullName,
     TResult Function(String username)? refreshUsername,
     TResult Function(String town)? refreshTown,
@@ -651,6 +1074,9 @@ class _$RefreshTownEventImpl implements _RefreshTownEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_InitEvent value) init,
+    required TResult Function(_LoadNewUserEvent value) loadNewUser,
+    required TResult Function(_LoadNewUserWithErrorEvent value)
+        loadNewUserWithError,
     required TResult Function(_RefreshFullNameEvent value) refreshFullName,
     required TResult Function(_RefreshUsernameEvent value) refreshUsername,
     required TResult Function(_RefreshTownEvent value) refreshTown,
@@ -663,6 +1089,8 @@ class _$RefreshTownEventImpl implements _RefreshTownEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_InitEvent value)? init,
+    TResult? Function(_LoadNewUserEvent value)? loadNewUser,
+    TResult? Function(_LoadNewUserWithErrorEvent value)? loadNewUserWithError,
     TResult? Function(_RefreshFullNameEvent value)? refreshFullName,
     TResult? Function(_RefreshUsernameEvent value)? refreshUsername,
     TResult? Function(_RefreshTownEvent value)? refreshTown,
@@ -675,6 +1103,8 @@ class _$RefreshTownEventImpl implements _RefreshTownEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitEvent value)? init,
+    TResult Function(_LoadNewUserEvent value)? loadNewUser,
+    TResult Function(_LoadNewUserWithErrorEvent value)? loadNewUserWithError,
     TResult Function(_RefreshFullNameEvent value)? refreshFullName,
     TResult Function(_RefreshUsernameEvent value)? refreshUsername,
     TResult Function(_RefreshTownEvent value)? refreshTown,
@@ -772,6 +1202,8 @@ class _$RefreshDistrictEventImpl implements _RefreshDistrictEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function(CustomUser? user) loadNewUser,
+    required TResult Function(String message) loadNewUserWithError,
     required TResult Function(String name) refreshFullName,
     required TResult Function(String username) refreshUsername,
     required TResult Function(String town) refreshTown,
@@ -784,6 +1216,8 @@ class _$RefreshDistrictEventImpl implements _RefreshDistrictEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
+    TResult? Function(CustomUser? user)? loadNewUser,
+    TResult? Function(String message)? loadNewUserWithError,
     TResult? Function(String name)? refreshFullName,
     TResult? Function(String username)? refreshUsername,
     TResult? Function(String town)? refreshTown,
@@ -796,6 +1230,8 @@ class _$RefreshDistrictEventImpl implements _RefreshDistrictEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function(CustomUser? user)? loadNewUser,
+    TResult Function(String message)? loadNewUserWithError,
     TResult Function(String name)? refreshFullName,
     TResult Function(String username)? refreshUsername,
     TResult Function(String town)? refreshTown,
@@ -812,6 +1248,9 @@ class _$RefreshDistrictEventImpl implements _RefreshDistrictEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_InitEvent value) init,
+    required TResult Function(_LoadNewUserEvent value) loadNewUser,
+    required TResult Function(_LoadNewUserWithErrorEvent value)
+        loadNewUserWithError,
     required TResult Function(_RefreshFullNameEvent value) refreshFullName,
     required TResult Function(_RefreshUsernameEvent value) refreshUsername,
     required TResult Function(_RefreshTownEvent value) refreshTown,
@@ -824,6 +1263,8 @@ class _$RefreshDistrictEventImpl implements _RefreshDistrictEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_InitEvent value)? init,
+    TResult? Function(_LoadNewUserEvent value)? loadNewUser,
+    TResult? Function(_LoadNewUserWithErrorEvent value)? loadNewUserWithError,
     TResult? Function(_RefreshFullNameEvent value)? refreshFullName,
     TResult? Function(_RefreshUsernameEvent value)? refreshUsername,
     TResult? Function(_RefreshTownEvent value)? refreshTown,
@@ -836,6 +1277,8 @@ class _$RefreshDistrictEventImpl implements _RefreshDistrictEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitEvent value)? init,
+    TResult Function(_LoadNewUserEvent value)? loadNewUser,
+    TResult Function(_LoadNewUserWithErrorEvent value)? loadNewUserWithError,
     TResult Function(_RefreshFullNameEvent value)? refreshFullName,
     TResult Function(_RefreshUsernameEvent value)? refreshUsername,
     TResult Function(_RefreshTownEvent value)? refreshTown,

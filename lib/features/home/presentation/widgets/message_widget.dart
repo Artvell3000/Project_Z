@@ -17,40 +17,53 @@ class MessageWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Ariza qoldiring.', style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Color.fromRGBO(16, 53, 91, 1),
-            )),
-            const SizedBox(height: 10, width: double.infinity,),
-            const Text('So\'rov qoldiring va bizning mutaxassislarimiz tez \norada siz bilan bog\'lanadi.', style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-            )),
-            const SizedBox(height: 10,),
+            const Text('Ariza qoldiring.',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Color.fromRGBO(16, 53, 91, 1),
+                )),
+            const SizedBox(
+              height: 10,
+              width: double.infinity,
+            ),
+            const Text('So\'rov qoldiring va bizning mutaxassislarimiz tez \norada siz bilan bog\'lanadi.',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                )),
+            const SizedBox(
+              height: 10,
+            ),
             MessageTextField(
               hint: "Ism Familiya*",
               controller: surnameController,
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             MessageTextField(
               hint: "Telefon raqam*",
               controller: phoneController,
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             MessageTextField(
               hint: "Uzbekiston, Toshkent*",
               controller: cityController,
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             ElevatedButton(
-                onPressed: (){}, 
+                onPressed: () {},
                 child: const Center(
-                  child: Text('Ariza qoldirish',
+                  child: Text(
+                    'Ariza qoldirish',
                     style: textStyleForElevationButton,
                   ),
-                )
-            )
+                ))
           ],
         ),
       ),
@@ -60,8 +73,11 @@ class MessageWidget extends StatelessWidget {
 
 class MessageTextField extends StatelessWidget {
   const MessageTextField({
-    super.key, required this.hint, required this.controller,
+    super.key,
+    required this.hint,
+    required this.controller,
   });
+
   final String hint;
   final TextEditingController controller;
 
@@ -85,7 +101,8 @@ class MessageTextField extends StatelessWidget {
             borderSide: BorderSide.none,
           ),
           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      ),),
+        ),
+      ),
     );
   }
 }

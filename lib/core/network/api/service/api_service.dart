@@ -9,13 +9,13 @@ part 'api_service.g.dart';
 abstract class ApiService {
   factory ApiService(Dio dio, {String? baseUrl}) = _ApiService;
 
-  @GET('/categories/')
+  @GET('categories/')
   Future<CategoryList> getCategories();
 
-  @GET('/news/')
+  @GET('news/')
   Future<NewsList> getNews();
 
-  @GET('/products/')
+  @GET('products/')
   Future<ProductList> getProducts();
 
   @POST('auth/send-code/')
@@ -25,12 +25,12 @@ abstract class ApiService {
   );
 
   @Headers({'Content-Type': 'application/json'})
-  @POST('/auth/verify-code/')
+  @POST('auth/verify-code/')
   Future<VerifyCodeResponse> verifyCode(
     @Body() VerifyCodeRequest request,
   );
 
-  @GET('/products/')
+  @GET('products/')
   Future<ProductList> searchProducts({
     @Query('name') String? name,
     @Query('subcategory') String? subcategory,
@@ -52,7 +52,7 @@ abstract class ApiService {
     @Header('Authorization') String token,
   );
 
-  @PUT('auth/users/me/')
+  @PATCH('auth/users/me/')
   @Headers({
     'Content-Type': 'application/json',
   })
@@ -60,4 +60,6 @@ abstract class ApiService {
     @Header('Authorization') String token,
     @Body() CustomUser user,
   );
+
+
 }

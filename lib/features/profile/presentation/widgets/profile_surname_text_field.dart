@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 
 class ProfileSurnameTextField extends StatelessWidget {
-  ProfileSurnameTextField({
-    super.key,
-    required BuildContext context,
-    required this.name, required this.onFullNameEntered
-  }){
+  ProfileSurnameTextField(
+      {super.key, required BuildContext context, required this.name, required this.onFullNameEntered}) {
     _controller.text = name;
-    _focusNode.addListener((){
-      if(!_focusNode.hasFocus){
-        if(_controller.text.length > 5){
+    _focusNode.addListener(() {
+      if (!_focusNode.hasFocus) {
+        if (_controller.text.length > 5) {
           onFullNameEntered(_controller.text);
         }
       }
     });
   }
+
   final String name;
   final void Function(String name) onFullNameEntered;
   final TextEditingController _controller = TextEditingController();

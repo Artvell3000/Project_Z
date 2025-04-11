@@ -1,7 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:project_z/core/domain/entity/entity.dart';
+
 part 'order.freezed.dart';
+
 part 'order.g.dart';
 
 @freezed

@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'product.freezed.dart';
+
 part 'product.g.dart';
 
 @freezed
@@ -13,8 +14,7 @@ class ProductImage with _$ProductImage {
     required int product,
   }) = _ProductImage;
 
-  factory ProductImage.fromJson(Map<String, dynamic> json) =>
-      _$ProductImageFromJson(json);
+  factory ProductImage.fromJson(Map<String, dynamic> json) => _$ProductImageFromJson(json);
 }
 
 @freezed
@@ -64,6 +64,5 @@ class ProductList with _$ProductList {
     required List<Product> results,
   }) = _ProductList;
 
-  factory ProductList.fromJson(Map<String, dynamic> json) =>
-      _$ProductListFromJson(json);
+  factory ProductList.fromJson(Map<String, dynamic> json) => _$ProductListFromJson(json);
 }

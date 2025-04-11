@@ -14,94 +14,74 @@ part 'profile_screen_bloc.freezed.dart';
 
 @injectable
 class ProfileScreenBloc extends Bloc<ProfileScreenEvent, ProfileScreenState> {
-
   final AuthBloc bloc;
-  CustomUser? _user;
+  late CustomUser _user;
 
   ProfileScreenBloc(this.bloc) : super(const ProfileScreenState.loading()) {
     on<ProfileScreenEvent>((event, emit) async {
       Logger().i('[ProfileScreenBloc : event] $event');
       await event.map(
-          init: (d) => _onInit(d, emit),
-          refreshFullName: (d) => _onRefreshFullName(d, emit),
-          refreshUsername: (d) => _onRefreshUsername(d, emit),
-          refreshTown: (d) => _onRefreshTown(d, emit),
-          refreshDistrict: (d) => _onRefreshDistrict(d, emit),
+        init: (d) => _onInit(d, emit),
+        loadNewUser: (d) => _onLoadNewUser(d, emit),
+        loadNewUserWithError: (d) => _onLoadNewUserWithError(d, emit),
+        refreshFullName: (d) => _onRefreshFullName(d, emit),
+        refreshUsername: (d) => _onRefreshUsername(d, emit),
+        refreshTown: (d) => _onRefreshTown(d, emit),
+        refreshDistrict: (d) => _onRefreshDistrict(d, emit),
       );
     });
     add(const ProfileScreenEvent.init());
   }
 
-  Future<void> _onRefreshFullName(_RefreshFullNameEvent d, Emitter<ProfileScreenState> emit) async{
-    emit(const ProfileScreenState.loading());
-
-    if(_user==null){
-      Logger().e('[_onRefreshFullName : _user==null] ');
-      return;
-    }
-
-    bloc.add(AuthEvent.refresh(_user!.copyWith(fullName: d.name)));
+  Future<void> _onLoadNewUser(_LoadNewUserEvent d, Emitter<ProfileScreenState> emit) async {
+    emit(ProfileScreenState.loaded(d.user));
   }
 
-  Future<void> _onRefreshUsername(_RefreshUsernameEvent d, Emitter<ProfileScreenState> emit) async{
-    emit(const ProfileScreenState.loading());
-
-    if(_user==null){
-      Logger().e('[_onRefreshFullName : _user==null] ');
-      return;
-    }
-
-    bloc.add(AuthEvent.refresh(_user!.copyWith(username: d.username)));
+  Future<void> _onLoadNewUserWithError(_LoadNewUserWithErrorEvent d, Emitter<ProfileScreenState> emit) async {
+    emit(ProfileScreenState.error(d.message));
   }
 
-  Future<void> _onRefreshTown(_RefreshTownEvent d, Emitter<ProfileScreenState> emit) async{
+  Future<void> _onRefreshFullName(_RefreshFullNameEvent d, Emitter<ProfileScreenState> emit) async {
     emit(const ProfileScreenState.loading());
-
-    if(_user==null){
-      Logger().e('[_onRefreshFullName : _user==null] ');
-      return;
-    }
-
-    bloc.add(AuthEvent.refresh(_user!.copyWith(town: d.town)));
+    bloc.add(AuthEvent.refresh(_user.copyWith(fullName: d.name)));
   }
 
-  Future<void> _onRefreshDistrict(_RefreshDistrictEvent d, Emitter<ProfileScreenState> emit) async{
+  Future<void> _onRefreshUsername(_RefreshUsernameEvent d, Emitter<ProfileScreenState> emit) async {
     emit(const ProfileScreenState.loading());
-
-    if(_user==null){
-      Logger().e('[_onRefreshFullName : _user==null] ');
-      return;
-    }
-
-    bloc.add(AuthEvent.refresh(_user!.copyWith(district: d.district)));
+    bloc.add(AuthEvent.refresh(_user.copyWith(username: d.username)));
   }
 
-  Future<void>  _onInit(_InitEvent d, Emitter<ProfileScreenState> emit) async {
-    bloc.state.mapOrNull(
-        loaded: (d){
-          emit(ProfileScreenState.loaded(d.user));
-        },
-        notLoaded: (d){
-          emit(const ProfileScreenState.loaded(null));
-        },
-        error: (d){
-          emit(ProfileScreenState.error(d.error));
-        }
-    );
+  Future<void> _onRefreshTown(_RefreshTownEvent d, Emitter<ProfileScreenState> emit) async {
+    emit(const ProfileScreenState.loading());
+    bloc.add(AuthEvent.refresh(_user.copyWith(town: d.town)));
+  }
 
-    bloc.stream.listen((state){
+  Future<void> _onRefreshDistrict(_RefreshDistrictEvent d, Emitter<ProfileScreenState> emit) async {
+    emit(const ProfileScreenState.loading());
+    bloc.add(AuthEvent.refresh(_user.copyWith(district: d.district)));
+  }
+
+  Future<void> _onInit(_InitEvent d, Emitter<ProfileScreenState> emit) async {
+    bloc.state.mapOrNull(loaded: (d) {
+      _user = d.user;
+      emit(ProfileScreenState.loaded(d.user));
+    }, notLoaded: (d) {
+      emit(const ProfileScreenState.loaded(null));
+    }, error: (d) {
+      emit(ProfileScreenState.error(d.error));
+    });
+
+    bloc.stream.listen((state) {
       Logger().i('[ProfileScreenBloc : state] $state');
-      state.mapOrNull(
-        loaded: (d){
-          emit(ProfileScreenState.loaded(d.user));
-        },
-        notLoaded: (d){
-          emit(const ProfileScreenState.loaded(null));
-        },
-        error: (d){
-          emit(ProfileScreenState.error(d.error));
-        }
-      );
+      state.mapOrNull(loaded: (d) {
+        _user = d.user;
+        add(ProfileScreenEvent.loadNewUser(d.user));
+
+      }, notLoaded: (d) {
+        add(const ProfileScreenEvent.loadNewUser(null));
+      }, error: (d) {
+        add(ProfileScreenEvent.loadNewUserWithError(d.error));
+      });
     });
   }
 }

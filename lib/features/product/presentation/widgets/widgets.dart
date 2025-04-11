@@ -5,5 +5,5 @@ export 'product_galery.dart';
 export 'product_title.dart';
 export 'summa_actions_widget.dart';
 export 'summa_widget.dart';
-export '../../../../shared/fast_navigation.dart';
+export '../../../../shared/widgets/fast_navigation.dart';
 

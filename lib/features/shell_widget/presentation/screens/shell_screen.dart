@@ -7,14 +7,10 @@ import 'package:project_z/features/shell_widget/presentation/widgets/widgets.dar
 import 'package:project_z/flutter_app_icons.dart';
 import 'package:project_z/shared/app_bar/app_bar_builder.dart' as shared;
 
-
 const loadingWidget = SizedBox(
   width: 320,
   height: 320,
-  child: Center(child: SizedBox(
-    height: 100,
-      width: 100,
-      child: CircularProgressIndicator())),
+  child: Center(child: SizedBox(height: 100, width: 100, child: CircularProgressIndicator())),
 );
 
 @RoutePage()
@@ -43,38 +39,32 @@ class _ProjectZShellScreenState extends State<ProjectZShellScreen> {
                   children: [const UnderAppBarWidget(), Expanded(child: child)],
                 ),
                 state.when(
-                    hide: () => const SizedBox(),
-                    inputData: (fullUsername, username) =>  AuthShell(
-                      child: AuthAddDataWidget(
-                        initFullName: fullUsername ?? '',
-                        initPhone: username ?? '',
-                        onClickButtonWhenEnteredData: (fullName, phone){
-                          BlocProvider.of<AuthBloc>(context).add(AuthEvent.sendCode(phone));
-                        },
-                      ),
+                  hide: () => const SizedBox(),
+                  inputData: (fullUsername, username) => AuthShell(
+                    child: AuthAddDataWidget(
+                      initFullName: fullUsername ?? '',
+                      initPhone: username ?? '',
+                      onClickButtonWhenEnteredData: (fullName, phone) {
+                        BlocProvider.of<AuthBloc>(context).add(AuthEvent.sendCode(phone));
+                      },
                     ),
-
-                    sendingCode: () => const AuthShell(child: loadingWidget),
-                    verifyingCode: () => const AuthShell(child: loadingWidget),
-
-                    inputCode: (username) => AuthShell(child: AuthVerifyCodeWidget(
-                      onClickSendWhenEnteredCode: (code){
-                        BlocProvider.of<AuthBloc>(context).add(AuthEvent.verifyCode(
-                          username, code
-                        ));
-                      },
-                    )),
-                    unsuccessVerifyCode: (username) => AuthShell(child: AuthVerifyCodeWidget(
-                      onClickSendWhenEnteredCode: (code){
-                        BlocProvider.of<AuthBloc>(context).add(AuthEvent.verifyCode(
-                            username, code
-                        ));
-                      },
-                    )),
-                    loaded: (user) => const SizedBox(),
-                    notLoaded: () => const SizedBox(),
-                    loading: () => const SizedBox(),
-                    error: (message) =>AuthShell(child: Center(child: Text(message))),
+                  ),
+                  sendingCode: () => const AuthShell(child: loadingWidget),
+                  verifyingCode: () => const AuthShell(child: loadingWidget),
+                  inputCode: (username) => AuthShell(child: AuthVerifyCodeWidget(
+                    onClickSendWhenEnteredCode: (code) {
+                      BlocProvider.of<AuthBloc>(context).add(AuthEvent.verifyCode(username, code));
+                    },
+                  )),
+                  unsuccessVerifyCode: (username) => AuthShell(child: AuthVerifyCodeWidget(
+                    onClickSendWhenEnteredCode: (code) {
+                      BlocProvider.of<AuthBloc>(context).add(AuthEvent.verifyCode(username, code));
+                    },
+                  )),
+                  loaded: (user) => const SizedBox(),
+                  notLoaded: () => const SizedBox(),
+                  loading: () => const SizedBox(),
+                  error: (message) => AuthShell(child: Center(child: Text(message))),
                 ),
               ],
             );
@@ -117,6 +107,3 @@ class _ProjectZShellScreenState extends State<ProjectZShellScreen> {
     );
   }
 }
-
-
-

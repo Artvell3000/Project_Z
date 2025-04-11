@@ -31,16 +31,12 @@ class UnderAppBarWidget extends StatelessWidget {
               children: [
                 UnderAppBarActionButton(
                   iconData: CustomIcons.search,
-                  onTap: (){
-
-                  },
+                  onTap: () {},
                   padding: const EdgeInsets.only(right: 5),
                 ),
                 UnderAppBarActionButton(
                   iconData: Icons.menu,
-                  onTap: (){
-
-                  },
+                  onTap: () {},
                 ),
               ],
             )
@@ -66,25 +62,23 @@ class UnderAppBarActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding!=null ? padding! : const EdgeInsets.all(0.0),
+      padding: padding != null ? padding! : const EdgeInsets.all(0.0),
       child: SizedBox(
         width: 46,
         height: 46,
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
+            style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
-            )
-          ),
+            )),
             onPressed: onTap,
             child: Center(
               child: Icon(
-                  iconData,
-                  color: Colors.white,
-                  size: 20.0,
-                ),
-            )
-        ),
+                iconData,
+                color: Colors.white,
+                size: 20.0,
+              ),
+            )),
       ),
     );
   }

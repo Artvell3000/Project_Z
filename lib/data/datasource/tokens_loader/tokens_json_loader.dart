@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:fpdart/fpdart.dart';
 import 'package:project_z/core/domain/entity/tokens/tokens.dart';
 
-
 class TokenJsonLoader {
   final String _tokensFileName = 'tokens.json';
   final Directory _appDirectory;

@@ -11,19 +11,12 @@ class ZEmptyShellScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AutoTabsRouter(
-        routes: [
-          const HomeRoute(),
-          SearchRoute(),
-          const BasketRoute(),
-          ProfileRoute(),
-          ProductRoute(productId: 3)
-        ],
+        routes: [const HomeRoute(), SearchRoute(), const BasketRoute(), ProfileRoute(), ProductRoute(productId: 3)],
         builder: (context, child) => child,
       ),
     );
   }
 }
-
 
 // class ProjectZShellScreen extends StatefulWidget {
 //   const ProjectZShellScreen({super.key});

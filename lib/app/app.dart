@@ -24,7 +24,10 @@ class _MyAppState extends State<MyApp> {
                   backgroundColor: const Color.fromRGBO(16, 53, 91, 1),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6),
-                  )))),
+                  ))),
+
+      ),
+
       routerConfig: appRouter.config(),
     );
   }

@@ -24,8 +24,7 @@ class CategoriesWidget extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: PartTitleWidget(
-              title: 'Kategoriya.', onTapMore: onTapMoreCategories),
+          child: PartTitleWidget(title: 'Kategoriya.', onTapMore: onTapMoreCategories),
         ),
         SizedBox(
           width: double.infinity,
@@ -35,7 +34,7 @@ class CategoriesWidget extends StatelessWidget {
             child: BlocBuilder<HomeScreenBloc, HomeScreenState>(
               builder: (context, state) {
                 return state.when(
-                  error: (message){
+                  error: (message) {
                     return Center(child: Text(message));
                   },
                   loading: () {
@@ -44,23 +43,17 @@ class CategoriesWidget extends StatelessWidget {
                   loaded: (categories, _, __, ___) {
                     return GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 8,
-                              mainAxisSpacing: 8,
-                              childAspectRatio: 156 / 126
-                          ),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2, crossAxisSpacing: 8, mainAxisSpacing: 8, childAspectRatio: 156 / 126),
                       itemCount: 4,
                       itemBuilder: (context, index) {
                         if (index >= categories.length) {
                           return const SizedBox();
                         }
                         return GestureDetector(
-                          onTap: (){
-                            AutoRouter.of(context).push(
-                              SearchRoute(initFilter: SearchFilter(enabled: categories[index]))
-                            );
+                          onTap: () {
+                            AutoRouter.of(context)
+                                .push(SearchRoute(initFilter: SearchFilter(enabled: categories[index])));
                           },
                           child: CategoryCard(
                             title: categories[index].name,
@@ -87,7 +80,8 @@ class CategoryCard extends StatelessWidget {
     super.key,
     required this.title,
     required this.lable,
-    required this.imgProvider, required this.notFound,
+    required this.imgProvider,
+    required this.notFound,
   });
 
   final String title, lable, imgProvider;
@@ -100,15 +94,17 @@ class CategoryCard extends StatelessWidget {
       child: Stack(
         children: [
           const SizedBox.expand(),
-          (!notFound)?Image.network(
-            imgProvider,
-            fit: BoxFit.cover,
-            width: double.infinity,
-          ) : Image.asset(
-            imgProvider,
-            fit: BoxFit.cover,
-            width: double.infinity,
-          ),
+          (!notFound)
+              ? Image.network(
+                  imgProvider,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                )
+              : Image.asset(
+                  imgProvider,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                ),
           Align(
             alignment: Alignment.topLeft,
             child: FractionalTranslation(
@@ -118,10 +114,8 @@ class CategoryCard extends StatelessWidget {
                 width: 60,
                 child: Text(
                   title,
-                  style: const TextStyle(
-                      color: Color.fromRGBO(16, 53, 91, 1),
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14),
+                  style:
+                      const TextStyle(color: Color.fromRGBO(16, 53, 91, 1), fontWeight: FontWeight.w500, fontSize: 14),
                 ),
               ),
             ),
@@ -135,10 +129,7 @@ class CategoryCard extends StatelessWidget {
                 width: 70,
                 child: Text(
                   lable,
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 8),
+                  style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w400, fontSize: 8),
                 ),
               ),
             ),

@@ -5,23 +5,19 @@ import 'package:project_z/features/profile/presentation/bloc/profile_screen_bloc
 import 'package:project_z/shared/functions/checker_phone.dart';
 
 class ProfilePhoneTextField extends StatelessWidget {
-  ProfilePhoneTextField({
-    super.key,
-    required BuildContext context,
-    required this.phone, required this.onPhoneEntered
-  }){
-    _controllerFirstNum.text = (phone == '')? '+998' : phone.substring(0,5);
-    _controllerLastNum.text = (phone == '')? '' : phone.substring(5,19);
-    _focusNodeFirst.addListener((){
+  ProfilePhoneTextField({super.key, required BuildContext context, required this.phone, required this.onPhoneEntered}) {
+    _controllerFirstNum.text = (phone == '') ? '+998' : phone.substring(0, 5);
+    _controllerLastNum.text = (phone == '') ? '' : phone.substring(5, 19);
+    _focusNodeFirst.addListener(() {
       final result = _controllerFirstNum.text + _controllerLastNum.text;
-      if(CheckerPhone.isUzPhoneNumber(result)){
+      if (CheckerPhone.isUzPhoneNumber(result)) {
         onPhoneEntered(result);
       }
     });
 
-    _focusNodeLast.addListener((){
+    _focusNodeLast.addListener(() {
       final result = _controllerFirstNum.text + _controllerLastNum.text;
-      if(CheckerPhone.isUzPhoneNumber(result)){
+      if (CheckerPhone.isUzPhoneNumber(result)) {
         onPhoneEntered(result);
       }
     });
@@ -33,7 +29,6 @@ class ProfilePhoneTextField extends StatelessWidget {
   final FocusNode _focusNodeFirst = FocusNode();
   final FocusNode _focusNodeLast = FocusNode();
   final String phone;
-
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +48,6 @@ class ProfilePhoneTextField extends StatelessWidget {
           height: 40,
           child: Stack(
             children: [
-
               Align(
                 alignment: Alignment.centerRight,
                 child: SizedBox(
@@ -71,7 +65,6 @@ class ProfilePhoneTextField extends StatelessWidget {
                   ),
                 ),
               ),
-
               Align(
                 alignment: Alignment.centerLeft,
                 child: SizedBox(

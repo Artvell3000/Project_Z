@@ -4,7 +4,8 @@ import 'package:project_z/flutter_app_icons.dart';
 class PartTitleWidget extends StatelessWidget {
   const PartTitleWidget({
     super.key,
-    required this.onTapMore, required this.title,
+    required this.onTapMore,
+    required this.title,
   });
 
   final void Function() onTapMore;
@@ -34,7 +35,10 @@ class PartTitleWidget extends StatelessWidget {
                 'Barchasi',
                 style: TextStyle(fontSize: 14),
               ),
-              Icon(Icons.chevron_right, size: 32,),
+              Icon(
+                Icons.chevron_right,
+                size: 32,
+              ),
             ],
           ),
         )

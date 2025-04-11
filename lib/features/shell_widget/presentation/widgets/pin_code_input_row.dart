@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class PinCodeInputRow extends StatefulWidget {
   const PinCodeInputRow({super.key, required this.toVerify});
+
   final void Function(String code) toVerify;
 
   @override
@@ -28,7 +29,7 @@ class _PinCodeInputRowState extends State<PinCodeInputRow> {
     final allFilled = _controllers.every((controller) => controller.text.isNotEmpty);
     if (allFilled) {
       StringBuffer code = StringBuffer();
-      for(final el in _controllers){
+      for (final el in _controllers) {
         code.write(el.text);
       }
       widget.toVerify(code.toString());
@@ -39,8 +40,7 @@ class _PinCodeInputRowState extends State<PinCodeInputRow> {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-      children: List.generate(6, (index){
+      children: List.generate(6, (index) {
         return Container(
           width: 50,
           height: 50,

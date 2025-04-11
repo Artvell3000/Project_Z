@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'tokens.freezed.dart';
+
 part 'tokens.g.dart';
 
 @freezed
