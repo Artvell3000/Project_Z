@@ -3,8 +3,8 @@ import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:project_z/core/bloc/buy_flow_facade/buy_flow_facade_bloc.dart';
 import 'package:project_z/core/domain/entity/custom_user/custom_user.dart';
-import 'package:project_z/features/shell_widget/presentation/bloc/auth/auth_bloc.dart';
 
 part 'profile_screen_event.dart';
 
@@ -14,7 +14,7 @@ part 'profile_screen_bloc.freezed.dart';
 
 @injectable
 class ProfileScreenBloc extends Bloc<ProfileScreenEvent, ProfileScreenState> {
-  final AuthBloc bloc;
+  final BuyFlowFacadeBloc bloc;
   late CustomUser _user;
 
   ProfileScreenBloc(this.bloc) : super(const ProfileScreenState.loading()) {
@@ -28,6 +28,7 @@ class ProfileScreenBloc extends Bloc<ProfileScreenEvent, ProfileScreenState> {
         refreshUsername: (d) => _onRefreshUsername(d, emit),
         refreshTown: (d) => _onRefreshTown(d, emit),
         refreshDistrict: (d) => _onRefreshDistrict(d, emit),
+        requestAuth: (d) => _onRequestAuth(d, emit)
       );
     });
     add(const ProfileScreenEvent.init());
@@ -37,51 +38,53 @@ class ProfileScreenBloc extends Bloc<ProfileScreenEvent, ProfileScreenState> {
     emit(ProfileScreenState.loaded(d.user));
   }
 
+  Future<void> _onRequestAuth(_RequestAuthEvent d, Emitter<ProfileScreenState> emit) async {
+    bloc.add(const BuyFlowFacadeEvent.requestAuth());
+  }
+
   Future<void> _onLoadNewUserWithError(_LoadNewUserWithErrorEvent d, Emitter<ProfileScreenState> emit) async {
     emit(ProfileScreenState.error(d.message));
   }
 
   Future<void> _onRefreshFullName(_RefreshFullNameEvent d, Emitter<ProfileScreenState> emit) async {
     emit(const ProfileScreenState.loading());
-    bloc.add(AuthEvent.refresh(_user.copyWith(fullName: d.name)));
+    bloc.add(BuyFlowFacadeEvent.refreshUser(_user.copyWith(fullName: d.name)));
   }
 
   Future<void> _onRefreshUsername(_RefreshUsernameEvent d, Emitter<ProfileScreenState> emit) async {
     emit(const ProfileScreenState.loading());
-    bloc.add(AuthEvent.refresh(_user.copyWith(username: d.username)));
+    bloc.add(BuyFlowFacadeEvent.refreshUser(_user.copyWith(username: d.username)));
   }
 
   Future<void> _onRefreshTown(_RefreshTownEvent d, Emitter<ProfileScreenState> emit) async {
     emit(const ProfileScreenState.loading());
-    bloc.add(AuthEvent.refresh(_user.copyWith(town: d.town)));
+    bloc.add(BuyFlowFacadeEvent.refreshUser(_user.copyWith(town: d.town)));
   }
 
   Future<void> _onRefreshDistrict(_RefreshDistrictEvent d, Emitter<ProfileScreenState> emit) async {
     emit(const ProfileScreenState.loading());
-    bloc.add(AuthEvent.refresh(_user.copyWith(district: d.district)));
+    bloc.add(BuyFlowFacadeEvent.refreshUser(_user.copyWith(district: d.district)));
   }
 
   Future<void> _onInit(_InitEvent d, Emitter<ProfileScreenState> emit) async {
-    bloc.state.mapOrNull(loaded: (d) {
-      _user = d.user;
-      emit(ProfileScreenState.loaded(d.user));
-    }, notLoaded: (d) {
-      emit(const ProfileScreenState.loaded(null));
-    }, error: (d) {
-      emit(ProfileScreenState.error(d.error));
+
+    (await bloc.user).fold((e){
+      add(ProfileScreenEvent.loadNewUserWithError(e.toString()));
+    }, (user){
+      if(user == null){
+        add(const ProfileScreenEvent.loadNewUser(null));
+      } else{
+        add(ProfileScreenEvent.loadNewUser(user));
+      }
     });
 
-    bloc.stream.listen((state) {
-      Logger().i('[ProfileScreenBloc : state] $state');
-      state.mapOrNull(loaded: (d) {
-        _user = d.user;
-        add(ProfileScreenEvent.loadNewUser(d.user));
-
-      }, notLoaded: (d) {
-        add(const ProfileScreenEvent.loadNewUser(null));
-      }, error: (d) {
-        add(ProfileScreenEvent.loadNewUserWithError(d.error));
-      });
+    bloc.stream.listen((state){
+      state.mapOrNull(
+        newUser: (d){
+          _user = d.user;
+          add(ProfileScreenEvent.loadNewUser(d.user));
+        }
+      );
     });
   }
 }

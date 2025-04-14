@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project_z/features/shell_widget/presentation/bloc/auth/auth_bloc.dart';
+import 'package:project_z/features/shell_widget/presentation/bloc/auth/auth_screen_bloc.dart';
 
 class AuthShell extends StatelessWidget {
   const AuthShell({super.key, required this.child});
@@ -13,7 +13,7 @@ class AuthShell extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            BlocProvider.of<AuthBloc>(context).add(const AuthEvent.hide());
+            BlocProvider.of<AuthScreenBloc>(context).add(const AuthScreenEvent.hide());
           },
           child: const ColoredBox(color: Color.fromRGBO(125, 125, 125, 0.5), child: SizedBox.expand()),
         ),

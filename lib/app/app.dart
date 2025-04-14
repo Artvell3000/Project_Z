@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_z/config/theme/theme.dart';
 import 'package:project_z/core/routing/router.dart';
 
 late AppRouter appRouter;
@@ -15,19 +16,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     appRouter = AppRouter();
     return MaterialApp.router(
-      //todo перенести тему в отдельный файл
-      theme: ThemeData(
-          fontFamily: 'Neometric',
-          elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                  backgroundColor: const Color.fromRGBO(16, 53, 91, 1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
-                  ))),
-
-      ),
-
+      theme: onlineShopTheme,
       routerConfig: appRouter.config(),
     );
   }

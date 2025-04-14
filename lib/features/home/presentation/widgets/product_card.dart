@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_z/core/domain/entity/entity.dart';
 import 'package:project_z/core/routing/router.dart';
-import 'package:project_z/features/shell_widget/presentation/bloc/auth/auth_bloc.dart';
+import 'package:project_z/features/shell_widget/presentation/bloc/auth/auth_screen_bloc.dart';
 import 'package:project_z/flutter_app_icons.dart';
-import 'package:project_z/shared/functions/auth/auth_functions.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -140,9 +139,7 @@ class ProductCard extends StatelessWidget {
                         flex: 100,
                         child: ElevatedButton(
                           onPressed: () async {
-                            AuthFunctions.doItOrStartAuth(context, (){
-                              //todo покупка
-                            });
+
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color.fromRGBO(16, 53, 91, 1),
@@ -170,9 +167,7 @@ class ProductCard extends StatelessWidget {
                           flex: 30,
                           child: ElevatedButton(
                             onPressed: () {
-                              AuthFunctions.doItOrStartAuth(context, (){
-                                //todo добавление в корзину
-                              });
+
                             },
                             child: const Center(
                               child: Icon(

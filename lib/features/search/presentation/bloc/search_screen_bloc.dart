@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 import 'package:project_z/core/domain/entity/entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:project_z/core/network/api/service/api_service.dart';
-import 'package:project_z/features/search/presentation/bloc/search_filter.dart';
+import 'package:project_z/features/search/domain/entity/search_filter.dart';
 
 part 'search_screen_event.dart';
 part 'search_screen_state.dart';

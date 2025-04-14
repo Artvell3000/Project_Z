@@ -1,11 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:project_z/core/domain/repositories/auth_repository.dart';
+import 'package:project_z/core/domain/repositories/basket_repository.dart';
 import 'package:project_z/core/domain/repositories/token_repository.dart';
 import 'package:project_z/core/network/api/service/api_service.dart';
+import 'package:project_z/data/repositories/api_auth_repository.dart';
+import 'package:project_z/data/repositories/api_basket_repository.dart';
 import 'package:project_z/data/repositories/tokens_from_json_repository.dart';
 import 'package:project_z/features/product/presentation/bloc/product_screen_bloc.dart';
-import 'package:project_z/features/search/presentation/bloc/search_filter.dart';
+import 'package:project_z/features/search/domain/entity/search_filter.dart';
 import 'package:project_z/features/search/presentation/bloc/search_screen_bloc.dart';
 import 'di.config.dart';
 
@@ -39,4 +43,10 @@ abstract class AppModule {
 
   @singleton
   ITokenRepository get iTokenRepository => TokensFromJsonRepository();
+
+  @singleton
+  IAuthRepository get iAuthRepository => ApiAuthRepository(apiService);
+
+  @singleton
+  IBasketRepository get iBasketRepository => ApiBasketRepository();
 }

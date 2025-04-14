@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project_z/features/shell_widget/presentation/bloc/auth/auth_bloc.dart';
+import 'package:project_z/features/shell_widget/presentation/bloc/auth/auth_screen_bloc.dart';
 import 'package:project_z/features/shell_widget/presentation/widgets/pin_code_input_row.dart';
 import 'package:project_z/shared/consts/text_field_style.dart';
 import 'package:project_z/shared/consts/text_style_for_elevation_button.dart';
@@ -34,7 +34,7 @@ class _AuthVerifyCodeWidgetState extends State<AuthVerifyCodeWidget> {
                 translation: const Offset(-0.1, 0),
                 child: TextButton(
                   onPressed: () {
-                    BlocProvider.of<AuthBloc>(context).add(const AuthEvent.startAuth());
+                    BlocProvider.of<AuthScreenBloc>(context).add(const AuthScreenEvent.startAuth());
                   },
                   child: const Row(
                     mainAxisSize: MainAxisSize.min,
@@ -55,7 +55,7 @@ class _AuthVerifyCodeWidgetState extends State<AuthVerifyCodeWidget> {
               ),
               IconButton(
                 icon: const Icon(Icons.close_rounded, size: 30, color: Color.fromRGBO(16, 53, 91, 1)),
-                onPressed: () => BlocProvider.of<AuthBloc>(context).add(const AuthEvent.hide()),
+                onPressed: () => BlocProvider.of<AuthScreenBloc>(context).add(const AuthScreenEvent.hide()),
               ),
             ],
           ),

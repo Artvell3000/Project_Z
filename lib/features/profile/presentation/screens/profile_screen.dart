@@ -6,7 +6,7 @@ import 'package:project_z/features/product/presentation/widgets/widgets.dart';
 import 'package:project_z/features/profile/presentation/bloc/profile_screen_bloc.dart';
 import 'package:project_z/features/profile/presentation/widgets/widgets.dart';
 import 'package:project_z/flutter_app_icons.dart';
-import 'package:project_z/shared/functions/auth/auth_functions.dart';
+import 'package:project_z/shared/consts/text_style_title.dart';
 import 'package:project_z/shared/scaffolds/z_scaffold.dart';
 
 @RoutePage()
@@ -32,7 +32,7 @@ class ProfileScreen extends StatelessWidget {
           alignment: Alignment.topLeft,
           child: Text(
             'Mening sahifam',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black),
+            style: titleTextStyle,
           ),
         ),
         Padding(
@@ -63,10 +63,8 @@ class ProfileScreen extends StatelessWidget {
                                 context: context,
                                 name: profile?.fullName ?? '',
                                 onFullNameEntered: (name) {
-                                  AuthFunctions.doItOrStartAuth(
-                                      context,
-                                      () => BlocProvider.of<ProfileScreenBloc>(context)
-                                          .add(ProfileScreenEvent.refreshFullName(name)));
+                                  BlocProvider.of<ProfileScreenBloc>(context)
+                                      .add(ProfileScreenEvent.refreshFullName(name));
                                 },
                               ),
                             );
@@ -79,9 +77,7 @@ class ProfileScreen extends StatelessWidget {
                   BlocBuilder<ProfileScreenBloc, ProfileScreenState>(
                     builder: (BuildContext context, ProfileScreenState state) {
                       return state.when(
-                          loading: () => const Center(
-                                child: CircularProgressIndicator(),
-                              ),
+                          loading: () => const SizedBox(),
                           loaded: (profile) {
                             return Padding(
                               padding: const EdgeInsets.only(top: 10),
@@ -89,10 +85,8 @@ class ProfileScreen extends StatelessWidget {
                                 context: context,
                                 phone: profile?.username ?? '',
                                 onPhoneEntered: (phone) {
-                                  AuthFunctions.doItOrStartAuth(
-                                      context,
-                                      () => BlocProvider.of<ProfileScreenBloc>(context)
-                                          .add(ProfileScreenEvent.refreshUsername(phone)));
+                                  BlocProvider.of<ProfileScreenBloc>(context)
+                                      .add(ProfileScreenEvent.refreshUsername(phone));
                                 },
                               ),
                             );
@@ -110,20 +104,18 @@ class ProfileScreen extends StatelessWidget {
         BlocBuilder<ProfileScreenBloc, ProfileScreenState>(
           builder: (context, state) {
             return state.when(
-                loading: () => loadingWidget,
+                loading: () => const SizedBox(),
                 loaded: (user) {
                   return AddGeoContainer(
+                    userIsNull: user == null,
                     town: user?.town ?? '',
                     district: user?.district ?? '',
                     onDistinctEntered: (distinct) {
-                      AuthFunctions.doItOrStartAuth(
-                          context,
-                          () => BlocProvider.of<ProfileScreenBloc>(context)
-                              .add(ProfileScreenEvent.refreshDistrict(distinct)));
+                      BlocProvider.of<ProfileScreenBloc>(context)
+                          .add(ProfileScreenEvent.refreshDistrict(distinct));
                     },
                     onTownEntered: (town) {
-                      AuthFunctions.doItOrStartAuth(context,
-                          () => BlocProvider.of<ProfileScreenBloc>(context).add(ProfileScreenEvent.refreshTown(town)));
+                      BlocProvider.of<ProfileScreenBloc>(context).add(ProfileScreenEvent.refreshTown(town));
                     },
                   );
                 },
@@ -144,8 +136,10 @@ class AddGeoContainer extends StatefulWidget {
     required this.district,
     required this.onTownEntered,
     required this.onDistinctEntered,
+    required this.userIsNull,
   });
 
+  final bool userIsNull;
   final String town;
   final String district;
   final void Function(String town) onTownEntered;
@@ -187,10 +181,11 @@ class _AddGeoContainerState extends State<AddGeoContainer> {
                             onPressed: () {
                               setState(() {
                                 ///проверка auth
-                                if (AuthFunctions.isLoadedUser(context)) {
-                                  hasClickedAddGeo = true;
+                                if (widget.userIsNull) {
+                                  BlocProvider.of<ProfileScreenBloc>(context)
+                                      .add(const ProfileScreenEvent.requestAuth());
                                 } else {
-                                  AuthFunctions.startAuth(context);
+                                  hasClickedAddGeo = true;
                                 }
                               });
                             },

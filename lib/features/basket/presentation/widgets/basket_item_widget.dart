@@ -96,7 +96,7 @@ class BasketItemWidget extends StatelessWidget {
                           )),
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 17.0),
-                        child: Text('1',
+                        child: Text('3',
                             style: TextStyle(
                               fontSize: 20.0,
                               fontWeight: FontWeight.w600,

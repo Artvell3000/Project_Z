@@ -1,5 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_z/features/basket/presentation/bloc/basket_screen_bloc.dart';
 import 'package:project_z/features/basket/presentation/widgets/widgets.dart';
 import 'package:project_z/features/product/presentation/widgets/widgets.dart';
 import 'package:project_z/shared/consts/text_style_title.dart';
@@ -19,21 +21,40 @@ class BasketScreen extends StatelessWidget {
           padding: EdgeInsets.only(top: 12.0),
           child: FastNavigation(),
         ),
-        Padding(
-            padding: EdgeInsets.only(top: 30.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Mening savatcham', style: titleTextStyle,),
-              QuantityWidget(quantity: 12)
-            ],
-          ),
-        ),
-        BasketItemWidget(),
-        Padding(
-          padding: EdgeInsets.only(top: 5.0),
-          child: PaymentCard(),
-        ),
+        BlocBuilder<BasketScreenBloc,BasketScreenState>(
+            builder: (context, state){
+              return state.mapOrNull(
+                loaded: (d){
+                  if(d.amount == 0) return EmptyBasketImage();
+                   return Column(
+                     children: [
+                       Padding(
+                         padding: EdgeInsets.only(top: 30.0, bottom: 20),
+                         child: Row(
+                           crossAxisAlignment: CrossAxisAlignment.start,
+                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                           children: [
+                             Text('Mening savatcham', style: titleTextStyle,),
+                             QuantityWidget(quantity: 3)
+                           ],
+                         ),
+                       ),
+                       Column(
+                         children: [
+                           BasketItemWidget(),
+                           //BasketItemWidget()
+                         ],
+                       ),
+                       Padding(
+                         padding: EdgeInsets.only(top: 5.0),
+                         child: PaymentCard(),
+                       ),
+                     ],
+                   );
+                }
+              ) ?? SizedBox();
+            }
+        )
       ],
     );
   }

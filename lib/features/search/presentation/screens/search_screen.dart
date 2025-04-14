@@ -6,7 +6,7 @@ import 'package:project_z/core/di/di.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/home/presentation/widgets/product_card.dart';
 import 'package:project_z/features/product/presentation/widgets/widgets.dart';
-import 'package:project_z/features/search/presentation/bloc/search_filter.dart';
+import 'package:project_z/features/search/domain/entity/search_filter.dart';
 import 'package:project_z/features/search/presentation/bloc/search_screen_bloc.dart';
 import 'package:project_z/features/search/presentation/widgets/widgets.dart';
 import 'package:project_z/shared/consts/text_style_for_elevation_button.dart';
@@ -54,7 +54,7 @@ class SearchScreen extends StatelessWidget {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            QuantityWidget(quantity: quantity,),
+                            SearchQuantityWidget(quantity: quantity,),
                             const SizedBox(height: 17.0),
                             Row(
                               children: [

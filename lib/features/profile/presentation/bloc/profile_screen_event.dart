@@ -17,4 +17,6 @@ class ProfileScreenEvent with _$ProfileScreenEvent {
   ) = _RefreshTownEvent;
 
   const factory ProfileScreenEvent.refreshDistrict(String district) = _RefreshDistrictEvent;
+
+  const factory ProfileScreenEvent.requestAuth() = _RequestAuthEvent;
 }

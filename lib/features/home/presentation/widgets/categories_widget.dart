@@ -6,7 +6,7 @@ import 'package:project_z/core/domain/entity/category/category.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/home/presentation/bloc/home_screen_bloc.dart';
 import 'package:project_z/features/home/presentation/widgets/part_title_widget.dart';
-import 'package:project_z/features/search/presentation/bloc/search_filter.dart';
+import 'package:project_z/features/search/domain/entity/search_filter.dart';
 
 class CategoriesWidget extends StatelessWidget {
   CategoriesWidget({

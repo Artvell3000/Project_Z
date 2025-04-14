@@ -4,7 +4,7 @@ import 'package:project_z/features/basket/presentation/screens/basket_screen.dar
 import 'package:project_z/features/home/presentation/screens/home_screen.dart';
 import 'package:project_z/features/product/presentation/screens/product_screen.dart';
 import 'package:project_z/features/profile/presentation/screens/profile_screen.dart';
-import 'package:project_z/features/search/presentation/bloc/search_filter.dart';
+import 'package:project_z/features/search/domain/entity/search_filter.dart';
 import 'package:project_z/features/search/presentation/screens/search_screen.dart';
 import 'package:project_z/features/shell_widget/presentation/screens/shell_screen.dart';
 import 'package:project_z/features/shell_widget/presentation/widgets/empty_shell.dart';

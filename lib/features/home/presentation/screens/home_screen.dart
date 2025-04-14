@@ -7,7 +7,7 @@ import 'package:project_z/core/di/di.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/home/presentation/bloc/home_screen_bloc.dart';
 import 'package:project_z/features/home/presentation/widgets/widgets.dart';
-import 'package:project_z/features/search/presentation/bloc/search_filter.dart';
+import 'package:project_z/features/search/domain/entity/search_filter.dart';
 import 'package:project_z/shared/scaffolds/z_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
