@@ -12,7 +12,7 @@ class AuthScreenState with _$AuthScreenState {
 
   const factory AuthScreenState.verifyingCode() = _VerifyingCodeAuthState;
 
-  const factory AuthScreenState.unsuccessVerifyCode(String username) = _UnsuccessVerifyCodeAuthState;
+  const factory AuthScreenState.unsuccessVerifyCode(DateTime d) = _UnsuccessVerifyCodeAuthState;
 
   const factory AuthScreenState.loaded(CustomUser user) = _LoadedAuthState;
 

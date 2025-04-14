@@ -13,6 +13,6 @@ class BuyFlowFacadeEvent with _$BuyFlowFacadeEvent {
 
   const factory BuyFlowFacadeEvent.verifyCode(String username, String code) = _FacadeVerifyCodeEvent;
 
-  const factory BuyFlowFacadeEvent.refreshUser(CustomUser newUser) = _FacadeRefreshUserEvent;
+  const factory BuyFlowFacadeEvent.refreshUser(CustomUserCompanion newUser) = _FacadeRefreshUserEvent;
 }
 

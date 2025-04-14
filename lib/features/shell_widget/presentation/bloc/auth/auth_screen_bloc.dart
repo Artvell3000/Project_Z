@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
@@ -16,14 +18,16 @@ part 'auth_screen_bloc.freezed.dart';
 class AuthScreenBloc extends Bloc<AuthScreenEvent, AuthScreenState> {
 
   final BuyFlowFacadeBloc _buyBloc;
+  int attemptInputCode = 1;
 
   late String code;
   late String _inputCode;
   late String _inputUsername;
+  late StreamSubscription<BuyFlowFacadeState> subscription;
 
   AuthScreenBloc(this._buyBloc) : super(const AuthScreenState.loading()) {
     on<AuthScreenEvent>((event, emit) async {
-      Logger().i('[AuthBloc] ${event.toString()}');
+      //Logger().i('[AuthBloc] ${event.toString()}');
       await event.map(
         init: (d) => _onInit(d, emit),
         hide: (d) => _onHide(d, emit),
@@ -60,20 +64,18 @@ class AuthScreenBloc extends Bloc<AuthScreenEvent, AuthScreenState> {
   }
 
   Future<void> _onVerifyCode(_VerifyingCodeAuthEvent d, Emitter<AuthScreenState> emit) async {
-    emit(const AuthScreenState.verifyingCode());
     _inputCode = d.code;
     if(_inputCode == code){
+      emit(const AuthScreenState.verifyingCode());
       _buyBloc.add(BuyFlowFacadeEvent.verifyCode(_inputUsername, _inputCode));
       return;
     }
-
-    emit(AuthScreenState.unsuccessVerifyCode(_inputUsername));
+    emit(AuthScreenState.unsuccessVerifyCode(DateTime.now()));
   }
 
   Future<void> _onInit(_InitAuthEvent d, Emitter<AuthScreenState> emit) async {
-    Logger().i('_onInit');
-    _buyBloc.stream.listen((state){
-      Logger().i('_buyBloc.stream.listen((state)');
+    subscription = _buyBloc.stream.listen((state){
+      Logger().i('_buyBloc.stream.listen(($state)');
       state.mapOrNull(
         needAuth: (d) => add(const AuthScreenEvent.startAuth()),
         needInputCode: (d) => add(AuthScreenEvent.startAuth(code: d.code)),
@@ -81,8 +83,8 @@ class AuthScreenBloc extends Bloc<AuthScreenEvent, AuthScreenState> {
         error: (d) => add(AuthScreenEvent.error(d.e)),
       );
     },
-      onDone: () => Logger().i('Stream closed!'), // Логируем завершение
-      onError: (e) => Logger().e('Stream error: $e'), // Логируем ошибки
+      onDone: () => Logger().i('Stream closed!'),
+      onError: (e) => Logger().e('Stream error: $e'),
     );
   }
 

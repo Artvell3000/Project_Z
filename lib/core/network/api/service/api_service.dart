@@ -58,7 +58,7 @@ abstract class ApiService {
   })
   Future<CustomUser> updateCurrentUser(
     @Header('Authorization') String token,
-    @Body() CustomUser user,
+    @Body() CustomUserCompanion user,
   );
 
 

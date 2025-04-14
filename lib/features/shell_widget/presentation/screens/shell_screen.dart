@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/basket/presentation/bloc/basket_screen_bloc.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/auth/auth_screen_bloc.dart';
@@ -11,7 +12,7 @@ import 'package:project_z/shared/app_bar/app_bar_builder.dart' as shared;
 const loadingWidget = SizedBox(
   width: 320,
   height: 320,
-  child: Center(child: SizedBox(height: 100, width: 100, child: CircularProgressIndicator())),
+  child: Center(child: SizedBox(height: 60, width: 60, child: CircularProgressIndicator())),
 );
 
 @RoutePage()
@@ -23,7 +24,6 @@ class ProjectZShellScreen extends StatefulWidget {
 }
 
 class _ProjectZShellScreenState extends State<ProjectZShellScreen> {
-  bool showAuth = false;
 
   @override
   Widget build(BuildContext context) {
@@ -57,11 +57,7 @@ class _ProjectZShellScreenState extends State<ProjectZShellScreen> {
                       BlocProvider.of<AuthScreenBloc>(context).add(AuthScreenEvent.verifyCode(username, code));
                     },
                   )),
-                  unsuccessVerifyCode: (username) => AuthShell(child: AuthVerifyCodeWidget(
-                    onClickSendWhenEnteredCode: (code) {
-                      BlocProvider.of<AuthScreenBloc>(context).add(AuthScreenEvent.verifyCode(username, code));
-                    },
-                  )),
+                  unsuccessVerifyCode: (username) => const SizedBox(),
                   loaded: (user) => const SizedBox(),
                   notLoaded: () => const SizedBox(),
                   loading: () => const SizedBox(),
@@ -69,6 +65,9 @@ class _ProjectZShellScreenState extends State<ProjectZShellScreen> {
                 ),
               ],
             );
+          },
+          buildWhen: (_, state){
+            return state.mapOrNull(unsuccessVerifyCode:(d) => false) ?? true;
           },
         );
       },
@@ -83,31 +82,6 @@ class _ProjectZShellScreenState extends State<ProjectZShellScreen> {
           onTap: tabsRouter.setActiveIndex,
           currentIndex: tabsRouter.activeIndex,
         );
-        // return BottomNavigationBar(
-        //   showUnselectedLabels: true,
-        //   currentIndex: tabsRouter.activeIndex,
-        //   unselectedItemColor: const Color.fromRGBO(150, 155, 159, 1),
-        //   selectedItemColor: const Color.fromRGBO(16, 53, 91, 1),
-        //   onTap: tabsRouter.setActiveIndex,
-        //   items: const [
-        //     BottomNavigationBarItem(
-        //       label: 'home',
-        //       icon: Icon(CustomIcons.home),
-        //     ),
-        //     BottomNavigationBarItem(
-        //       label: 'search',
-        //       icon: Icon(CustomIcons.search),
-        //     ),
-        //     BottomNavigationBarItem(
-        //       label: 'basket',
-        //       icon: Icon(CustomIcons.basket),
-        //     ),
-        //     BottomNavigationBarItem(
-        //       label: 'profile',
-        //       icon: Icon(CustomIcons.profile),
-        //     ),
-        //   ],
-        // );
       },
     );
   }
@@ -206,29 +180,6 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
                       ),
                     ),
                   );
-
-
-                  // return state.mapOrNull(
-                  //     loaded: (d){
-                  //       return Container(
-                  //         width: 50,
-                  //         height: 50,
-                  //         decoration: BoxDecoration(
-                  //           color: Colors.red,
-                  //           borderRadius: BorderRadius.circular(15), // Adjust the radius for desired roundness
-                  //           border: Border.all(
-                  //             color: Colors.white,
-                  //             width: 5, // Adjust this value for a thicker or thinner border
-                  //           ),
-                  //         ),
-                  //         child: const Text('1', style: TextStyle(
-                  //           color: Colors.white,
-                  //           fontWeight: FontWeight.w400,
-                  //           fontSize: 10
-                  //         ),),
-                  //       );
-                  //     }
-                  // ) ?? const SizedBox();
                 }
             ),
           ) : const SizedBox(),

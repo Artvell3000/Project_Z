@@ -7,7 +7,7 @@ class BuyFlowFacadeState with _$BuyFlowFacadeState {
 
   const factory BuyFlowFacadeState.needInputCode(String code) = _FacadeNeedInputCodeState;
 
-  const factory BuyFlowFacadeState.needAuth() = _FacadeNeedAuthState;
+  const factory BuyFlowFacadeState.needAuth(DateTime d) = _FacadeNeedAuthState;
 
   const factory BuyFlowFacadeState.newUser(CustomUser user) = _FacadeNewUserState;
 

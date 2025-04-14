@@ -48,22 +48,23 @@ class ProfileScreenBloc extends Bloc<ProfileScreenEvent, ProfileScreenState> {
 
   Future<void> _onRefreshFullName(_RefreshFullNameEvent d, Emitter<ProfileScreenState> emit) async {
     emit(const ProfileScreenState.loading());
-    bloc.add(BuyFlowFacadeEvent.refreshUser(_user.copyWith(fullName: d.name)));
+    Logger().i('[CustomUserCompanion] ${CustomUserCompanion(fullName: d.name).toJson()}');
+    bloc.add(BuyFlowFacadeEvent.refreshUser(CustomUserCompanion(fullName: d.name)));
   }
 
   Future<void> _onRefreshUsername(_RefreshUsernameEvent d, Emitter<ProfileScreenState> emit) async {
     emit(const ProfileScreenState.loading());
-    bloc.add(BuyFlowFacadeEvent.refreshUser(_user.copyWith(username: d.username)));
+    bloc.add(BuyFlowFacadeEvent.refreshUser(CustomUserCompanion(username: d.username)));
   }
 
   Future<void> _onRefreshTown(_RefreshTownEvent d, Emitter<ProfileScreenState> emit) async {
     emit(const ProfileScreenState.loading());
-    bloc.add(BuyFlowFacadeEvent.refreshUser(_user.copyWith(town: d.town)));
+    bloc.add(BuyFlowFacadeEvent.refreshUser(CustomUserCompanion(town: d.town)));
   }
 
   Future<void> _onRefreshDistrict(_RefreshDistrictEvent d, Emitter<ProfileScreenState> emit) async {
     emit(const ProfileScreenState.loading());
-    bloc.add(BuyFlowFacadeEvent.refreshUser(_user.copyWith(district: d.district)));
+    bloc.add(BuyFlowFacadeEvent.refreshUser(CustomUserCompanion(district: d.district)));
   }
 
   Future<void> _onInit(_InitEvent d, Emitter<ProfileScreenState> emit) async {

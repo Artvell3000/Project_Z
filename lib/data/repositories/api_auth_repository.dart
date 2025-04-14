@@ -69,10 +69,10 @@ class ApiAuthRepository implements IAuthRepository{
   }
 
   @override
-  Future<Either<Exception, CustomUser>> refreshUser(CustomUser newUser) async {
+  Future<Either<Exception, CustomUser>> refreshUser(CustomUserCompanion newUser) async {
     try{
       Logger().i('start get user');
-      final user = await _api.updateCurrentUser(_tokens.refreshToken, newUser);
+      final user = await _api.updateCurrentUser('Bearer ${_tokens.accessToken}', newUser);
       Logger().i('end get user $user');
       return Either.right(user);
     } catch (e){

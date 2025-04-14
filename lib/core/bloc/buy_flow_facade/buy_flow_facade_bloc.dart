@@ -38,7 +38,7 @@ class BuyFlowFacadeBloc extends Bloc<BuyFlowFacadeEvent, BuyFlowFacadeState> {
 
   Future<void> _onRequestAuth(_FacadeRequestAuthEvent d, Emitter<BuyFlowFacadeState> emit) async {
     Logger().i('[BuyFlowFacadeBloc : _onRequestAuth]');
-    emit(const BuyFlowFacadeState.needAuth());
+    emit(BuyFlowFacadeState.needAuth(DateTime.now()));
   }
 
   Future<Either<Exception, CustomUser?>> get user async{
@@ -57,9 +57,14 @@ class BuyFlowFacadeBloc extends Bloc<BuyFlowFacadeEvent, BuyFlowFacadeState> {
   Future<void> _onRefreshUser(_FacadeRefreshUserEvent d, Emitter<BuyFlowFacadeState> emit) async {
     try{
       if(_authRepository.hasAuth){
-        await _authRepository.refreshUser(d.newUser);
+        final response = await _authRepository.refreshUser(d.newUser);
+        response.fold((e){
+          throw(e);
+        }, (user){
+          emit(BuyFlowFacadeState.newUser(user));
+        });
       } else {
-        emit(const BuyFlowFacadeState.needAuth());
+        add(const BuyFlowFacadeEvent.requestAuth());
       }
     } on Exception catch (e){
       emit(BuyFlowFacadeState.error(e));
