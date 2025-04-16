@@ -1,13 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:project_z/features/basket/presentation/screens/basket_screen.dart';
-import 'package:project_z/features/home/presentation/screens/home_screen.dart';
-import 'package:project_z/features/menu/presentation/screens/menu_screen.dart';
-import 'package:project_z/features/product/presentation/screens/product_screen.dart';
-import 'package:project_z/features/profile/presentation/screens/profile_screen.dart';
+import 'package:project_z/features/features.dart';
 import 'package:project_z/features/search/domain/entity/search_filter.dart';
-import 'package:project_z/features/search/presentation/screens/search_screen.dart';
-import 'package:project_z/features/shell_widget/presentation/screens/shell_screen.dart';
 import 'package:project_z/features/shell_widget/presentation/widgets/empty_shell.dart';
 part 'router.gr.dart';
 
@@ -25,6 +19,7 @@ class AppRouter extends RootStackRouter {
       page: ProjectZShellRoute.page,
       initial: true,
       children: [
+        AutoRoute(path: 'orders', page: OrderListRoute.page),
         AutoRoute(path: 'home', page: HomeRoute.page),
         AutoRoute(path: 'product', page: ProductRoute.page), // Assuming Product is a top-level tab
         AutoRoute(path: 'search', page: SearchRoute.page),

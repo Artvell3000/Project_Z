@@ -14,6 +14,7 @@ class BuyFlowFacadeState with _$BuyFlowFacadeState {
       DateTime d, {
         @Default(false) bool isBasketUpdated,
         @Default(false) bool isUserUpdated,
+        @Default(false) bool isOrderUpdated,
       }) = _FacadeHasAuthState;
 
   const factory BuyFlowFacadeState.notAuth(DateTime d) = _FacadeNotAuthState;

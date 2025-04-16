@@ -3,12 +3,11 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:project_z/core/domain/repositories/auth_repository.dart';
 import 'package:project_z/core/domain/repositories/basket_repository.dart';
+import 'package:project_z/core/domain/repositories/order_repository.dart';
 import 'package:project_z/core/domain/repositories/token_repository.dart';
 import 'package:project_z/core/network/api/mock/mock_api_service.dart';
 import 'package:project_z/core/network/api/service/api_service.dart';
-import 'package:project_z/data/repositories/api_auth_repository.dart';
-import 'package:project_z/data/repositories/api_basket_repository.dart';
-import 'package:project_z/data/repositories/tokens_from_json_repository.dart';
+import 'package:project_z/data/repositories/repositories.dart';
 import 'package:project_z/features/product/presentation/bloc/product_screen_bloc.dart';
 import 'package:project_z/features/search/domain/entity/search_filter.dart';
 import 'package:project_z/features/search/presentation/bloc/search_screen_bloc.dart';
@@ -50,4 +49,7 @@ abstract class AppModule {
 
   @singleton
   IBasketRepository get iBasketRepository => ApiBasketRepository(apiService);
+
+  @singleton
+  IOrderRepository get iOrderRepository => ApiOrderRepository(apiService);
 }

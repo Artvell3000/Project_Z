@@ -21,6 +21,11 @@ abstract class ApiService {
   @GET('news/')
   Future<NewsList> getNews();
 
+  @GET('order/')
+  Future<PaginatedOrderItems> getOrder({
+    @Header('Authorization') required String token,
+  });
+
   @GET('products/')
   Future<ProductList> getProducts();
 

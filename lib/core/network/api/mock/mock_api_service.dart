@@ -20,6 +20,13 @@ class MockApiService extends Mock implements ApiService {
 
   final _basket = mockPaginatedBasketItems;
 
+  final _orders = paginatedOrderItems;
+
+  @override
+  Future<PaginatedOrderItems> getOrder({required String token}) async {
+    return _orders;
+  }
+
   @override
   Future<PaginatedBasketItems> getMyBasketItems({required String token, String? search, int? page}) async {
     return _basket;

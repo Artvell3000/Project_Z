@@ -21,8 +21,8 @@ class MenuScreen extends StatelessWidget {
         const Align(
           alignment: Alignment.centerLeft,
           child: Padding(
-            padding: const EdgeInsets.only(top: 30.0, bottom: 15),
-            child: const Text('Mening savatcham', style: titleTextStyle),
+            padding: EdgeInsets.only(top: 30.0, bottom: 15),
+            child: Text('Mening sahifam', style: titleTextStyle),
           ),
         ),
         Column(

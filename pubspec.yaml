@@ -53,6 +53,7 @@ flutter:
      - assets/footer/
      - assets/icons/
      - assets/basket/
+     - assets/order/
   fonts:
     - family: CustomIcons
       fonts:

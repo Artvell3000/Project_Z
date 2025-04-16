@@ -76,6 +76,7 @@ class _ProjectZShellScreenState extends State<ProjectZShellScreen> {
         );
       },
       routes: [
+
         const HomeRoute(),
         SearchRoute(),
         const BasketRoute(),
@@ -83,6 +84,7 @@ class _ProjectZShellScreenState extends State<ProjectZShellScreen> {
 
         const MenuRoute(),
         ProductRoute(productId: 1),
+        const OrderListRoute(),
       ],
       bottomNavigationBuilder: (_, tabsRouter) {
         return CustomBottomBar(

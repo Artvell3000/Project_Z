@@ -39,9 +39,16 @@ class BasketScreenBloc extends Bloc<BasketScreenEvent, BasketScreenState> {
 
   Future<void> _remove(_BasketScreenRemoveItemEvent d, Emitter<BasketScreenState> emit) async {
     _basket = _removeBasketItemById( _basket, d.itemId);
+
+    final amount = _getFullAmount(_basket);
+    if(amount == 0){
+      emit(const BasketScreenState.loadedEmpty());
+      return;
+    }
+
     emit(BasketScreenState.loaded(
       items: _basket,
-      amount: _getFullAmount(_basket),
+      amount: amount,
       fullPrice: _getFullPrice(_basket),
       categoryPrice: _getMapCategoryPrice(_basket),
       fullPriceWithDiscount: _getFullPriceWithDiscount(_basket),
