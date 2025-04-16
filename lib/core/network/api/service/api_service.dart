@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart' hide Headers;
-import 'package:project_z/core/domain/entity/basket/basket.dart';
 import 'package:project_z/core/domain/entity/entity.dart';
 import 'package:project_z/core/network/api/request_models/request_models.dart';
 import 'package:retrofit/retrofit.dart';

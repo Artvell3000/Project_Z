@@ -4,9 +4,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:project_z/core/domain/entity/basket/basket.dart';
 import 'package:project_z/features/basket/presentation/bloc/basket_screen_bloc.dart';
 import 'package:project_z/shared/consts/text_style_title.dart';
+import 'package:project_z/shared/widgets/discount_widget.dart';
 
 class BasketItemWidget extends StatelessWidget {
   const BasketItemWidget({super.key, required this.item});
+
   final BasketItem item;
 
   @override
@@ -41,21 +43,7 @@ class BasketItemWidget extends StatelessWidget {
                             style: titleTextStyle,
                           ),
                           const SizedBox(width: 8.0),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(17.0),
-                            ),
-                            child: Text(
-                              '-${item.product.discount}%',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 12.0,
-                              ),
-                            ),
-                          ),
+                          DiscountWidget(value: item.product.discount),
                         ],
                       ),
                       const SizedBox(height: 4.0),
@@ -87,7 +75,10 @@ class BasketItemWidget extends StatelessWidget {
                       onPressed: () {
                         //todo unselect
                       },
-                      child: SvgPicture.asset('assets/basket/metka.svg', height: 30,)),
+                      child: SvgPicture.asset(
+                        'assets/basket/metka.svg',
+                        height: 30,
+                      )),
                   Row(
                     children: [
                       ElevatedButton(
@@ -101,7 +92,7 @@ class BasketItemWidget extends StatelessWidget {
                             elevation: 0,
                           ),
                           onPressed: () {
-                            if(item.amount > 1){
+                            if (item.amount > 1) {
                               final bloc = BlocProvider.of<BasketScreenBloc>(context);
                               bloc.add(BasketScreenEvent.decrementQuantity(item.id));
                             }
@@ -151,7 +142,11 @@ class BasketItemWidget extends StatelessWidget {
                         final bloc = BlocProvider.of<BasketScreenBloc>(context);
                         bloc.add(BasketScreenEvent.removeItem(item.id));
                       },
-                      child: SvgPicture.asset('assets/basket/basket.svg', color: const Color.fromRGBO(148, 153, 165, 1), height: 30,)),
+                      child: SvgPicture.asset(
+                        'assets/basket/basket.svg',
+                        color: const Color.fromRGBO(148, 153, 165, 1),
+                        height: 30,
+                      )),
                 ],
               ),
             )

@@ -43,6 +43,8 @@ class _BottomDrawerState extends State<BottomDrawer> {
   final TextEditingController fromController = TextEditingController();
   final TextEditingController toController = TextEditingController();
 
+  bool tapedOnCategory = false;
+
   @override
   void initState() {
     super.initState();
@@ -102,6 +104,14 @@ class _BottomDrawerState extends State<BottomDrawer> {
                     ///
                     /// КАТЕГОРИИ
                     ///
+                    // Align(
+                    //   alignment: Alignment.centerLeft,
+                    //   child: (tapedOnCategory)? Column(
+                    //     children: Filter.struct.keys.map((el){
+                    //       return SizedBox();
+                    //     }).toList(),
+                    //   ) : SizedBox(),
+                    // ),
 
                     Align(
                       alignment: Alignment.centerLeft,

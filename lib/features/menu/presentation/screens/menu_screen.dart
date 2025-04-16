@@ -1,5 +1,7 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/menu/presentation/widgets/widgets.dart';
 import 'package:project_z/features/product/presentation/widgets/widgets.dart';
 import 'package:project_z/shared/consts/text_style_title.dart';
@@ -31,7 +33,7 @@ class MenuScreen extends StatelessWidget {
             MenuItemWidget(
               name: 'Mening Sahifam',
               onClick: (){
-
+                AutoRouter.of(context).push(const OrderListRoute());
               },
             ),
             MenuItemWidget(

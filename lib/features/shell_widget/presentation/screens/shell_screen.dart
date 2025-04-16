@@ -82,9 +82,10 @@ class _ProjectZShellScreenState extends State<ProjectZShellScreen> {
         const BasketRoute(),
         const ProfileRoute(),
 
+        const OrderListRoute(),
         const MenuRoute(),
         ProductRoute(productId: 1),
-        const OrderListRoute(),
+
       ],
       bottomNavigationBuilder: (_, tabsRouter) {
         return CustomBottomBar(

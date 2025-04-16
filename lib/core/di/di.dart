@@ -1,10 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-import 'package:project_z/core/domain/repositories/auth_repository.dart';
-import 'package:project_z/core/domain/repositories/basket_repository.dart';
-import 'package:project_z/core/domain/repositories/order_repository.dart';
-import 'package:project_z/core/domain/repositories/token_repository.dart';
+import 'package:project_z/core/domain/repositories/repositories.dart';
 import 'package:project_z/core/network/api/mock/mock_api_service.dart';
 import 'package:project_z/core/network/api/service/api_service.dart';
 import 'package:project_z/data/repositories/repositories.dart';
