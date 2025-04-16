@@ -23,7 +23,7 @@ class AuthScreenBloc extends Bloc<AuthScreenEvent, AuthScreenState> {
   late String code;
   late String _inputCode;
   late String _inputUsername;
-  late StreamSubscription<BuyFlowFacadeState> subscription;
+  late final StreamSubscription<BuyFlowFacadeState> subscription;
 
   AuthScreenBloc(this._buyBloc) : super(const AuthScreenState.loading()) {
     on<AuthScreenEvent>((event, emit) async {

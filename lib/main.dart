@@ -27,10 +27,11 @@ void main() {
     DeviceOrientation.portraitDown,
   ]).then((_) {
     runApp(
-        BlocProvider(
-          create: (context) => getIt<BuyFlowFacadeBloc>(),
-          child: MyApp(),
-        )
+      MultiBlocProvider(providers: [
+        BlocProvider(create: (_) => getIt<BuyFlowFacadeBloc>()),
+        BlocProvider(create: (_) => getIt<AuthScreenBloc>()),
+      ],
+          child:  MyApp())
     );
   });
 }

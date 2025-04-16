@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/flutter_app_icons.dart';
 
 const String textLogo = 'Logo \ncompany';
@@ -31,7 +33,9 @@ class UnderAppBarWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 UnderAppBarActionButton(
-                  onTap: () {},
+                  onTap: () {
+
+                  },
                   padding: const EdgeInsets.only(right: 5),
                   child: const Icon(
                     CustomIcons.search,
@@ -44,7 +48,9 @@ class UnderAppBarWidget extends StatelessWidget {
                     'assets/icons/menu.svg',
                     height: 20.0,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    AutoRouter.of(context).push(const MenuRoute());
+                  },
                 ),
               ],
             )

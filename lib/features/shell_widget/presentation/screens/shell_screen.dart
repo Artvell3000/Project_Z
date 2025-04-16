@@ -34,48 +34,45 @@ class _ProjectZShellScreenState extends State<ProjectZShellScreen> {
         return shared.AppBarBuilder.build();
       },
       transitionBuilder: (context, child, _) {
-        return BlocProvider(
-          create: (context) => getIt<AuthScreenBloc>(),
-          child: BlocBuilder<AuthScreenBloc, AuthScreenState>(
-            builder: (context, state) {
-              return Stack(
-                children: [
-                  Column(
-                    children: [const UnderAppBarWidget(), Expanded(child: child)],
-                  ),
-                  state.when(
-                    hide: () => const SizedBox(),
-                    inputData: (fullUsername, username) =>
-                        AuthShell(
-                          child: AuthAddDataWidget(
-                            initFullName: fullUsername ?? '',
-                            initPhone: username ?? '',
-                            onClickButtonWhenEnteredData: (fullName, phone) {
-                              BlocProvider.of<AuthScreenBloc>(context).add(AuthScreenEvent.sendCode(phone));
-                            },
-                          ),
-                        ),
-                    sendingCode: () => const AuthShell(child: loadingWidget),
-                    verifyingCode: () => const AuthShell(child: loadingWidget),
-                    inputCode: (username) =>
-                        AuthShell(child: AuthVerifyCodeWidget(
-                          onClickSendWhenEnteredCode: (code) {
-                            BlocProvider.of<AuthScreenBloc>(context).add(AuthScreenEvent.verifyCode(username, code));
+        return BlocBuilder<AuthScreenBloc, AuthScreenState>(
+          builder: (context, state) {
+            return Stack(
+              children: [
+                Column(
+                  children: [const UnderAppBarWidget(), Expanded(child: child)],
+                ),
+                state.when(
+                  hide: () => const SizedBox(),
+                  inputData: (fullUsername, username) =>
+                      AuthShell(
+                        child: AuthAddDataWidget(
+                          initFullName: fullUsername ?? '',
+                          initPhone: username ?? '',
+                          onClickButtonWhenEnteredData: (fullName, phone) {
+                            BlocProvider.of<AuthScreenBloc>(context).add(AuthScreenEvent.sendCode(phone));
                           },
-                        )),
-                    unsuccessVerifyCode: (username) => const SizedBox(),
-                    loaded: (user) => const SizedBox(),
-                    notLoaded: () => const SizedBox(),
-                    loading: () => const SizedBox(),
-                    error: (message) => AuthShell(child: Center(child: Text(message))),
-                  ),
-                ],
-              );
-            },
-            buildWhen: (_, state) {
-              return state.mapOrNull(unsuccessVerifyCode: (d) => false) ?? true;
-            },
-          ),
+                        ),
+                      ),
+                  sendingCode: () => const AuthShell(child: loadingWidget),
+                  verifyingCode: () => const AuthShell(child: loadingWidget),
+                  inputCode: (username) =>
+                      AuthShell(child: AuthVerifyCodeWidget(
+                        onClickSendWhenEnteredCode: (code) {
+                          BlocProvider.of<AuthScreenBloc>(context).add(AuthScreenEvent.verifyCode(username, code));
+                        },
+                      )),
+                  unsuccessVerifyCode: (username) => const SizedBox(),
+                  loaded: (user) => const SizedBox(),
+                  notLoaded: () => const SizedBox(),
+                  loading: () => const SizedBox(),
+                  error: (message) => AuthShell(child: Center(child: Text(message))),
+                ),
+              ],
+            );
+          },
+          buildWhen: (_, state) {
+            return state.mapOrNull(unsuccessVerifyCode: (d) => false) ?? true;
+          },
         );
       },
       routes: [
@@ -83,6 +80,9 @@ class _ProjectZShellScreenState extends State<ProjectZShellScreen> {
         SearchRoute(),
         const BasketRoute(),
         const ProfileRoute(),
+
+        const MenuRoute(),
+        ProductRoute(productId: 1),
       ],
       bottomNavigationBuilder: (_, tabsRouter) {
         return CustomBottomBar(
