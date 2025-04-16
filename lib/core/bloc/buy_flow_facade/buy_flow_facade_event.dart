@@ -9,10 +9,16 @@ class BuyFlowFacadeEvent with _$BuyFlowFacadeEvent {
 
   const factory BuyFlowFacadeEvent.requestAuth() = _FacadeRequestAuthEvent;
 
+  const factory BuyFlowFacadeEvent.abortAuth() = _FacadeAbortAuthEvent;
+
   const factory BuyFlowFacadeEvent.sendCode(String username) = _FacadeSendCodeEvent;
 
   const factory BuyFlowFacadeEvent.verifyCode(String username, String code) = _FacadeVerifyCodeEvent;
 
   const factory BuyFlowFacadeEvent.refreshUser(CustomUserCompanion newUser) = _FacadeRefreshUserEvent;
+
+  const factory BuyFlowFacadeEvent.requestBasket() = _FacadeRequestBasketEvent;
+
+  const factory BuyFlowFacadeEvent.requestUser() = _FacadeRequestUserEvent;
 }
 

@@ -17,6 +17,12 @@ class ApiAuthRepository implements IAuthRepository{
   bool get hasAuth => _hasAuth;
 
   @override
+  AuthTokens get tokens{
+    if(!_hasAuth) throw(Exception('_tokens not init'));
+    return _tokens;
+  }
+
+  @override
   Future<Either<Exception,CustomUser>> setTokens(AuthTokens tokens) async {
     try{
       final response = await _api.getCurrentUser('Bearer ${tokens.accessToken}');
@@ -63,8 +69,8 @@ class ApiAuthRepository implements IAuthRepository{
       _hasAuth = true;
       return Either.right(_tokens.copyWith());
 
-    } catch (e){
-      return Either.left(Exception(e.toString()));
+    } on Exception catch (e){
+      return Either.left(e);
     }
   }
 

@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:project_z/core/domain/repositories/auth_repository.dart';
 import 'package:project_z/core/domain/repositories/basket_repository.dart';
 import 'package:project_z/core/domain/repositories/token_repository.dart';
+import 'package:project_z/core/network/api/mock/mock_api_service.dart';
 import 'package:project_z/core/network/api/service/api_service.dart';
 import 'package:project_z/data/repositories/api_auth_repository.dart';
 import 'package:project_z/data/repositories/api_basket_repository.dart';
@@ -39,7 +40,7 @@ abstract class AppModule {
   Dio get dio => Dio();
 
   @singleton
-  ApiService get apiService => ApiService(dio);
+  ApiService get apiService => MockApiService();
 
   @singleton
   ITokenRepository get iTokenRepository => TokensFromJsonRepository();
@@ -48,5 +49,5 @@ abstract class AppModule {
   IAuthRepository get iAuthRepository => ApiAuthRepository(apiService);
 
   @singleton
-  IBasketRepository get iBasketRepository => ApiBasketRepository();
+  IBasketRepository get iBasketRepository => ApiBasketRepository(apiService);
 }

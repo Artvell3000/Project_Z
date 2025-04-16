@@ -18,7 +18,7 @@ void main() {
   configureDependencies();
 
   //MOCK
-  //configureTestDependencies();
+  configureTestDependencies();
   //MOCK
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,13 +29,7 @@ void main() {
     runApp(
         BlocProvider(
           create: (context) => getIt<BuyFlowFacadeBloc>(),
-          child: BlocProvider(
-            create: (context) => BasketScreenBloc(),
-            child: BlocProvider(
-              create: (context) => getIt<AuthScreenBloc>(),
-              child: MyApp(),
-            ),
-          ),
+          child: MyApp(),
         )
     );
   });

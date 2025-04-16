@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart' hide Headers;
+import 'package:project_z/core/domain/entity/basket/basket.dart';
 import 'package:project_z/core/domain/entity/entity.dart';
 import 'package:project_z/core/network/api/request_models/request_models.dart';
 import 'package:retrofit/retrofit.dart';
@@ -11,6 +12,11 @@ abstract class ApiService {
 
   @GET('categories/')
   Future<CategoryList> getCategories();
+
+  @GET('categories/{id}/')
+  Future<Category> getCategoryById(
+      @Path('id') int id,
+      );
 
   @GET('news/')
   Future<NewsList> getNews();
@@ -61,5 +67,53 @@ abstract class ApiService {
     @Body() CustomUserCompanion user,
   );
 
+  // Basket endpoints
+  @GET('basket/')
+  Future< PaginatedBasketItems> getBasketList({
+    @Header('Authorization') required String token,
+    @Query('search') String? search,
+    @Query('page') int? page,
+  });
 
+  @POST('basket/')
+  @Headers({'Content-Type': 'application/json'})
+  Future<BasketItem> createBasketItem(
+      @Header('Authorization') String token,
+      @Body() BasketItemRequest request,
+      );
+
+  @GET('basket/my-basket/')
+  Future< PaginatedBasketItems> getMyBasketItems({
+    @Header('Authorization') required String token,
+    @Query('search') String? search,
+    @Query('page') int? page,
+  });
+
+  @GET('basket/{id}/')
+  Future<BasketItem> getBasketItem(
+      @Header('Authorization') String token,
+      @Path('id') int basketItemId,
+      );
+
+  @PUT('basket/{id}/')
+  @Headers({'Content-Type': 'application/json'})
+  Future<BasketItem> updateBasketItem(
+      @Header('Authorization') String token,
+      @Path('id') int basketItemId,
+      @Body() BasketItemRequest request,
+      );
+
+  @PATCH('basket/{id}/')
+  @Headers({'Content-Type': 'application/json'})
+  Future<BasketItem> partialUpdateBasketItem(
+      @Header('Authorization')  String token,
+      @Path('id') int basketItemId,
+      @Body() BasketItemRequest request,
+      );
+
+  @DELETE('basket/{id}/')
+  Future<void> deleteBasketItem(
+      @Header('Authorization') String token,
+      @Path('id') int basketItemId,
+      );
 }

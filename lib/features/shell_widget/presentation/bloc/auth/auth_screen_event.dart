@@ -6,7 +6,7 @@ class AuthScreenEvent with _$AuthScreenEvent {
 
   const factory AuthScreenEvent.error(Exception e) = _ErrorAuthEvent;
 
-  const factory AuthScreenEvent.hide() = _HideAuthEvent;
+  const factory AuthScreenEvent.hide(bool hasAuth) = _HideAuthEvent;
 
   const factory AuthScreenEvent.sendCode(String username) = _SendingCodeAuthEvent;
 

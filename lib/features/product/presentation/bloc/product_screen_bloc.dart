@@ -38,7 +38,7 @@ class ProductScreenBloc extends Bloc<ProductScreenEvent, ProductScreenState> {
 
   Future<void> loadData() async {
     try{
-      product = (await api.searchProducts()).results.first;
+      product = (await api.getProductById(id));
       newProducts = (await api.searchProducts(status: newProductStatus)).results;
       add(ProductScreenEvent.productLoaded(product, newProducts));
     } catch(e){

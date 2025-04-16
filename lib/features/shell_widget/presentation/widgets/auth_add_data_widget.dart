@@ -50,7 +50,7 @@ class _AuthAddDataWidgetState extends State<AuthAddDataWidget> {
                 child: IconButton(
                   icon: const Icon(Icons.close_rounded, size: 30, color: Color.fromRGBO(16, 53, 91, 1)),
                   onPressed: () {
-                    BlocProvider.of<AuthScreenBloc>(context).add(const AuthScreenEvent.hide());
+                    BlocProvider.of<AuthScreenBloc>(context).add(const AuthScreenEvent.hide(false));
                   },
                 ),
               ),

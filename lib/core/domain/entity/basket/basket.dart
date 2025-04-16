@@ -21,7 +21,7 @@ class PaginatedBasketItems with _$PaginatedBasketItems {
 @freezed
 class BasketItem with _$BasketItem {
   const factory BasketItem({
-    @JsonKey(name: 'id') required String id,
+    @JsonKey(name: 'id') required int id,
     @JsonKey(name: 'user') required int user,
     @JsonKey(name: 'product') required Product product,
     @JsonKey(name: 'product_id') required int productId,
@@ -32,4 +32,16 @@ class BasketItem with _$BasketItem {
 
   factory BasketItem.fromJson(Map<String, dynamic> json) =>
       _$BasketItemFromJson(json);
+}
+
+@freezed
+class BasketItemRequest with _$BasketItemRequest {
+  const factory BasketItemRequest({
+    @JsonKey(name: 'product') required Product product,
+    @JsonKey(name: 'product_id') required int productId,
+    @JsonKey(name: 'amount') required int amount,
+  }) = _BasketItemRequest;
+
+  factory BasketItemRequest.fromJson(Map<String, dynamic> json) =>
+      _$BasketItemRequestFromJson(json);
 }

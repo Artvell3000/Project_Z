@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
+import 'package:project_z/core/bloc/buy_flow_facade/buy_flow_facade_bloc.dart';
+import 'package:project_z/core/di/di.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/basket/presentation/bloc/basket_screen_bloc.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/auth/auth_screen_bloc.dart';
@@ -32,43 +34,48 @@ class _ProjectZShellScreenState extends State<ProjectZShellScreen> {
         return shared.AppBarBuilder.build();
       },
       transitionBuilder: (context, child, _) {
-        return BlocBuilder<AuthScreenBloc, AuthScreenState>(
-          builder: (context, state) {
-            return Stack(
-              children: [
-                Column(
-                  children: [const UnderAppBarWidget(), Expanded(child: child)],
-                ),
-                state.when(
-                  hide: () => const SizedBox(),
-                  inputData: (fullUsername, username) => AuthShell(
-                    child: AuthAddDataWidget(
-                      initFullName: fullUsername ?? '',
-                      initPhone: username ?? '',
-                      onClickButtonWhenEnteredData: (fullName, phone) {
-                        BlocProvider.of<AuthScreenBloc>(context).add(AuthScreenEvent.sendCode(phone));
-                      },
-                    ),
+        return BlocProvider(
+          create: (context) => getIt<AuthScreenBloc>(),
+          child: BlocBuilder<AuthScreenBloc, AuthScreenState>(
+            builder: (context, state) {
+              return Stack(
+                children: [
+                  Column(
+                    children: [const UnderAppBarWidget(), Expanded(child: child)],
                   ),
-                  sendingCode: () => const AuthShell(child: loadingWidget),
-                  verifyingCode: () => const AuthShell(child: loadingWidget),
-                  inputCode: (username) => AuthShell(child: AuthVerifyCodeWidget(
-                    onClickSendWhenEnteredCode: (code) {
-                      BlocProvider.of<AuthScreenBloc>(context).add(AuthScreenEvent.verifyCode(username, code));
-                    },
-                  )),
-                  unsuccessVerifyCode: (username) => const SizedBox(),
-                  loaded: (user) => const SizedBox(),
-                  notLoaded: () => const SizedBox(),
-                  loading: () => const SizedBox(),
-                  error: (message) => AuthShell(child: Center(child: Text(message))),
-                ),
-              ],
-            );
-          },
-          buildWhen: (_, state){
-            return state.mapOrNull(unsuccessVerifyCode:(d) => false) ?? true;
-          },
+                  state.when(
+                    hide: () => const SizedBox(),
+                    inputData: (fullUsername, username) =>
+                        AuthShell(
+                          child: AuthAddDataWidget(
+                            initFullName: fullUsername ?? '',
+                            initPhone: username ?? '',
+                            onClickButtonWhenEnteredData: (fullName, phone) {
+                              BlocProvider.of<AuthScreenBloc>(context).add(AuthScreenEvent.sendCode(phone));
+                            },
+                          ),
+                        ),
+                    sendingCode: () => const AuthShell(child: loadingWidget),
+                    verifyingCode: () => const AuthShell(child: loadingWidget),
+                    inputCode: (username) =>
+                        AuthShell(child: AuthVerifyCodeWidget(
+                          onClickSendWhenEnteredCode: (code) {
+                            BlocProvider.of<AuthScreenBloc>(context).add(AuthScreenEvent.verifyCode(username, code));
+                          },
+                        )),
+                    unsuccessVerifyCode: (username) => const SizedBox(),
+                    loaded: (user) => const SizedBox(),
+                    notLoaded: () => const SizedBox(),
+                    loading: () => const SizedBox(),
+                    error: (message) => AuthShell(child: Center(child: Text(message))),
+                  ),
+                ],
+              );
+            },
+            buildWhen: (_, state) {
+              return state.mapOrNull(unsuccessVerifyCode: (d) => false) ?? true;
+            },
+          ),
         );
       },
       routes: [
@@ -118,19 +125,33 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildBarItem(0, CustomIcons.home, 'Home'),
-          _buildBarItem(1, CustomIcons.search, 'Search'),
-          _buildBarItem(2, CustomIcons.basket, 'Basket', isBasket: true),
-          _buildBarItem(3, CustomIcons.profile, 'Profile'),
+          _buildBarItem(context, 0, CustomIcons.home, 'Home'),
+          _buildBarItem(context, 1, CustomIcons.search, 'Search'),
+          _buildBarItem(context, 2, CustomIcons.basket, 'Basket', isBasket: true, onClick: (){
+            BlocProvider.of<BuyFlowFacadeBloc>(context).add(
+                const BuyFlowFacadeEvent.requestBasket()
+            );
+          }),
+          _buildBarItem(context, 3, CustomIcons.profile, 'Profile', onClick: (){
+            BlocProvider.of<BuyFlowFacadeBloc>(context).add(
+                const BuyFlowFacadeEvent.requestUser()
+            );
+          }),
         ],
       ),
     );
   }
 
-  Widget _buildBarItem(int index, IconData icon, String label, {bool isBasket = false}) {
+  Widget _buildBarItem(BuildContext context,int index, IconData icon, String label, {
+    bool isBasket = false,
+    void Function()? onClick,
+  }) {
     final isSelected = widget.currentIndex == index;
     return GestureDetector(
-      onTap: () => widget.onTap(index),
+      onTap: () {
+          widget.onTap(index);
+          if(onClick != null) onClick();
+        },
       child: Stack(
         children: [
           Column(
@@ -150,37 +171,33 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           ),
           (isBasket) ? FractionalTranslation(
             translation: const Offset(1.2, 0.05),
-            child: BlocBuilder<BasketScreenBloc, BasketScreenState>(
-                builder: (context, state){
-                  return Container(
-                    height: 25,
-                    width: 25,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15), // Adjust the radius for desired roundness
+            child: Container(
+              height: 25,
+              width: 25,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15), // Adjust the radius for desired roundness
+              ),
+              child: Center(
+                child: Container(
+                  height: 22,
+                  width: 22,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(15), // Adjust the radius for desired roundness
+                  ),
+                  child: const Center(
+                    child: FractionalTranslation(
+                      translation: Offset(0.0, 0.05),
+                      child: Text('3', style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 13
+                      ),),
                     ),
-                    child: Center(
-                      child: Container(
-                        height: 22,
-                        width: 22,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(15), // Adjust the radius for desired roundness
-                        ),
-                        child: const Center(
-                          child: FractionalTranslation(
-                            translation: Offset(0.0, 0.05),
-                            child: Text('3', style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 13
-                            ),),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }
+                  ),
+                ),
+              ),
             ),
           ) : const SizedBox(),
         ],

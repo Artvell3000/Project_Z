@@ -45,6 +45,9 @@ class AuthScreenBloc extends Bloc<AuthScreenEvent, AuthScreenState> {
   }
 
   Future<void> _onHide(_HideAuthEvent d, Emitter<AuthScreenState> emit) async {
+    if(!d.hasAuth){
+      _buyBloc.add(const BuyFlowFacadeEvent.abortAuth());
+    }
     emit(const AuthScreenState.hide());
   }
 
@@ -65,6 +68,7 @@ class AuthScreenBloc extends Bloc<AuthScreenEvent, AuthScreenState> {
 
   Future<void> _onVerifyCode(_VerifyingCodeAuthEvent d, Emitter<AuthScreenState> emit) async {
     _inputCode = d.code;
+    Logger().i('$_inputCode : $code');
     if(_inputCode == code){
       emit(const AuthScreenState.verifyingCode());
       _buyBloc.add(BuyFlowFacadeEvent.verifyCode(_inputUsername, _inputCode));
@@ -79,7 +83,7 @@ class AuthScreenBloc extends Bloc<AuthScreenEvent, AuthScreenState> {
       state.mapOrNull(
         needAuth: (d) => add(const AuthScreenEvent.startAuth()),
         needInputCode: (d) => add(AuthScreenEvent.startAuth(code: d.code)),
-        newUser: (d) => add(const AuthScreenEvent.hide()),
+        hasAuth: (d) => add(const AuthScreenEvent.hide(true)),
         error: (d) => add(AuthScreenEvent.error(d.e)),
       );
     },

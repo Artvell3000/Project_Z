@@ -7,8 +7,11 @@ class BasketScreenState with _$BasketScreenState {
 
   // Успешная загрузка корзины
   const factory BasketScreenState.loaded({
-    required List<BasketItem> items,
+    required Map<Category, List<BasketItem>> items,
     required int amount,
+    required Map<String, String> categoryPrice,
+    required double fullPriceWithDiscount,
+    required double fullPrice,
   }) = _BasketScreenLoadedState;
 
   const factory BasketScreenState.loadedEmpty() = _BasketScreenLoadedEmptyState;

@@ -7,6 +7,7 @@ abstract interface class IAuthRepository{
   Future<Either<Exception, CustomUser>> refreshUser(CustomUserCompanion newUser);
   Future<Either<Exception,CustomUser>> setTokens(AuthTokens tokens);
   Future<Either<Exception, CustomUser>> getUser();
+  AuthTokens get tokens;
   Future<Either<Exception, String>> sendCode(String username);
   Future<Either<Exception, AuthTokens>> verifyCode(String username,String code);
 }

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:project_z/core/domain/entity/basket/basket.dart';
+import 'package:project_z/core/domain/entity/category/category.dart';
 
 class PaymentCard extends StatelessWidget {
-  const PaymentCard({super.key});
+  const PaymentCard({super.key, required this.categoryPrice, required this.fullPrice, required this.fullPriceWithDiscount});
+  final Map<String,String> categoryPrice;
+  final double fullPrice;
+  final double fullPriceWithDiscount;
 
   @override
   Widget build(BuildContext context) {
@@ -27,18 +32,18 @@ class PaymentCard extends StatelessWidget {
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
-                  children: const <Widget>[
-                    Text(
-                      '5 005 000 so\'m',
-                      style: TextStyle(
+                  children: [
+                    Text( //цена со скидкой
+                      '$fullPriceWithDiscount so\'m',
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Colors.black
                       ),
                     ),
-                    Text(
-                      '6 045 000 so\'m',
-                      style: TextStyle(
+                    Text( // полная цена
+                      '$fullPrice so\'m',
+                      style: const TextStyle(
                         fontSize: 12,
                         decoration: TextDecoration.lineThrough,
                         color: Color.fromRGBO(255, 34, 42, 1),
@@ -50,8 +55,18 @@ class PaymentCard extends StatelessWidget {
               ],
             ),
             const Divider(height: 24, thickness: 1),
-            _buildItem('Oshxona mebellari', '1 250 000 so\'m'),
-            const Divider(height: 24, thickness: 1),
+
+            Column(
+              children: categoryPrice.entries.map((en){
+                return Column(
+                  children: [
+                    _buildItem(en.key, '${en.value} so\'m'),
+                    const Divider(height: 24, thickness: 1),
+                  ],
+                );
+              }).toList(),
+            ),
+
             const SizedBox(height: 20),
             SizedBox(
               width: double.infinity,

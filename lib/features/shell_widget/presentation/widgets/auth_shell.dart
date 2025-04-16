@@ -13,7 +13,7 @@ class AuthShell extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            BlocProvider.of<AuthScreenBloc>(context).add(const AuthScreenEvent.hide());
+            BlocProvider.of<AuthScreenBloc>(context).add(const AuthScreenEvent.hide(false));
           },
           child: const ColoredBox(color: Color.fromRGBO(125, 125, 125, 0.5), child: SizedBox.expand()),
         ),

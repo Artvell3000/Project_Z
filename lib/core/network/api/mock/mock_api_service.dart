@@ -6,7 +6,7 @@ import 'package:project_z/core/network/api/request_models/request_models.dart';
 import 'package:project_z/core/network/api/service/api_service.dart';
 import 'package:project_z/core/network/api/mock/const/const.dart';
 
-@singleton
+@injectable
 class MockApiService extends Mock implements ApiService {
   MockApiService() : super();
 
@@ -82,13 +82,13 @@ class MockApiService extends Mock implements ApiService {
 
   @override
   Future<CustomUser> getCurrentUser(String token) async {
-    if(token != 'accessToken') throw Exception('not mock token');
+    if(token != 'Bearer accessToken') throw Exception('not mock token');
     return _user.copyWith();
   }
 
   @override
   Future<CustomUser> updateCurrentUser(String token, CustomUserCompanion user) async {
-    if(token != 'accessToken') throw Exception('not mock token');
+    if(token != 'Bearer accessToken') throw Exception('not mock token');
     if (user.username != null) _user = _user.copyWith(username: user.username!);
     if (user.fullName != null) _user = _user.copyWith(fullName: user.fullName);
     if (user.town != null) _user = _user.copyWith(town: user.town);
@@ -115,6 +115,13 @@ class MockApiService extends Mock implements ApiService {
   @override
   Future<CategoryList> getCategories() async {
     return _categories;
+  }
+
+  @override
+  Future<Category> getCategoryById(int id) async {
+    return mockCategories.results.where((el){
+      return el.id == id;
+    }).first;
   }
 
   @override

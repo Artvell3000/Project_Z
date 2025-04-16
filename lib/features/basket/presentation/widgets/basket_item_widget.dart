@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:project_z/core/domain/entity/basket/basket.dart';
+import 'package:project_z/features/basket/presentation/bloc/basket_screen_bloc.dart';
 import 'package:project_z/shared/consts/text_style_title.dart';
 
 class BasketItemWidget extends StatelessWidget {
-  const BasketItemWidget({super.key});
+  const BasketItemWidget({super.key, required this.item});
+  final BasketItem item;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +23,7 @@ class BasketItemWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Image.network(
-                  'https://i.ibb.co/tw7Qn7yn/photo.png',
+                  item.product.images.first.image,
                   width: 100,
                   height: 100,
                   fit: BoxFit.contain,
@@ -31,8 +36,8 @@ class BasketItemWidget extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          const Text(
-                            '3 458 000 so\'m',
+                          Text(
+                            item.product.formattedFinalPrice,
                             style: titleTextStyle,
                           ),
                           const SizedBox(width: 8.0),
@@ -42,9 +47,9 @@ class BasketItemWidget extends StatelessWidget {
                               color: Colors.red,
                               borderRadius: BorderRadius.circular(17.0),
                             ),
-                            child: const Text(
-                              '-36%',
-                              style: TextStyle(
+                            child: Text(
+                              '-${item.product.discount}%',
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 12.0,
@@ -54,15 +59,15 @@ class BasketItemWidget extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 4.0),
-                      const Text(
-                        'Smistetil SL77-001F...',
-                        style: TextStyle(
+                      Text(
+                        item.product.name,
+                        style: const TextStyle(
                             fontSize: 14.0, color: Color.fromRGBO(97, 97, 97, 1), fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(height: 4.0),
-                      const Text(
-                        'Mahsulot kodi: 5389',
-                        style: TextStyle(
+                      Text(
+                        'Mahsulot kodi: ${item.product.slug}',
+                        style: const TextStyle(
                           color: Color.fromRGBO(130, 130, 130, 1),
                           fontWeight: FontWeight.w400,
                           fontSize: 14.0,
@@ -78,48 +83,75 @@ class BasketItemWidget extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  IconButton(
+                  TextButton(
                       onPressed: () {
                         //todo unselect
                       },
-                      icon: const Icon(Icons.check_circle, color: Color.fromRGBO(16, 53, 91, 1), size: 30.0)),
+                      child: SvgPicture.asset('assets/basket/metka.svg', height: 30,)),
                   Row(
                     children: [
-                      IconButton(
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(36, 36),
+                            backgroundColor: (item.amount == 1) ? Colors.grey : Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            padding: EdgeInsets.zero,
+                            elevation: 0,
+                          ),
                           onPressed: () {
-                            //todo remove one
+                            if(item.amount > 1){
+                              final bloc = BlocProvider.of<BasketScreenBloc>(context);
+                              bloc.add(BasketScreenEvent.decrementQuantity(item.id));
+                            }
                           },
-                          icon: const Icon(
-                            Icons.remove,
-                            size: 30.0,
-                            color: Colors.black,
+                          child: const Center(
+                            child: Icon(
+                              Icons.remove,
+                              size: 30.0,
+                              color: Colors.black,
+                            ),
                           )),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 17.0),
-                        child: Text('3',
-                            style: TextStyle(
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                        child: Text(item.amount.toString(),
+                            style: const TextStyle(
                               fontSize: 20.0,
                               fontWeight: FontWeight.w600,
                               color: Color.fromRGBO(40, 47, 60, 1),
                             )),
                       ),
-                      IconButton(
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(36, 36),
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          padding: EdgeInsets.zero,
+                          elevation: 0,
+                        ),
                         onPressed: () {
-                          //todo add one
+                          final bloc = BlocProvider.of<BasketScreenBloc>(context);
+                          bloc.add(BasketScreenEvent.incrementQuantity(item.id));
                         },
-                        icon: const Icon(
-                          Icons.add,
-                          size: 30.0,
-                          color: Colors.black,
+                        child: const Center(
+                          child: Icon(
+                            Icons.add,
+                            size: 30.0,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  IconButton(
+                  TextButton(
                       onPressed: () {
-                        //todo delete item
+                        final bloc = BlocProvider.of<BasketScreenBloc>(context);
+                        bloc.add(BasketScreenEvent.removeItem(item.id));
                       },
-                      icon: const Icon(Icons.delete_outline, color: Color.fromRGBO(148, 153, 165, 1), size: 30.0)),
+                      child: SvgPicture.asset('assets/basket/basket.svg', color: const Color.fromRGBO(148, 153, 165, 1), height: 30,)),
                 ],
               ),
             )

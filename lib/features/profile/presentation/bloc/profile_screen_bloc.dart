@@ -15,21 +15,19 @@ part 'profile_screen_bloc.freezed.dart';
 @injectable
 class ProfileScreenBloc extends Bloc<ProfileScreenEvent, ProfileScreenState> {
   final BuyFlowFacadeBloc bloc;
-  late CustomUser _user;
+  late CustomUser? _user;
 
   ProfileScreenBloc(this.bloc) : super(const ProfileScreenState.loading()) {
     on<ProfileScreenEvent>((event, emit) async {
-      Logger().i('[ProfileScreenBloc : event] $event');
       await event.map(
-        init: (d) => _onInit(d, emit),
-        loadNewUser: (d) => _onLoadNewUser(d, emit),
-        loadNewUserWithError: (d) => _onLoadNewUserWithError(d, emit),
-        refreshFullName: (d) => _onRefreshFullName(d, emit),
-        refreshUsername: (d) => _onRefreshUsername(d, emit),
-        refreshTown: (d) => _onRefreshTown(d, emit),
-        refreshDistrict: (d) => _onRefreshDistrict(d, emit),
-        requestAuth: (d) => _onRequestAuth(d, emit)
-      );
+          init: (d) => _onInit(d, emit),
+          loadNewUser: (d) => _onLoadNewUser(d, emit),
+          loadNewUserWithError: (d) => _onLoadNewUserWithError(d, emit),
+          refreshFullName: (d) => _onRefreshFullName(d, emit),
+          refreshUsername: (d) => _onRefreshUsername(d, emit),
+          refreshTown: (d) => _onRefreshTown(d, emit),
+          refreshDistrict: (d) => _onRefreshDistrict(d, emit),
+          requestAuth: (d) => _onRequestAuth(d, emit));
     });
     add(const ProfileScreenEvent.init());
   }
@@ -48,7 +46,6 @@ class ProfileScreenBloc extends Bloc<ProfileScreenEvent, ProfileScreenState> {
 
   Future<void> _onRefreshFullName(_RefreshFullNameEvent d, Emitter<ProfileScreenState> emit) async {
     emit(const ProfileScreenState.loading());
-    Logger().i('[CustomUserCompanion] ${CustomUserCompanion(fullName: d.name).toJson()}');
     bloc.add(BuyFlowFacadeEvent.refreshUser(CustomUserCompanion(fullName: d.name)));
   }
 
@@ -67,25 +64,41 @@ class ProfileScreenBloc extends Bloc<ProfileScreenEvent, ProfileScreenState> {
     bloc.add(BuyFlowFacadeEvent.refreshUser(CustomUserCompanion(district: d.district)));
   }
 
-  Future<void> _onInit(_InitEvent d, Emitter<ProfileScreenState> emit) async {
-
-    (await bloc.user).fold((e){
+  Future<void> _loadUser() async {
+    (await bloc.user).fold((e) {
       add(ProfileScreenEvent.loadNewUserWithError(e.toString()));
-    }, (user){
-      if(user == null){
+    }, (user) {
+      if (user == null) {
         add(const ProfileScreenEvent.loadNewUser(null));
-      } else{
+      } else {
         add(ProfileScreenEvent.loadNewUser(user));
       }
     });
+  }
 
-    bloc.stream.listen((state){
+  Future<void> _onInit(_InitEvent d, Emitter<ProfileScreenState> emit) async {
+    await bloc.state.mapOrNull(notAuth: (d) async {
+      bloc.add(const BuyFlowFacadeEvent.requestAuth());
+      add(const ProfileScreenEvent.loadNewUser(null));
+    }, hasAuth: (d) async {
+      if (d.isUserUpdated) {
+        await _loadUser();
+      }
+    });
+
+    bloc.stream.listen((state) {
       state.mapOrNull(
-        newUser: (d){
-          _user = d.user;
-          add(ProfileScreenEvent.loadNewUser(d.user));
+
+      //     notAuth: (d) async {
+      //   bloc.add(const BuyFlowFacadeEvent.requestAuth());
+      //   add(const ProfileScreenEvent.loadNewUser(null));
+      // },
+
+          hasAuth: (d) async {
+        if (d.isUserUpdated) {
+          await _loadUser();
         }
-      );
+      });
     });
   }
 }

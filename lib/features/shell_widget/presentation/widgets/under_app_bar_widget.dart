@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:project_z/flutter_app_icons.dart';
 
 const String textLogo = 'Logo \ncompany';
@@ -30,12 +31,19 @@ class UnderAppBarWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 UnderAppBarActionButton(
-                  iconData: CustomIcons.search,
                   onTap: () {},
                   padding: const EdgeInsets.only(right: 5),
+                  child: const Icon(
+                    CustomIcons.search,
+                    color: Colors.white,
+                    size: 20.0,
+                  ),
                 ),
                 UnderAppBarActionButton(
-                  iconData: Icons.menu,
+                  child: SvgPicture.asset(
+                    'assets/icons/menu.svg',
+                    height: 20.0,
+                  ),
                   onTap: () {},
                 ),
               ],
@@ -50,12 +58,12 @@ class UnderAppBarWidget extends StatelessWidget {
 class UnderAppBarActionButton extends StatelessWidget {
   const UnderAppBarActionButton({
     super.key,
-    required this.iconData,
+    required this.child,
     required this.onTap,
     this.padding,
   });
 
-  final IconData iconData;
+  final Widget child;
   final void Function() onTap;
   final EdgeInsets? padding;
 
@@ -73,11 +81,7 @@ class UnderAppBarActionButton extends StatelessWidget {
             )),
             onPressed: onTap,
             child: Center(
-              child: Icon(
-                iconData,
-                color: Colors.white,
-                size: 20.0,
-              ),
+              child: child,
             )),
       ),
     );

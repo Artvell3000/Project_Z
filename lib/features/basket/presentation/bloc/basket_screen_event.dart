@@ -3,32 +3,21 @@ part of 'basket_screen_bloc.dart';
 @freezed
 class BasketScreenEvent with _$BasketScreenEvent {
 
-  // Загрузка корзины
+  const factory BasketScreenEvent.init() = _BasketScreenInitEvent;
+  const factory BasketScreenEvent.error(String message) = _BasketScreenErrorEvent;
   const factory BasketScreenEvent.load() = _BasketScreenLoadEvent;
 
   const factory BasketScreenEvent.loaded(
-      List<BasketItem> items
+      Map<Category,List<BasketItem>> items
       ) = _BasketScreenLoadedEvent;
 
-  // Добавление товара
-  const factory BasketScreenEvent.addItem({
-    required Product product,
-    required int quantity,
-  }) = _BasketScreenAddItemEvent;
+  const factory BasketScreenEvent.loadedEmpty() = _BasketScreenLoadedEmptyEvent;
 
-  // Удаление товара
-  const factory BasketScreenEvent.removeItem({
-    required String productId,
-  }) = _BasketScreenRemoveItemEvent;
+  const factory BasketScreenEvent.removeItem(int itemId) = _BasketScreenRemoveItemEvent;
 
-  // Изменение количества товара
-  const factory BasketScreenEvent.updateQuantity({
-    required String productId,
-    required int newQuantity,
-  }) = _BasketScreenUpdateQuantityEvent;
+  const factory BasketScreenEvent.incrementQuantity(int itemId) = _BasketScreenIncrementQuantityEvent;
 
-  // Очистка корзины
-  const factory BasketScreenEvent.clear() = _BasketScreenClearEvent;
+  const factory BasketScreenEvent.decrementQuantity(int itemId) = _BasketScreenDecrementQuantityEvent;
 
   // Оформление заказа
   const factory BasketScreenEvent.checkout({

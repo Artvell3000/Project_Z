@@ -12,6 +12,7 @@ const textStyleForTextFieldStyle = TextStyle(
   color: Color.fromRGBO(16, 53, 91, 1),
   fontSize: 14,
   fontWeight: FontWeight.w600,
+
 );
 
 const textStyleForLabel = TextStyle(
@@ -25,7 +26,8 @@ var textFieldDecoration = InputDecoration(
   fillColor: const Color.fromRGBO(245, 245, 247, 1),
   contentPadding: const EdgeInsets.only(
     top: 15,
-    left: 5,
+    left: 15,
+    right: 15
   ),
   border: OutlineInputBorder(
     borderRadius: BorderRadius.circular(12),
