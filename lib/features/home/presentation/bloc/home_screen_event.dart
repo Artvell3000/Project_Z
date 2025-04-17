@@ -12,4 +12,9 @@ class HomeScreenEvent with _$HomeScreenEvent {
   const factory HomeScreenEvent.error(
     String error,
   ) = _ErrorEvent;
+
+  const factory HomeScreenEvent.moveTo({
+    @Default(false) bool toSearchWithCategory,
+    int? parentCategoryId
+  }) = _MoveToEvent;
 }

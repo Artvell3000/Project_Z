@@ -2,6 +2,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:logger/logger.dart';
 import 'package:project_z/constants/product/status.dart';
 import 'package:project_z/core/di/di.dart';
 import 'package:project_z/core/routing/router.dart';
@@ -43,37 +44,57 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => getIt<HomeScreenBloc>(),
-      child: ZScaffold(
-        children: [
-          NewsWidget(
-            onTap: onTapNewsWidget,
-            currentNews: 0,
-          ),
-          CategoriesWidget(
-            onTapMoreCategories: () => onTapMoreCategories(context),
-          ),
-          NewProductsWidget(
-            onTapMoreNewProducts: () => onTapMoreNewProducts(context),
-          ),
-          NewsWidget(
-            onTap: onTapNewsWidget,
-            currentNews: 1,
-          ),
-          SpecialOffersWidget(
-            onTapMoreSpecialOffers: () => onTapMoreSpecialOffers(context),
-          ),
-          MessageWidget(),
-          Padding(
-            padding: const EdgeInsets.only(top: 40.0),
-            child: SizedBox(
-              width: double.infinity,
-              child: SvgPicture.asset(
-                'assets/footer/footer.svg',
-                fit: BoxFit.fitWidth,
+      child: BlocListener<HomeScreenBloc, HomeScreenState>(
+        listener: (context, state) {
+          state.mapOrNull(
+            moveTo: (d){
+              final bloc = BlocProvider.of<HomeScreenBloc>(context);
+              if(d.toSearchWithCategory){
+                //Logger().i('${bloc.getSubcategories(d.parentCategoryId!).map((el) => '${el.name} ').toList()}');
+                AutoRouter.of(context)
+                    .push(SearchRoute(initFilter: SearchFilter(
+                    subcategories: bloc.getSubcategories(d.parentCategoryId!)
+                )));
+              }
+
+            }
+          );
+        },
+        listenWhen: (prev, state){
+          return state.mapOrNull(moveTo:(d) => true) ?? false;
+        },
+        child: ZScaffold(
+          children: [
+            NewsWidget(
+              onTap: onTapNewsWidget,
+              currentNews: 0,
+            ),
+            CategoriesWidget(
+              onTapMoreCategories: () => onTapMoreCategories(context),
+            ),
+            NewProductsWidget(
+              onTapMoreNewProducts: () => onTapMoreNewProducts(context),
+            ),
+            NewsWidget(
+              onTap: onTapNewsWidget,
+              currentNews: 1,
+            ),
+            SpecialOffersWidget(
+              onTapMoreSpecialOffers: () => onTapMoreSpecialOffers(context),
+            ),
+            MessageWidget(),
+            Padding(
+              padding: const EdgeInsets.only(top: 40.0),
+              child: SizedBox(
+                width: double.infinity,
+                child: SvgPicture.asset(
+                  'assets/footer/footer.svg',
+                  fit: BoxFit.fitWidth,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

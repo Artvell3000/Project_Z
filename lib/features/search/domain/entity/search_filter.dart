@@ -7,6 +7,8 @@ part 'search_filter.freezed.dart';
 class SearchFilter with _$SearchFilter {
   const factory SearchFilter({
     Category? enabled,
-    String? status
+    String? status,
+    String? search,
+    List<Category>? subcategories
   }) = _SearchFilter;
 }

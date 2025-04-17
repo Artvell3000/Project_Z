@@ -24,30 +24,66 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   late List<Product> specialOffer;
   late String error;
 
+  late Map<int, List<Category>> _struct;
+
   HomeScreenBloc(this.api) : super(const HomeScreenState.loading()) {
     Logger().i('[HomeScreenBloc] init');
     on<HomeScreenEvent>((event, emit) async {
-      event.map(loaded: (data) {
-        final mainCategories = data.categories.where((c) => c.subcategoryId == null).toList();
-        emit(HomeScreenState.loaded(
-          categories: mainCategories,
-          news: data.news,
-          newProducts: data.newProducts,
-          specialOffer: data.specialOffer,
-        ));
-      }, error: (data) {
-        emit(HomeScreenState.error(productsError: data.error));
-      });
+      event.map(
+          loaded: (d) => _onLoadedData(d, emit),
+          error: (data) {
+            emit(HomeScreenState.error(productsError: data.error));
+          },
+          moveTo: (d) => _onMoveTo(d, emit));
     });
 
     loadData();
+  }
+
+  List<Category> getSubcategories(int parentId){
+    return _struct[parentId] ?? [];
+  }
+
+  void _onLoadedData(_LoadedEvent d, Emitter<HomeScreenState> emit) {
+    final mainCategories = d.categories.where((c) => c.subcategoryId == null).toList();
+    emit(HomeScreenState.loaded(
+      categories: mainCategories,
+      news: d.news,
+      newProducts: d.newProducts,
+      specialOffer: d.specialOffer,
+    ));
+  }
+
+  void _onMoveTo(_MoveToEvent d, Emitter<HomeScreenState> emit) {
+    if (d.toSearchWithCategory) {
+      emit(HomeScreenState.moveTo(toSearchWithCategory: d.toSearchWithCategory, parentCategoryId: d.parentCategoryId));
+    }
   }
 
   Future<void> loadData() async {
     try {
       newProducts = (await api.searchProducts(status: newProductStatus)).results;
       specialOffer = (await api.searchProducts(status: specialOfferStatus)).results;
+
+
+
       categories = (await api.getCategories()).results;
+
+      Map<int, List<Category>> struct = {};
+
+      for(final el in categories){
+        if(el.subcategoryId == null){
+          struct[el.id] = [];
+        } else {
+          if(struct[el.subcategoryId] == null){
+            struct[el.subcategoryId!] = [el];
+          } else {
+            struct[el.subcategoryId!]!.add(el);
+          }
+        }
+      }
+      _struct = struct;
+
       news = (await api.getNews()).results;
       add(HomeScreenEvent.loaded(
           categories: categories, news: news, newProducts: newProducts, specialOffer: specialOffer));

@@ -12,4 +12,9 @@ class HomeScreenState with _$HomeScreenState {
   }) = _LoadedDataState;
 
   const factory HomeScreenState.error({required String productsError}) = _ErrorState;
+
+  const factory HomeScreenState.moveTo({
+    @Default(false) bool toSearchWithCategory,
+    int? parentCategoryId
+  }) = _MoveToState;
 }

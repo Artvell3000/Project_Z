@@ -2,7 +2,13 @@ part of 'search_screen_bloc.dart';
 
 @freezed
 class SearchScreenEvent with _$SearchScreenEvent {
-  const factory SearchScreenEvent.loading({double? from, double? to, Category? categories, String? status}) = _LoadingSearch;
+  const factory SearchScreenEvent.loading({
+    double? from,
+    double? to,
+    Category? categories,
+    String? status,
+    List<Category>? subcategories,
+  }) = _LoadingSearch;
 
   const factory SearchScreenEvent.loaded({
       required List<Product> products,

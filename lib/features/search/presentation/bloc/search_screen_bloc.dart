@@ -54,9 +54,9 @@ class SearchScreenBloc extends Bloc<SearchScreenEvent, SearchScreenState> {
   }
 
   SearchScreenBloc(this.api, {this.initFilter}) : super(const SearchScreenState.loading()) {
-    on<SearchScreenEvent>((event, emit) {
-      event.when(
-          loading: (from, to, enabled, status) async {
+    on<SearchScreenEvent>((event, emit) async {
+      await event.when(
+          loading: (from, to, enabled, status, subcategories) async {
             emit(const SearchScreenState.loading());
             if(!isInitialized) return;
             try{
@@ -75,7 +75,7 @@ class SearchScreenBloc extends Bloc<SearchScreenEvent, SearchScreenState> {
                   status: status
               )
               );
-            } catch(e){
+            } on Exception catch(e){
               add(SearchScreenEvent.error(e.toString()));
             }
           },
@@ -101,10 +101,20 @@ class SearchScreenBloc extends Bloc<SearchScreenEvent, SearchScreenState> {
       final categories = await api.getCategories();
       struct = _getStruct(categories.results);
 
-      final products = (await api.searchProducts(
-        status: initFilter?.status,
-        subcategory: initFilter?.enabled?.name,
-      )).results;
+      var products = <Product>[];
+
+      if(initFilter != null && initFilter?.subcategories!=null){
+        for(final el in initFilter!.subcategories!){
+          var r = ( await api.searchProducts(subcategory: el.id.toString())).results.toList();
+          products.insertAll(0,r);
+        }
+      } else {
+        products = (await api.searchProducts(
+          status: initFilter?.status,
+          subcategory: initFilter?.enabled?.name,
+        )).results.toList();
+      }
+
       isInitialized = true;
       add(SearchScreenEvent.loaded(
           products: products, 

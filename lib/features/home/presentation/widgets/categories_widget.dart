@@ -34,6 +34,7 @@ class CategoriesWidget extends StatelessWidget {
             child: BlocBuilder<HomeScreenBloc, HomeScreenState>(
               builder: (context, state) {
                 return state.when(
+                  moveTo: (_, __) => const SizedBox(),
                   error: (message) {
                     return Center(child: Text(message));
                   },
@@ -52,8 +53,9 @@ class CategoriesWidget extends StatelessWidget {
                         }
                         return GestureDetector(
                           onTap: () {
-                            AutoRouter.of(context)
-                                .push(SearchRoute(initFilter: SearchFilter(enabled: categories[index])));
+                            final bloc = BlocProvider.of<HomeScreenBloc>(context);
+                            bloc.add(HomeScreenEvent.moveTo(
+                                toSearchWithCategory: true, parentCategoryId: categories[index].id));
                           },
                           child: CategoryCard(
                             title: categories[index].name,
@@ -66,6 +68,9 @@ class CategoriesWidget extends StatelessWidget {
                     );
                   },
                 );
+              },
+              buildWhen: (prev, state) {
+                return state.mapOrNull(moveTo: (d) => false) ?? true;
               },
             ),
           ),

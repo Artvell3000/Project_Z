@@ -132,6 +132,20 @@ class MockApiService extends Mock implements ApiService {
   }
 
   @override
+  Future<CategoryList> getSubcategoriesByParentId(int id) async {
+    final categoriesByParentId =  mockCategories.results.where((el){
+      return el.subcategoryId == id;
+    }).toList();
+
+    return CategoryList(
+      count: categoriesByParentId.length,
+      next: null,
+      previous: null,
+      results: categoriesByParentId,
+    );
+  }
+
+  @override
   Future<NewsList> getNews() async {
     return _news;
   }

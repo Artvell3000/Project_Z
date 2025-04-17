@@ -17,6 +17,11 @@ abstract class ApiService {
       @Path('id') int id,
       );
 
+  @GET('categories/subcategory/{category_id}/')
+  Future<CategoryList> getSubcategoriesByParentId(
+      @Path('category_id') int id,
+      );
+
   @GET('news/')
   Future<NewsList> getNews();
 

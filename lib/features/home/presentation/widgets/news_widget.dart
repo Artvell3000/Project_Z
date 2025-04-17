@@ -35,6 +35,7 @@ class NewsWidget extends StatelessWidget {
                     BlocBuilder<HomeScreenBloc, HomeScreenState>(
                       builder: (context, state) {
                         return state.when(
+                          moveTo: (_,__) => const SizedBox(),
                           loading: () {
                             return const Center(
                               child: CircularProgressIndicator(),
@@ -57,6 +58,9 @@ class NewsWidget extends StatelessWidget {
                                   );
                           },
                         );
+                      },
+                      buildWhen: (prev,state){
+                        return state.mapOrNull(moveTo:(d) => false) ?? true;
                       },
                     ),
                   ],

@@ -1,17 +1,16 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/home/presentation/bloc/home_screen_bloc.dart';
 import 'package:project_z/features/home/presentation/widgets/part_title_widget.dart';
 import 'package:project_z/features/home/presentation/widgets/product_card.dart';
 
 class ProductsWithStatusPreview extends StatelessWidget {
-  const ProductsWithStatusPreview(
-      {super.key,
-      required this.onTapMoreProducts,
-      required this.title,
-      required this.status,});
+  const ProductsWithStatusPreview({
+    super.key,
+    required this.onTapMoreProducts,
+    required this.title,
+    required this.status,
+  });
 
   final void Function() onTapMoreProducts;
   final String title;
@@ -32,6 +31,7 @@ class ProductsWithStatusPreview extends StatelessWidget {
             child: BlocBuilder<HomeScreenBloc, HomeScreenState>(
               builder: (context, state) {
                 return state.when(
+                  moveTo: (_, __) => const SizedBox(),
                   error: (message) {
                     return Center(child: Text(message));
                   },
@@ -47,12 +47,8 @@ class ProductsWithStatusPreview extends StatelessWidget {
                           0,
                       child: GridView.builder(
                         physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 8,
-                                mainAxisSpacing: 8,
-                                childAspectRatio: 156 / 261),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, crossAxisSpacing: 8, mainAxisSpacing: 8, childAspectRatio: 156 / 261),
                         itemCount: 4,
                         itemBuilder: (context, index) {
                           if (index >= used.length) {
@@ -66,6 +62,9 @@ class ProductsWithStatusPreview extends StatelessWidget {
                     );
                   },
                 );
+              },
+              buildWhen: (prev, state) {
+                return state.mapOrNull(moveTo: (d) => false) ?? true;
               },
             ),
           ),
