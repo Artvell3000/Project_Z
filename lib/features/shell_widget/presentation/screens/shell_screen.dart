@@ -1,11 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger/logger.dart';
 import 'package:project_z/core/bloc/buy_flow_facade/buy_flow_facade_bloc.dart';
-import 'package:project_z/core/di/di.dart';
 import 'package:project_z/core/routing/router.dart';
-import 'package:project_z/features/basket/presentation/bloc/basket_screen_bloc.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/auth/auth_screen_bloc.dart';
 import 'package:project_z/features/shell_widget/presentation/widgets/widgets.dart';
 import 'package:project_z/flutter_app_icons.dart';
@@ -76,6 +73,8 @@ class _ProjectZShellScreenState extends State<ProjectZShellScreen> {
         );
       },
       routes: [
+
+
 
         const HomeRoute(),
         SearchRoute(),

@@ -21,6 +21,7 @@ void main() async {
   configureDependencies();
 
   //MOCK
+  // todo запускать из командной строки
   configureTestDependencies();
   //MOCK
 
@@ -29,6 +30,7 @@ void main() async {
   // Инициализация Hive
   await Hive.initFlutter();
   await Hive.openBox('searchHistory');
+  await Hive.openBox('tokens');
 
   // Отключение автоповорота
   SystemChrome.setPreferredOrientations([
