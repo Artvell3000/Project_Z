@@ -9,6 +9,8 @@ class SearchFilter with _$SearchFilter {
     Category? enabled,
     String? status,
     String? search,
-    List<Category>? subcategories
+    List<Category>? subcategories,
+    double? to,
+    double? from,
   }) = _SearchFilter;
 }

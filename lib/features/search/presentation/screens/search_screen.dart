@@ -2,6 +2,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:project_z/core/di/di.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/home/presentation/widgets/product_card.dart';
@@ -64,10 +65,7 @@ class SearchScreen extends StatelessWidget {
                                     onPressed: () {
                                       showBottomDrawer(context, enabledC, struct);
                                     },
-                                    icon: const Icon(
-                                      Icons.filter_list,
-                                      color: Colors.white,
-                                    ),
+                                    icon: SvgPicture.asset('assets/search/filter.svg', height: 12, color: Colors.white),
                                     label: const Text(
                                       'Фильтры',
                                       style: textStyleForElevationButton,
@@ -105,7 +103,7 @@ class SearchScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 8.0),
                             SizedBox(
-                              height: (result.length / 2) * 300.0,
+                              height: (result.length / 2 + 1) * 300.0,
                               child: GridView.builder(
                                 physics:
                                     const NeverScrollableScrollPhysics(),

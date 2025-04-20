@@ -10,7 +10,7 @@ class PaginatedOrderItems with _$PaginatedOrderItems {
     @JsonKey(name: 'count') required int count,
     @JsonKey(name: 'next') String? next,
     @JsonKey(name: 'previous') String? previous,
-    @JsonKey(name: 'results') required List<OrderItem> results,
+    @JsonKey(name: 'results') required List<Order> results,
   }) = _PaginatedOrderItems;
 
   factory PaginatedOrderItems.fromJson(Map<String, dynamic> json) =>
@@ -20,7 +20,7 @@ class PaginatedOrderItems with _$PaginatedOrderItems {
 @freezed
 class Order with _$Order {
   const factory Order({
-    required String id,
+    required int id,
     @JsonKey(name: 'user_phone') required String userPhone,
     required List<OrderItem> items,
     @JsonKey(name: 'total_price') required double totalPrice,

@@ -18,7 +18,7 @@ class _ProductGalleryState extends State<ProductGallery> {
       children: [
 
         Card(
-          elevation: 4,
+          elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
@@ -42,7 +42,7 @@ class _ProductGalleryState extends State<ProductGallery> {
               return Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: Card(
-                  elevation: 4,
+                  elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                     side: BorderSide(

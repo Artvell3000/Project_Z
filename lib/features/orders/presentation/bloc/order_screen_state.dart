@@ -5,7 +5,7 @@ class OrderScreenState with _$OrderScreenState {
 
   const factory OrderScreenState.loading() = _OrderScreenLoadingState;
 
-  const factory OrderScreenState.loaded(List<OrderItem> items) = _OrderScreenLoadedState;
+  const factory OrderScreenState.loaded(List<Order> items) = _OrderScreenLoadedState;
 
   const factory OrderScreenState.loadedEmpty() = _OrderScreenLoadEmptyState;
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_z/core/domain/entity/entity.dart';
 import 'package:project_z/core/routing/router.dart';
+import 'package:project_z/features/orders/presentation/widgets/status_widget.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/auth/auth_screen_bloc.dart';
 import 'package:project_z/flutter_app_icons.dart';
 
@@ -14,14 +15,24 @@ class ProductCard extends StatelessWidget {
 
   final Product info;
 
+  void _onCreateOrderClick(BuildContext context){
+
+  }
+
+  void _onAddToBasketClick(BuildContext context){
+
+  }
+
+  void _onGoToProductClick(BuildContext context){
+    AutoRouter.of(context).push(ProductRoute(
+      productId: info.id,
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        AutoRouter.of(context).push(ProductRoute(
-          productId: info.id,
-        ));
-      },
+      onTap: () => _onGoToProductClick(context),
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10), color: Colors.white),
@@ -42,53 +53,8 @@ class ProductCard extends StatelessWidget {
                         width: double.infinity,
                       ),
                     ),
-                    (info.status == 'yangilik')
-                        ? Align(
-                            alignment: Alignment.topLeft,
-                            child: FractionalTranslation(
-                              translation: const Offset(0.1, 0.2),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Colors.white),
-                                child: const Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10.0, vertical: 5),
-                                  child: Text(
-                                    'Yangilik',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 10),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                        : const SizedBox.shrink(),
-                    (info.status == 'mahsus_taklif')
-                        ? Align(
-                            alignment: Alignment.topLeft,
-                            child: FractionalTranslation(
-                              translation: const Offset(0.1, 0.2),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Colors.white),
-                                child: const Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10.0, vertical: 5),
-                                  child: Text(
-                                    'Mahsus taklif',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 10),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
+                    (info.status != null)
+                        ? _StatusWidget(info.status!)
                         : const SizedBox.shrink(),
                   ],
                 ),
@@ -138,9 +104,7 @@ class ProductCard extends StatelessWidget {
                       Expanded(
                         flex: 100,
                         child: ElevatedButton(
-                          onPressed: () async {
-
-                          },
+                          onPressed: () => _onCreateOrderClick(context),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color.fromRGBO(16, 53, 91, 1),
                             shape: RoundedRectangleBorder(
@@ -166,9 +130,7 @@ class ProductCard extends StatelessWidget {
                       Expanded(
                           flex: 30,
                           child: ElevatedButton(
-                            onPressed: () {
-
-                            },
+                            onPressed: () => _onAddToBasketClick(context),
                             child: const Center(
                               child: Icon(
                                 CustomIcons.basket,
@@ -182,6 +144,48 @@ class ProductCard extends StatelessWidget {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _StatusWidget extends StatelessWidget {
+  const _StatusWidget(this._status,{super.key});
+  final String _status;
+
+  String _getFormattedStatus(String status){
+    final formatted = status
+        .replaceAll('_', ' ')
+        .trim()
+        .isNotEmpty
+        ? status[0].toUpperCase() + status.substring(1).toLowerCase()
+        : '';
+
+    return formatted;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topLeft,
+      child: FractionalTranslation(
+        translation: const Offset(0.1, 0.2),
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.white),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: 10.0, vertical: 5),
+            child: Text(
+              _getFormattedStatus(_status),
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 10),
+            ),
+          ),
         ),
       ),
     );

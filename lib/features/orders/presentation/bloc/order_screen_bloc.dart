@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:injectable/injectable.dart';
+import 'package:injectable/injectable.dart' as di;
 import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -12,7 +12,7 @@ part 'order_screen_bloc.freezed.dart';
 part 'order_screen_event.dart';
 part 'order_screen_state.dart';
 
-@injectable
+@di.injectable
 class OrderScreenBloc extends Bloc<OrderScreenEvent, OrderScreenState> {
   final BuyFlowFacadeBloc _bloc;
   late StreamSubscription<BuyFlowFacadeState> _subscription;

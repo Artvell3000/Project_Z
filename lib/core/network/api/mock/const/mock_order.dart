@@ -7,29 +7,40 @@ final paginatedOrderItems = PaginatedOrderItems(
   next: null,
   previous: null,
   results: [
-    OrderItem(
-      id: 101,
-      product: mockProducts.results[0], // Using the first product from the mock list
-      amount: 2,
+    Order(
+      id: 1,
+      userPhone: '+998 (99) 999 99 99',
+      user: 1,
+      totalPrice: 9999999,
+      status: 'Bekor qilindi',
       createdAt: DateTime.now().subtract(const Duration(days: 5)).toIso8601String(),
       updatedAt: DateTime.now().subtract(const Duration(days: 3)).toIso8601String(),
-      order: 1,
-    ),
-    OrderItem(
-      id: 102,
-      product: mockProducts.results[3], // Using the fourth product from the mock list
-      amount: 1,
-      createdAt: DateTime.now().subtract(const Duration(days: 10)).toIso8601String(),
-      updatedAt: DateTime.now().subtract(const Duration(days: 7)).toIso8601String(),
-      order: 1,
-    ),
-    OrderItem(
-      id: 103,
-      product: mockProducts.results[6], // Using the seventh product from the mock list
-      amount: 3,
-      createdAt: DateTime.now().subtract(const Duration(days: 15)).toIso8601String(),
-      updatedAt: DateTime.now().subtract(const Duration(days: 12)).toIso8601String(),
-      order: 2,
-    ),
+      items: [
+        OrderItem(
+          id: 101,
+          product: mockProducts.results[0],
+          amount: 2,
+          createdAt: DateTime.now().subtract(const Duration(days: 5)).toIso8601String(),
+          updatedAt: DateTime.now().subtract(const Duration(days: 3)).toIso8601String(),
+          order: 1,
+        ),
+        OrderItem(
+          id: 102,
+          product: mockProducts.results[3],
+          amount: 1,
+          createdAt: DateTime.now().subtract(const Duration(days: 10)).toIso8601String(),
+          updatedAt: DateTime.now().subtract(const Duration(days: 7)).toIso8601String(),
+          order: 1,
+        ),
+        OrderItem(
+          id: 103,
+          product: mockProducts.results[6],
+          amount: 3,
+          createdAt: DateTime.now().subtract(const Duration(days: 15)).toIso8601String(),
+          updatedAt: DateTime.now().subtract(const Duration(days: 12)).toIso8601String(),
+          order: 2,
+        ),
+      ],
+    )
   ],
 );

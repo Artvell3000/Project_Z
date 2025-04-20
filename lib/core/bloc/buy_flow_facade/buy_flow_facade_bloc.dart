@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:fpdart/fpdart.dart';
-import 'package:injectable/injectable.dart';
+import 'package:fpdart/fpdart.dart' as fp;
+import 'package:injectable/injectable.dart' as di;
 import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
 import 'package:project_z/core/domain/entity/basket/basket.dart';
@@ -20,7 +20,7 @@ part 'buy_flow_facade_state.dart';
 
 part 'buy_flow_facade_bloc.freezed.dart';
 
-@singleton
+@di.singleton
 class BuyFlowFacadeBloc extends Bloc<BuyFlowFacadeEvent, BuyFlowFacadeState> {
   final ITokenRepository _tokensRepository;
   final IBasketRepository _basketRepository;
@@ -30,34 +30,52 @@ class BuyFlowFacadeBloc extends Bloc<BuyFlowFacadeEvent, BuyFlowFacadeState> {
 
   late Map<Category, List<BasketItem>> _basket;
 
-  BuyFlowFacadeBloc(this._tokensRepository, this._basketRepository, this._authRepository, this._api, this._orderRepository)
+  BuyFlowFacadeBloc(
+      this._tokensRepository, this._basketRepository, this._authRepository, this._api, this._orderRepository)
       : super(const BuyFlowFacadeState.init()) {
     on<BuyFlowFacadeEvent>((event, emit) async {
       await event.map(
-          init: (d) => _onInit(emit),
-          sendCode: (d) => _onSendCode(d, emit),
-          verifyCode: (d) => _onVerifyCode(d, emit),
-          refreshUser: (d) => _onRefreshUser(d, emit),
-          requestAuth: (d) => _onRequestAuth(d, emit),
-          requestBasket: (d) => _onRequestBasket(d, emit),
-          requestUser: (d) => _onRequestUser(d, emit),
-          abortAuth: (d) => _onAbortAuth(d,emit),
-        );
+        init: (d) => _onInit(emit),
+        sendCode: (d) => _onSendCode(d, emit),
+        verifyCode: (d) => _onVerifyCode(d, emit),
+        refreshUser: (d) => _onRefreshUser(d, emit),
+        requestAuth: (d) => _onRequestAuth(d, emit),
+        requestBasket: (d) => _onRequestBasket(d, emit),
+        requestUser: (d) => _onRequestUser(d, emit),
+        abortAuth: (d) => _onAbortAuth(d, emit),
+      );
     });
 
     add(const BuyFlowFacadeEvent.init());
   }
 
-  Future<void > _onAbortAuth(_FacadeAbortAuthEvent d, Emitter<BuyFlowFacadeState> emit) async {
+  Future<void> _onAddToBasket() async {
+    //if(_auth)
+  }
+
+  Future<void> _onAbortAuth(_FacadeAbortAuthEvent d, Emitter<BuyFlowFacadeState> emit) async {
     emit(BuyFlowFacadeState.notAuth(DateTime.now()));
+  }
+
+  Future<void> _onCreateOrder(_FacadeAbortAuthEvent d, Emitter<BuyFlowFacadeState> emit) async {
+    try {
+      if (_authRepository.hasAuth) {
+
+        //todo создание заказа
+        emit(BuyFlowFacadeState.hasAuth(DateTime.now(), isBasketUpdated: true, isOrderUpdated: true));
+      } else {
+        add(const BuyFlowFacadeEvent.requestAuth());
+      }
+    } on Exception catch (e) {
+      emit(BuyFlowFacadeState.error(e));
+    }
   }
 
   Future<void> _onRequestBasket(_FacadeRequestBasketEvent d, Emitter<BuyFlowFacadeState> emit) async {
     try {
       if (_authRepository.hasAuth) {
-
-        final response =(await basket).getOrElse((e){
-          throw(e);
+        final response = (await basket).getOrElse((e) {
+          throw (e);
         });
 
         emit(BuyFlowFacadeState.hasAuth(DateTime.now(), isBasketUpdated: true));
@@ -72,9 +90,8 @@ class BuyFlowFacadeBloc extends Bloc<BuyFlowFacadeEvent, BuyFlowFacadeState> {
   Future<void> _onRequestUser(_FacadeRequestUserEvent d, Emitter<BuyFlowFacadeState> emit) async {
     try {
       if (_authRepository.hasAuth) {
-
-        final response =(await user).getOrElse((e){
-          throw(e);
+        final response = (await user).getOrElse((e) {
+          throw (e);
         });
 
         emit(BuyFlowFacadeState.hasAuth(DateTime.now(), isUserUpdated: true));
@@ -90,29 +107,29 @@ class BuyFlowFacadeBloc extends Bloc<BuyFlowFacadeEvent, BuyFlowFacadeState> {
     emit(BuyFlowFacadeState.needAuth(DateTime.now()));
   }
 
-  Future<Either<Exception, List<OrderItem>?>> get order async {
+  Future<fp.Either<Exception, List<Order>?>> get order async {
     try {
       if (_authRepository.hasAuth) {
         final token = _authRepository.tokens.accessToken;
         final response = (await _orderRepository.getAll(token));
 
-        List<OrderItem>? items;
+        List<Order>? items;
         response.fold((e) {
           throw (e);
         }, (page) {
           items = page.results;
         });
 
-        return Either.right(items);
+        return fp.Either.right(items);
       }
       add(const BuyFlowFacadeEvent.requestAuth());
-      return Either.right(null);
+      return fp.Either.right(null);
     } on Exception catch (e) {
-      return Either.left(e);
+      return fp.Either.left(e);
     }
   }
 
-  Future<Either<Exception, Map<Category, List<BasketItem>>?>> get basket async {
+  Future<fp.Either<Exception, Map<Category, List<BasketItem>>?>> get basket async {
     try {
       if (_authRepository.hasAuth) {
         final token = _authRepository.tokens.accessToken;
@@ -138,34 +155,33 @@ class BuyFlowFacadeBloc extends Bloc<BuyFlowFacadeEvent, BuyFlowFacadeState> {
           }
         }
         Logger().i('basket: $map');
-        return Either.right(map);
+        return fp.Either.right(map);
       }
       add(const BuyFlowFacadeEvent.requestAuth());
-      return Either.right(null);
+      return fp.Either.right(null);
     } on Exception catch (e) {
-      return Either.left(e);
+      return fp.Either.left(e);
     }
   }
 
-  Future<Either<Exception, CustomUser?>> get user async {
+  Future<fp.Either<Exception, CustomUser?>> get user async {
     try {
       if (_authRepository.hasAuth) {
         return (await _authRepository.getUser());
-
       }
 
       add(const BuyFlowFacadeEvent.requestAuth());
-      return Either.right(null);
+      return fp.Either.right(null);
     } on Exception catch (e) {
-      return Either.left(e);
+      return fp.Either.left(e);
     }
   }
 
   Future<void> _onRefreshUser(_FacadeRefreshUserEvent d, Emitter<BuyFlowFacadeState> emit) async {
     try {
       if (_authRepository.hasAuth) {
-        final user = (await _authRepository.refreshUser(d.newUser)).getOrElse((e){
-          throw(e);
+        final user = (await _authRepository.refreshUser(d.newUser)).getOrElse((e) {
+          throw (e);
         });
 
         emit(BuyFlowFacadeState.hasAuth(DateTime.now(), isUserUpdated: true));
@@ -190,15 +206,14 @@ class BuyFlowFacadeBloc extends Bloc<BuyFlowFacadeEvent, BuyFlowFacadeState> {
     }
   }
 
-
-
   Future<void> _onVerifyCode(_FacadeVerifyCodeEvent d, Emitter<BuyFlowFacadeState> emit) async {
     try {
       (await _authRepository.verifyCode(d.username, d.code)).getOrElse((e) {
         throw (e);
       });
 
-      emit(BuyFlowFacadeState.hasAuth(DateTime.now(), isUserUpdated: true, isBasketUpdated: true, isOrderUpdated: true));
+      emit(
+          BuyFlowFacadeState.hasAuth(DateTime.now(), isUserUpdated: true, isBasketUpdated: true, isOrderUpdated: true));
     } on Exception catch (e) {
       emit(BuyFlowFacadeState.error(e));
     }

@@ -3,38 +3,34 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:logger/logger.dart';
 import 'package:project_z/features/search/presentation/bloc/search_screen_bloc.dart';
+import 'package:project_z/features/search/presentation/widgets/widgets.dart';
 import 'package:project_z/shared/consts/text_style_title.dart';
 import 'package:project_z/core/domain/entity/entity.dart' as e;
 
 class Filter {
-  static e.Category? enabled;
-  static double? from;
-  static double? to;
-  static Map<e.Category, List<e.Category>> struct = {};
+  e.Category? enabled;
+  double? from;
+  double? to;
 }
 
-void showBottomDrawer(
-    BuildContext context,
-    e.Category? enabled,
-    Map<e.Category, List<e.Category>> struct
-    ) {
-  Filter.struct = Map.from(struct);
-  Filter.enabled = enabled;
+void showBottomDrawer(BuildContext context, e.Category? enabled, Map<e.Category, List<e.Category>> struct) {
+  final filter = Filter();
+  filter.enabled = enabled;
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
-    builder: (context) => const BottomDrawer(),
+    builder: (context) => BottomDrawer(filter: filter, struct: struct,),
   ).then((_) {
-    BlocProvider.of<SearchScreenBloc>(context).add(SearchScreenEvent.loading(
-        categories: Filter.enabled, to: Filter.to, from: Filter.from
-    ));
+    BlocProvider.of<SearchScreenBloc>(context)
+        .add(SearchScreenEvent.loading(categories: filter.enabled, to: filter.to, from: filter.from));
   });
 }
 
 class BottomDrawer extends StatefulWidget {
-  const BottomDrawer({super.key});
-
+  const BottomDrawer({super.key, required this.filter, required this.struct});
+  final Filter filter;
+  final Map<e.Category, List<e.Category>> struct;
   @override
   State<BottomDrawer> createState() => _BottomDrawerState();
 }
@@ -92,181 +88,185 @@ class _BottomDrawerState extends State<BottomDrawer> {
             padding: const EdgeInsets.only(left: 20, right: 20, top: 26),
             child: SizedBox(
               height: MediaQuery.of(context).size.height * (490 / 624),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text('Kategoriyalar', style: titleTextStyle),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text('Kategoriyalar', style: titleTextStyle),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5.0),
+                    child: CatalogWidget(
+                      height: 400,
+                      width: double.infinity,
+                      struct: widget.struct,
+                      onSelectSubcategory: (category){
+                        widget.filter.enabled = category;
+                      },
                     ),
-
-                    ///
-                    /// КАТЕГОРИИ
-                    ///
-                    // Align(
-                    //   alignment: Alignment.centerLeft,
-                    //   child: (tapedOnCategory)? Column(
-                    //     children: Filter.struct.keys.map((el){
-                    //       return SizedBox();
-                    //     }).toList(),
-                    //   ) : SizedBox(),
-                    // ),
-
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.max,
-                          children: Filter.struct.entries.map((e) {
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 25.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Text(
-                                    e.key.name,
-                                    style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black),
-                                  ),
-                                  Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: Filter.struct[e.key]!.map((e) {
-                                        return Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 20.0, top: 14),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                if (Filter.enabled == e) {
-                                                  Filter.enabled = null;
-                                                  return;
-                                                }
-                                                Filter.enabled= e;
-                                              });
-                                            },
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Text(
-                                                  e.name,
-                                                  style: const TextStyle(
-                                                      fontWeight: FontWeight.w400,
-                                                      fontSize: 14,
-                                                      color: Colors.grey),
-                                                ),
-                                                (Filter.enabled ==e)
-                                                    ? const Icon(
-                                                        Icons.check,
-                                                        color: Colors.green,
-                                                        size: 16,
-                                                      )
-                                                    : const SizedBox()
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      }).toList())
-                                ],
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: PriceFromToWidget(
+                      onChangedInterval: (from, to) {
+                        widget.filter.from = from;
+                        widget.filter.to = to;
+                      },
                     ),
-
-                    ///
-                    /// КАТЕГОРИИ
-                    ///
-
-                    const Padding(
-                      padding: EdgeInsets.only(top: 20.0),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text('Narx, So’m', style: titleTextStyle),
-                      ),
-                    ),
-
-                    ///
-                    /// ЦЕНА
-                    ///
-
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 156,
-                            height: 50,
-                            margin: const EdgeInsets.only(right: 4),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child: TextField(
-                              controller: fromController,
-                              onChanged: (str) {
-                                Filter.from = double.tryParse(str);
-                              },
-                              decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  contentPadding:
-                                      EdgeInsets.symmetric(horizontal: 16.0),
-                                  hintText: 'От',
-                                  hintStyle: TextStyle(
-                                      color: Color.fromRGBO(167, 167, 167, 1),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400)),
-                              keyboardType: TextInputType.number,
-                            ),
-                          ),
-                          Container(
-                            width: 156,
-                            height: 50,
-                            margin: const EdgeInsets.only(left: 4),
-                            // Половина от общего расстояния 8
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child: TextField(
-                              controller: toController,
-                              onChanged: (str) {
-                                Filter.to = double.tryParse(str);
-                              },
-                              decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  contentPadding:
-                                      EdgeInsets.symmetric(horizontal: 16.0),
-                                  hintText: 'До',
-                                  hintStyle: TextStyle(
-                                      color: Color.fromRGBO(167, 167, 167, 1),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400)),
-                              keyboardType: TextInputType.number,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-
-                    ///
-                    /// ЦЕНА
-                    ///
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CatalogWidget extends StatefulWidget {
+  const CatalogWidget({super.key, required this.height, required this.width, required this.struct, required this.onSelectSubcategory});
+
+  final Map<e.Category, List<e.Category>> struct;
+  final void Function(e.Category category) onSelectSubcategory;
+  final double height;
+  final double width;
+
+  static const mainCategoryTextStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black);
+  static const subcategoryTextStyle = TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: Colors.grey);
+
+  @override
+  State<CatalogWidget> createState() => _CatalogWidgetState();
+}
+
+class _CatalogWidgetState extends State<CatalogWidget> {
+  late final List<e.Category> _mainCategories;
+  e.Category? _enabledMainCategory;
+  e.Category? _enabledSubcategory;
+  bool _showScrollbar = false;
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    _mainCategories = widget.struct.keys.toList();
+    _scrollController.addListener(_checkScroll);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _checkScroll());
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_checkScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _checkScroll() {
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    setState(() {
+      _showScrollbar = maxScroll > 0;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: widget.height,
+      width: widget.width,
+      child: Scrollbar(
+        thumbVisibility: _showScrollbar,
+        controller: _scrollController,
+        child: (_enabledMainCategory == null)
+            ? ListView.builder(
+                controller: _scrollController,
+                itemCount: _mainCategories.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 25.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _enabledMainCategory = _mainCategories[index];
+                        });
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            _mainCategories[index].name,
+                            style: CatalogWidget.mainCategoryTextStyle,
+                          ),
+                          const Icon(
+                            Icons.keyboard_arrow_down,
+                            size: 30,
+                            color: Colors.black,
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                })
+            : ListView.builder(
+                controller: _scrollController,
+                itemCount: widget.struct[_enabledMainCategory]!.length + 1,
+                itemBuilder: (context, index) {
+                  if (index == 0) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 25.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _enabledMainCategory = null;
+                          });
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              _enabledMainCategory?.name ?? "None",
+                              style: CatalogWidget.mainCategoryTextStyle,
+                            ),
+                            const Icon(
+                              Icons.keyboard_arrow_up,
+                              size: 30,
+                              color: Colors.black,
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+
+                  final subcategories = widget.struct[_enabledMainCategory!]!;
+                  return Padding(
+                    padding: EdgeInsets.only(top: (index-1 == 0) ? 14 : 10, left: 20),
+                    child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _enabledSubcategory = subcategories[index-1];
+                            widget.onSelectSubcategory(_enabledSubcategory!);
+                          });
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              subcategories[index-1].name,
+                              style: CatalogWidget.subcategoryTextStyle,
+                            ),
+                            (_enabledSubcategory == null)
+                                ? const SizedBox()
+                                : const Icon(
+                                    Icons.check,
+                                    size: 20,
+                                    color: Color.fromRGBO(16, 53, 91, 1),
+                                  )
+                          ],
+                        )),
+                  );
+                }),
       ),
     );
   }
