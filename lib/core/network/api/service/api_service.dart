@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart' hide Headers;
-import 'package:project_z/core/domain/entity/entity.dart';
-import 'package:project_z/core/network/api/request_models/request_models.dart';
+import 'package:project_z/core/network/api/entity/entity.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'api_service.g.dart';
@@ -10,28 +9,33 @@ abstract class ApiService {
   factory ApiService(Dio dio, {String? baseUrl}) = _ApiService;
 
   @GET('categories/')
-  Future<CategoryList> getCategories();
-
-  @GET('categories/{id}/')
-  Future<Category> getCategoryById(
-      @Path('id') int id,
-      );
-
-  @GET('categories/subcategory/{category_id}/')
-  Future<CategoryList> getSubcategoriesByParentId(
-      @Path('category_id') int id,
-      );
-
-  @GET('news/')
-  Future<NewsList> getNews();
-
-  @GET('order/')
-  Future<PaginatedOrderItems> getOrder({
-    @Header('Authorization') required String token,
+  Future<PaginatedCategoryDTO> getCategories({
+    @Query('page') int? page,
   });
 
+  @GET('categories/{id}/')
+  Future<CategoryDTO> getCategoryById(
+    @Path('id') int id,
+  );
+
+  @GET('categories/subcategory/{category_id}/')
+  Future<PaginatedCategoryDTO> getSubcategoriesByParentId(
+    @Path('category_id') int id, {
+    @Query('search') String? search,
+    @Query('page') int? page,
+  });
+
+  @GET('news/')
+  Future<PaginatedNewsDTO> getNews({
+    @Query('page') int? page,
+  });
+
+
+
   @GET('products/')
-  Future<ProductList> getProducts();
+  Future<PaginatedProductDTO> getProducts({
+    @Query('page') int? page,
+  });
 
   @POST('auth/send-code/')
   @Headers({'Content-Type': 'application/json'})
@@ -46,7 +50,7 @@ abstract class ApiService {
   );
 
   @GET('products/')
-  Future<ProductList> searchProducts({
+  Future<PaginatedProductDTO> searchProducts({
     @Query('name') String? name,
     @Query('subcategory') String? subcategory,
     @Query('status') String? status,
@@ -58,12 +62,12 @@ abstract class ApiService {
   });
 
   @GET('products/{id}/')
-  Future<Product> getProductById(
+  Future<ProductDTO> getProductById(
     @Path('id') int productId,
   );
 
   @GET('auth/users/me/')
-  Future<CustomUser> getCurrentUser(
+  Future<CustomUserDTO> getCurrentUser(
     @Header('Authorization') String token,
   );
 
@@ -71,14 +75,14 @@ abstract class ApiService {
   @Headers({
     'Content-Type': 'application/json',
   })
-  Future<CustomUser> updateCurrentUser(
+  Future<CustomUserDTO> updateCurrentUser(
     @Header('Authorization') String token,
     @Body() CustomUserCompanion user,
   );
 
   // Basket endpoints
   @GET('basket/')
-  Future< PaginatedBasketItems> getBasketList({
+  Future<PaginatedBasketItemsDTO> getBasketList({
     @Header('Authorization') required String token,
     @Query('search') String? search,
     @Query('page') int? page,
@@ -86,43 +90,58 @@ abstract class ApiService {
 
   @POST('basket/')
   @Headers({'Content-Type': 'application/json'})
-  Future<BasketItem> createBasketItem(
-      @Header('Authorization') String token,
-      @Body() BasketItemRequest request,
-      );
+  Future<BasketItemDTO> createBasketItem(
+    @Header('Authorization') String token,
+    @Body() BasketItemCompanion request,
+  );
 
   @GET('basket/my-basket/')
-  Future< PaginatedBasketItems> getMyBasketItems({
+  @Headers({'Content-Type': 'application/json'})
+  Future<List<BasketItemDTO>> getMyBasketItems({
     @Header('Authorization') required String token,
     @Query('search') String? search,
     @Query('page') int? page,
   });
 
   @GET('basket/{id}/')
-  Future<BasketItem> getBasketItem(
-      @Header('Authorization') String token,
-      @Path('id') int basketItemId,
-      );
+  Future<BasketItemDTO> getBasketItem(
+    @Header('Authorization') String token,
+    @Path('id') int basketItemId,
+  );
 
   @PUT('basket/{id}/')
   @Headers({'Content-Type': 'application/json'})
-  Future<BasketItem> updateBasketItem(
-      @Header('Authorization') String token,
-      @Path('id') int basketItemId,
-      @Body() BasketItemRequest request,
-      );
+  Future<BasketItemDTO> updateBasketItem(
+    @Header('Authorization') String token,
+    @Path('id') int basketItemId,
+    @Body() BasketItemCompanion request,
+  );
 
   @PATCH('basket/{id}/')
   @Headers({'Content-Type': 'application/json'})
-  Future<BasketItem> partialUpdateBasketItem(
-      @Header('Authorization')  String token,
-      @Path('id') int basketItemId,
-      @Body() BasketItemRequest request,
-      );
+  Future<BasketItemDTO> partialUpdateBasketItem(
+    @Header('Authorization') String token,
+    @Path('id') int basketItemId,
+    @Body() BasketItemCompanion request,
+  );
 
   @DELETE('basket/{id}/')
   Future<void> deleteBasketItem(
-      @Header('Authorization') String token,
-      @Path('id') int basketItemId,
-      );
+    @Header('Authorization') String token,
+    @Path('id') int basketItemId,
+  );
+
+  // Orders endpoints
+  @GET('orders/')
+  Future<PaginatedOrderItemsDTO> getOrder({
+    @Header('Authorization') required String token,
+    @Query('page') int? page,
+  });
+
+  @POST('orders/create/')
+  @Headers({'Content-Type': 'application/json'})
+  Future<void> createOrder(
+    @Header('Authorization') String token,
+    @Body() OrderCompanion request,
+  );
 }

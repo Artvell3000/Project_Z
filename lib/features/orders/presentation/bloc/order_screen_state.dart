@@ -5,10 +5,14 @@ class OrderScreenState with _$OrderScreenState {
 
   const factory OrderScreenState.loading() = _OrderScreenLoadingState;
 
-  const factory OrderScreenState.loaded(List<Order> items) = _OrderScreenLoadedState;
+  const factory OrderScreenState.needAuth() = _OrderScreenNeedAuthState;
 
-  const factory OrderScreenState.loadedEmpty() = _OrderScreenLoadEmptyState;
+  const factory OrderScreenState.loaded({
+    required List<Order> items,
+    required int page,
+    required bool isAllItems,
+}) = _OrderScreenLoadedState;
 
-  const factory OrderScreenState.error(String message) = _OrderScreenErrorState;
+  const factory OrderScreenState.error(DomainError e) = _OrderScreenErrorState;
 }
 

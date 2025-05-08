@@ -11,10 +11,5 @@ class HomeScreenState with _$HomeScreenState {
     required List<Product> specialOffer,
   }) = _LoadedDataState;
 
-  const factory HomeScreenState.error({required String productsError}) = _ErrorState;
-
-  const factory HomeScreenState.moveTo({
-    @Default(false) bool toSearchWithCategory,
-    int? parentCategoryId
-  }) = _MoveToState;
+  const factory HomeScreenState.error(Exception e) = _ErrorState;
 }

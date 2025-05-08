@@ -20,54 +20,45 @@ class ProductsWithStatusPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: PartTitleWidget(title: title, onTapMore: onTapMoreProducts),
-        ),
-        SizedBox(
-          width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: BlocBuilder<HomeScreenBloc, HomeScreenState>(
-              builder: (context, state) {
-                return state.when(
-                  moveTo: (_, __) => const SizedBox(),
-                  error: (message) {
-                    return Center(child: Text(message));
-                  },
-                  loading: () => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                  loaded: (_, __, newProd, special) {
-                    final used = (status == 'yangilik') ? newProd : special;
-                    return SizedBox(
-                      height: state.mapOrNull(loaded: (d) {
-                            return used.length >= 3 ? 620 : 320;
-                          }) ??
-                          0,
-                      child: GridView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, crossAxisSpacing: 8, mainAxisSpacing: 8, childAspectRatio: 156 / 261),
-                        itemCount: 4,
-                        itemBuilder: (context, index) {
-                          if (index >= used.length) {
-                            return const SizedBox();
-                          }
-                          return ProductCard(
-                            info: used[index],
-                          );
-                        },
-                      ),
+        PartTitleWidget(title: title, onTapMore: onTapMoreProducts),
+        BlocBuilder<HomeScreenBloc, HomeScreenState>(
+          builder: (context, state) {
+            return state.when(
+              error: (e) {
+                return Center(child: Text(e.toString()));
+              },
+              loading: () => GridView.builder(
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, crossAxisSpacing: 8, mainAxisSpacing: 8, childAspectRatio: 156 / 261),
+                itemCount: 4,
+                itemBuilder: (context, index) {
+                  return const LoadingProductWidget();
+                },
+              ),
+              loaded: (_, __, newProd, special) {
+                final used = (status == 'yangilik') ? newProd : special;
+                return GridView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, crossAxisSpacing: 4, mainAxisSpacing: 4, childAspectRatio: 156 / 261),
+                  itemCount: 4,
+                  itemBuilder: (context, index) {
+                    if (index >= used.length) {
+                      return const SizedBox();
+                    }
+                    return ProductCard(
+                      info: used[index],
                     );
                   },
                 );
               },
-              buildWhen: (prev, state) {
-                return state.mapOrNull(moveTo: (d) => false) ?? true;
-              },
-            ),
-          ),
+            );
+          },
         )
       ],
     );

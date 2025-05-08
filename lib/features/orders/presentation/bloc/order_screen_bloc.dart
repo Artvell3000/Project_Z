@@ -5,8 +5,11 @@ import 'package:injectable/injectable.dart' as di;
 import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:project_z/core/bloc/buy_flow_facade/buy_flow_facade_bloc.dart';
 import 'package:project_z/core/domain/entity/order/order.dart';
+import 'package:project_z/core/domain/entity/tokens/tokens.dart';
+import 'package:project_z/core/domain/repositories/order_repository.dart';
+import 'package:project_z/core/domain/repositories/token_repository.dart';
+import 'package:project_z/core/error/entity/domain_exception.dart';
 
 part 'order_screen_bloc.freezed.dart';
 part 'order_screen_event.dart';
@@ -14,70 +17,81 @@ part 'order_screen_state.dart';
 
 @di.injectable
 class OrderScreenBloc extends Bloc<OrderScreenEvent, OrderScreenState> {
-  final BuyFlowFacadeBloc _bloc;
-  late StreamSubscription<BuyFlowFacadeState> _subscription;
-
-  OrderScreenBloc(this._bloc) : super(const OrderScreenState.loading()) {
+  OrderScreenBloc(this._iOrderRepository, this._iTokenRepository) : super(const OrderScreenState.loading()) {
     on<OrderScreenEvent>((event, emit) async {
       await event.map(
           init: (d) => _onInit(d, emit),
-          error: (d) => _onError(d, emit),
-          load: (d) => _onLoaded(d, emit),
-          loadEmpty: (d) => _onLoadedEmpty(d, emit)
+          refresh:(d) => _onRefresh(d, emit),
+          loadMore: (d) => _onLoadMore(d, emit)
       );
     });
 
     add(const OrderScreenEvent.init());
   }
 
-  Future<void> _loadOrderFromFacade() async {
-    (await _bloc.order).fold((e){
-      add(OrderScreenEvent.error(e.toString()));
-    }, (items){
-      if(items == null){
-        add(const OrderScreenEvent.loadEmpty());
-      }else{
-        add(OrderScreenEvent.load(items));
+  final IOrderRepository _iOrderRepository;
+  final ITokenRepository _iTokenRepository;
+  AuthTokens? _tokens;
+  int? _nextPage = 1;
+  final List<Order> _orders = [];
+
+  // on event
+  Future<void> _onInit(_OrderScreenInitEvent d, Emitter<OrderScreenState> emit) async {
+    await _update(emit);
+  }
+
+  Future<void> _onRefresh(_OrderScreenRefreshEvent d, Emitter<OrderScreenState> emit) async {
+    emit(const OrderScreenState.loading());
+    await _update(emit);
+  }
+
+  Future<void> _onLoadMore(_OrderScreenLoadMoreEvent d, Emitter<OrderScreenState> emit) async {
+    if(_tokens == null){
+      emit(const OrderScreenState.needAuth());
+      return;
+    }
+    await _loadMore(_tokens!.accessToken,emit);
+  }
+  
+  // private methods
+  Future<void> _loadMore( String token,Emitter<OrderScreenState> emit) async {
+    if(_nextPage == null){
+      emit(OrderScreenState.loaded(items: _orders, page: -1, isAllItems: true));
+      return;
+    }
+    
+    final response = await _iOrderRepository.getByPage(token);
+    response.fold((e){
+      _loadError(e, emit);
+    }, (orders){
+      Logger().i('orders length ${orders.results.first.items.length}');
+      _orders.addAll(orders.results);
+      emit(OrderScreenState.loaded(items: _orders, page: _nextPage!, isAllItems: orders.next == null));
+      _nextPage = orders.next;
+    });
+  }
+
+  Future<void> _update(Emitter<OrderScreenState> emit) async {
+
+    final response = await _iTokenRepository.find();
+    await response.fold((e) async {
+      
+    }, (tokens) async {
+      if(tokens == null){
+        emit(const OrderScreenState.needAuth());
+      } else {
+        _tokens = tokens;
+        _nextPage = 1;
+        await _loadMore(tokens.accessToken, emit);
       }
     });
   }
 
-  Future<void> _onInit(_OrderScreenInitEvent d, Emitter<OrderScreenState> emit) async {
-    Logger().i(_bloc.state);
-    await _bloc.state.mapOrNull(
-        notAuth: (d) async  {
-          _bloc.add(const BuyFlowFacadeEvent.requestAuth());
-          add(const OrderScreenEvent.loadEmpty());
-        },
-        hasAuth: (d) async {
-          if(d.isOrderUpdated) {
-            await _loadOrderFromFacade();
-          }
-        }
+  void _loadError(DomainError e, Emitter<OrderScreenState> emit) async {
+    e.maybeMap(
+        orElse: () => emit(OrderScreenState.error(e)),
+        unauthorized: (d) => emit(const OrderScreenState.needAuth())
     );
-
-    _subscription = _bloc.stream.listen((state){
-      Logger().i(state.toString());
-      state.mapOrNull(
-          hasAuth: (d) async {
-            if(d.isOrderUpdated){
-              await _loadOrderFromFacade();
-            }
-          }
-      );
-    });
-  }
-
-  Future<void> _onError(_OrderScreenErrorEvent d, Emitter<OrderScreenState> emit) async {
-    emit(OrderScreenState.error(d.message));
-  }
-
-  Future<void> _onLoaded(_OrderScreenLoadEvent d, Emitter<OrderScreenState> emit) async {
-    emit(OrderScreenState.loaded(d.items));
-  }
-
-  Future<void> _onLoadedEmpty(_OrderScreenLoadEmptyEvent d, Emitter<OrderScreenState> emit) async {
-    emit(const OrderScreenState.loadedEmpty());
   }
 }
 

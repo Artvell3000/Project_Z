@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_z/flutter_app_icons.dart';
+import 'package:project_z/shared/consts/colors.dart';
 
 class PartTitleWidget extends StatelessWidget {
   const PartTitleWidget({
@@ -15,17 +16,17 @@ class PartTitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
           title,
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            //color: Color.fromRGBO(16, 53, 91, 1),
           ),
         ),
-        TextButton(
-          onPressed: onTapMore,
+        GestureDetector(
+          onTap: onTapMore,
           child: const Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,11 +34,12 @@ class PartTitleWidget extends StatelessWidget {
             children: [
               Text(
                 'Barchasi',
-                style: TextStyle(fontSize: 14),
+                style: TextStyle(fontSize: 14, color: Colors.black),
               ),
               Icon(
-                Icons.chevron_right,
+                Icons.chevron_right_rounded,
                 size: 32,
+                color: mainColor,
               ),
             ],
           ),

@@ -1,144 +1,177 @@
-import 'package:auto_route/annotations.dart';
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:logger/logger.dart';
 import 'package:project_z/core/di/di.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/home/presentation/widgets/product_card.dart';
-import 'package:project_z/features/product/presentation/widgets/widgets.dart';
 import 'package:project_z/features/search/domain/entity/search_filter.dart';
-import 'package:project_z/features/search/presentation/bloc/search_screen_bloc.dart';
+import 'package:project_z/features/search/presentation/bloc/search_screen/search_screen_bloc.dart';
 import 'package:project_z/features/search/presentation/widgets/widgets.dart';
-import 'package:project_z/shared/consts/text_style_for_elevation_button.dart';
-import 'package:project_z/shared/scaffolds/z_scaffold.dart';
-import 'package:project_z/core/domain/entity/entity.dart' as e;
+import 'package:project_z/shared/consts/text_style_title.dart';
+import 'package:project_z/shared/widgets/quantity_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
-class SearchScreen extends StatelessWidget {
-  SearchScreen({super.key,  this.initFilter, this.startWithBottomSheet = false});
-  final SearchFilter? initFilter;
+class SearchScreen extends StatefulWidget {
+  const SearchScreen(this._initFilter, {super.key, this.startWithBottomSheet = false});
+
+  final SearchFilter _initFilter;
   final bool startWithBottomSheet;
-  bool showedStartBottomSheet = false;
+
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  final _scrollController = ScrollController();
+  BuildContext? contextWithBloc;
+  bool _isLoading = false;
+
+  Future<void> _showFilter(BuildContext context) async {
+    final filter = await ShowBottomDrawerFunction.body(context, widget._initFilter);
+    if (filter != null) {
+      Logger().i(filter.toString());
+      context.router.push(SearchRoute(initFilter: filter));
+    }
+  }
+
+  void _showAll(BuildContext context){
+    if (context.mounted) {
+      AutoRouter.of(context).push(SearchRoute(initFilter: SearchFilter.empty));
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.position.pixels;
+    const threshold = 150.0;
+
+    if (maxScroll - currentScroll <= threshold && !_isLoading && contextWithBloc!=null) {
+      _isLoading = true;
+      BlocProvider.of<SearchScreenBloc>(contextWithBloc!).add(
+        const SearchScreenEvent.loadMore()
+      );
+    }
+  }
+
+  int getCountLoadingCard(int length, bool isAll){
+    if(isAll) return 0;
+    return (length % 2 == 0) ? 2 : 3;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<SearchScreenBloc>(param1: initFilter),
-      child: ZScaffold(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 12.0),
-              child: FastNavigation(),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Container(
-              padding: const EdgeInsets.all(16.0),
-              child: BlocBuilder<SearchScreenBloc, SearchScreenState>(
-                builder: (context, state) {
-                  return state.when(
-                      error: (message){
-                        return Center(child: Text(message));
-                      },
-                      loading: () => const Center(child: CircularProgressIndicator(),),
-                      loaded: (result,  quantity, e.Category? enabledC, Map<e.Category, List<e.Category>> struct, status) {
-                        if(startWithBottomSheet && !showedStartBottomSheet){
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            showedStartBottomSheet = true;
-                            showBottomDrawer(context, null, struct);
-                          });
-                        }
+    return Scaffold(
+      body: BlocProvider(
+        create: (context) => getIt<SearchScreenBloc>(param1: widget._initFilter),
+        child: Builder(
+          builder: (context) {
+            return SingleChildScrollView(
+              controller: _scrollController,
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 30.0, bottom: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.searchTitle,
+                        style: titleTextStyle,
+                      ),
+                      BlocBuilder<SearchScreenBloc, SearchScreenState>(
+                        buildWhen: (_, state) =>
+                            state.mapOrNull(
+                              loaded: (d) => true,
+                            ) ??
+                            false,
+                        builder: (context, state) {
+                          return state.mapOrNull(
+                                loaded: (d) => QuantityWidget(d.quantity),
+                              ) ??
+                              const SizedBox();
+                        },
+                      )
+                    ],
+                  ),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        flex: 1,
+                        child: SearchElevatedButton(
+                          imgLeft: 'assets/search/filter.svg',
+                          text: 'Фильтры',
+                          onClick: (context) => _showFilter(context),
+                        )),
+                    const SizedBox(width: 8.0),
+                    Expanded(
+                        flex: 1,
+                        child: SearchElevatedButton(
+                          iconSize: 10,
+                          imgRight: 'assets/search/arrow_down.svg',
+                          text: 'Barchasi',
+                          isActive: !widget._initFilter.isEmpty,
+                          onClick: (context) => _showAll(context),
+                        )),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5.0),
+                  child: BlocBuilder<SearchScreenBloc, SearchScreenState>(
+                    builder: (context, state) {
+                      return state.map(
+                        error: (d) => Center(child: Text(d.e.toString())),
+                        loading: (d) => const LoadingProductsGrid(),
+                        loaded: (d) {
+                          _isLoading = false;
+                          contextWithBloc = context;
+                          return GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2, crossAxisSpacing: 4, mainAxisSpacing: 4, childAspectRatio: 156 / 270),
+                          itemCount: d.products.length + getCountLoadingCard(d.products.length, d.isAllProducts),
+                          itemBuilder: (context, index) {
+                            if(index >= d.products.length){
+                              return const LoadingProductWidget();
+                            }
 
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SearchQuantityWidget(quantity: quantity,),
-                            const SizedBox(height: 17.0),
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: ElevatedButton.icon(
-                                    onPressed: () {
-                                      showBottomDrawer(context, enabledC, struct);
-                                    },
-                                    icon: SvgPicture.asset('assets/search/filter.svg', height: 12, color: Colors.white),
-                                    label: const Text(
-                                      'Фильтры',
-                                      style: textStyleForElevationButton,
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 8.0),
-                                Expanded(
-                                  flex: 1,
-                                  child: ElevatedButton.icon(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.keyboard_arrow_down_outlined,
-                                      color: Colors.white,
-                                    ),
-                                    label: const Text(
-                                      'Barchasi',
-                                      style: textStyleForElevationButton,
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8.0),
-                            SizedBox(
-                              height: (result.length / 2 + 1) * 300.0,
-                              child: GridView.builder(
-                                physics:
-                                    const NeverScrollableScrollPhysics(),
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        crossAxisSpacing: 8,
-                                        mainAxisSpacing: 8,
-                                        childAspectRatio: 156 / 270),
-                                itemCount: result.length,
-                                itemBuilder: (context, index) {
-                                  if (index >= result.length) {
-                                    return const SizedBox();
-                                  }
-                                  return GestureDetector(
-                                    onTap: () {
-                                      AutoRouter.of(context)
-                                          .push(ProductRoute(
-                                        productId: result[index].id,
-                                      ));
-                                    },
-                                    child: ProductCard(
-                                      info: result[index],
-                                    ),
-                                  );
-                                },
+                            final product = d.products[index];
+                            return GridTile(
+                              key: ValueKey(product.id),
+                              child: ProductCard(
+                                info: product,
                               ),
-                            )
-                          ],
-                        );
-                      });
-                },
-              ),
-            )
-          ]),
+                            );
+                          },
+                        );},
+                      );
+                    },
+                  ),
+                )
+              ]),
+            );
+          },
+        ),
+      ),
     );
   }
 }

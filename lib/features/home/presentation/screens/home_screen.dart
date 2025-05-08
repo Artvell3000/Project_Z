@@ -9,13 +9,18 @@ import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/home/presentation/bloc/home_screen_bloc.dart';
 import 'package:project_z/features/home/presentation/widgets/widgets.dart';
 import 'package:project_z/features/search/domain/entity/search_filter.dart';
-import 'package:project_z/shared/scaffolds/z_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_z/shared/consts/colors.dart';
 
 @RoutePage()
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   void onTapSearchInUnderAppBarWidget() {
 
   }
@@ -25,7 +30,8 @@ class HomeScreen extends StatelessWidget {
   void onTapNewsWidget() {}
 
   void onTapMoreCategories(BuildContext context) {
-    AutoRouter.of(context).push(SearchRoute(startWithBottomSheet: true));
+    Logger().i('tap more categories');
+    AutoRouter.of(context).push(SearchRoute(startWithBottomSheet: true, initFilter: SearchFilter.empty));
   }
 
   void onTapMoreNewProducts(BuildContext context) {
@@ -40,65 +46,69 @@ class HomeScreen extends StatelessWidget {
     ));
   }
 
+  bool isSwitched = false;
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<HomeScreenBloc>(),
-      child: BlocListener<HomeScreenBloc, HomeScreenState>(
-        listener: (context, state) {
-          state.mapOrNull(
-            moveTo: (d){
-              final bloc = BlocProvider.of<HomeScreenBloc>(context);
-              if(d.toSearchWithCategory){
-                //Logger().i('${bloc.getSubcategories(d.parentCategoryId!).map((el) => '${el.name} ').toList()}');
-                AutoRouter.of(context)
-                    .push(SearchRoute(initFilter: SearchFilter(
-                    subcategories: bloc.getSubcategories(d.parentCategoryId!)
-                )));
-              }
-
-            }
-          );
-        },
-        listenWhen: (prev, state){
-          return state.mapOrNull(moveTo:(d) => true) ?? false;
-        },
-        child: ZScaffold(
-          children: [
-            NewsWidget(
-              onTap: onTapNewsWidget,
-              currentNews: 0,
-            ),
-            CategoriesWidget(
-              onTapMoreCategories: () => onTapMoreCategories(context),
-            ),
-            NewProductsWidget(
-              onTapMoreNewProducts: () => onTapMoreNewProducts(context),
-            ),
-            NewsWidget(
-              onTap: onTapNewsWidget,
-              currentNews: 1,
-            ),
-            SpecialOffersWidget(
-              onTapMoreSpecialOffers: () => onTapMoreSpecialOffers(context),
-            ),
-            MessageWidget(),
-            Padding(
-              padding: const EdgeInsets.only(top: 40.0),
-              child: SizedBox(
-                width: double.infinity,
-                child: SvgPicture.asset(
-                  'assets/footer/footer.svg',
-                  fit: BoxFit.fitWidth,
+    return Scaffold(
+      body: BlocProvider(
+        create: (context) => getIt<HomeScreenBloc>(),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: NewsWidget(
+                  onTap: onTapNewsWidget,
+                  currentNews: 0,
                 ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: CategoriesWidget(
+                  onTapMoreCategories: () => onTapMoreCategories(context),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: NewProductsWidget(
+                  onTapMoreNewProducts: () => onTapMoreNewProducts(context),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: NewsWidget(
+                  onTap: onTapNewsWidget,
+                  currentNews: 1,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: SpecialOffersWidget(
+                  onTapMoreSpecialOffers: () => onTapMoreSpecialOffers(context),
+                ),
+              ),
+              MessageWidget(),
+              Padding(
+                padding: const EdgeInsets.only(top: 40.0),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: SvgPicture.asset(
+                    'assets/footer/footer.svg',
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
+
 
 
 

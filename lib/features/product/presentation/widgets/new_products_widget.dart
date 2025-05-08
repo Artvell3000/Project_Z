@@ -23,57 +23,41 @@ class NewProductsWidget extends StatelessWidget {
         ),
         BlocBuilder<ProductScreenBloc, ProductScreenState>(
           builder: (context, state) {
-            return SizedBox(
-              height:  state.map(
-                  loading: (_) => 30,
-                  loadedProducts: (d){
-                    return d.newProducts.length >= 3 ? 620 : 320;
-                  },
-                  errorProducts: (_) => 30,
-              ),
-              width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Builder(
-                  builder: (context) {
-                    return state.map(
-                        loading: (d) =>
-                        const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                        loadedProducts: (d) {
-                          return GridView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 8,
-                                mainAxisSpacing: 8,
-                                childAspectRatio: 156 / 261),
-                            itemCount: 4,
-                            itemBuilder: (context, index) {
-                              if (index >= products.length) {
-                                return const SizedBox();
-                              }
-                              return GestureDetector(
-                                onTap: () {
-                                  AutoRouter.of(context).push(ProductRoute(
-                                    productId: products[index].id,
-                                  ));
-                                },
-                                child: ProductCard(
-                                  info: products[index],
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        errorProducts: (d) =>
-                            Center(child: Text(d.productError)));
-                  },
+            return state.map(
+                loading: (d) =>
+                const Center(
+                  child: CircularProgressIndicator(),
                 ),
-              ),
-            );
+                loadedProducts: (d) {
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                    const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 8,
+                        mainAxisSpacing: 8,
+                        childAspectRatio: 156 / 261),
+                    itemCount: 4,
+                    itemBuilder: (context, index) {
+                      if (index >= products.length) {
+                        return const SizedBox();
+                      }
+                      return GestureDetector(
+                        onTap: () {
+                          AutoRouter.of(context).push(ProductRoute(
+                            productId: products[index].id,
+                          ));
+                        },
+                        child: ProductCard(
+                          info: products[index],
+                        ),
+                      );
+                    },
+                  );
+                },
+                errorProducts: (d) =>
+                    Center(child: Text(d.productError)));
           },
         )
       ],

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class StatusWidget extends StatelessWidget {
-  StatusWidget({super.key, required this.status});
+class OrderStatusIcon extends StatelessWidget {
+  OrderStatusIcon({super.key, required this.status});
 
   final String status;
 
@@ -16,8 +16,6 @@ class StatusWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     return SvgPicture.asset(
       _statusToPath[status] ?? _onUnexpectedStatus,
       height: 24,

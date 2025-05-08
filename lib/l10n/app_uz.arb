@@ -1,0 +1,20 @@
+{
+  "searchTitle": "Barcha mahsulotlar",
+  "basketTitle": "Mening savatcham",
+  "ordersTitle": "Xaridlar tarixi",
+  "profileTitle": "Mening sahifam",
+
+  "authAlertDialogTitle" : "Avtorizatsiya talab qilinadi",
+  "authAlertDialogContent" : "Mahsulot haqida ma'lumot olish yoki xarid qilish uchun ro'yxatdan o'tish kerak. Iltimos Davom etish uchun tizimga kiring.",
+  "authAlertDialogBackButton" : "Ortga",
+  "authAlertDialogContinueButton" : "Davom eting",
+  "productNotFoundAlertTitle": "Mahsulot topilmadi",
+  "productNotFoundAlertContent": "Uzr, soʻralgan mahsulot mavjud emas yoki oʻchirilgan. Boshqa mahsulotlarni koʻrib chiqing.",
+
+  "profileFullNameLabel" : "Ism va familiya",
+  "profilePhoneLabel" : "Telefon",
+  "profileUserInfoTitle" : "Sizning ma'lumotlaringiz",
+  "profileGeoTitle" : "Sizning ma'lumotlaringiz",
+  "profileDistinct" : "Tuman",
+  "profileTown" : "Viloyat / Shahar"
+}

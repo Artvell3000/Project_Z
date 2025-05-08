@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:project_z/shared/consts/text_style_title.dart';
 
 class PriceFromToWidget extends StatefulWidget {
-  const PriceFromToWidget({super.key, required this.onChangedInterval});
+  const PriceFromToWidget({super.key, required this.onChangedInterval, this.initFrom, this.initTo});
 
+  final double? initFrom;
+  final double? initTo;
   final void Function(double? from, double? to) onChangedInterval;
 
   @override
@@ -12,15 +14,18 @@ class PriceFromToWidget extends StatefulWidget {
 }
 
 class _PriceFromToWidgetState extends State<PriceFromToWidget> {
+  final _fromFocusNode = FocusNode();
+  final _toFocusNode = FocusNode();
   final TextEditingController _fromController = TextEditingController();
   final TextEditingController _toController = TextEditingController();
 
-  final FocusNode _fromFocusNode = FocusNode();
-  final FocusNode _toFocusNode = FocusNode();
+
 
   @override
   void initState() {
     super.initState();
+    _fromController.text = widget.initFrom?.toStringAsFixed(2) ?? '';
+    _toController.text = widget.initTo?.toStringAsFixed(2) ?? '';
     _fromFocusNode.addListener(_onFocusChange);
     _toFocusNode.addListener(_onFocusChange);
   }
@@ -57,28 +62,21 @@ class _PriceFromToWidgetState extends State<PriceFromToWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
       children: [
-        const Text('Narx, So’m', style: titleTextStyle),
-        const SizedBox(height: 15.0),
-        Row(
-          children: [
-            Expanded(
-              child: _PriceTextField(
-                controller: _fromController,
-                focusNode: _fromFocusNode,
-                hint: 'От',
-              ),
-            ),
-            Expanded(
-              child: _PriceTextField(
-                controller: _toController,
-                focusNode: _toFocusNode,
-                hint: 'До',
-              ),
-            ),
-          ],
+        Expanded(
+          child: _PriceTextField(
+            controller: _fromController,
+            focusNode: _fromFocusNode,
+            hint: 'От',
+          ),
+        ),
+        Expanded(
+          child: _PriceTextField(
+            controller: _toController,
+            focusNode: _toFocusNode,
+            hint: 'До',
+          ),
         ),
       ],
     );

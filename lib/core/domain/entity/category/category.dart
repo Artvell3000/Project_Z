@@ -3,47 +3,28 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'category.freezed.dart';
 
-part 'category.g.dart';
-
 @freezed
-class CategoryList with _$CategoryList {
-  @JsonSerializable(fieldRename: FieldRename.snake)
-  const factory CategoryList({
+class CategoryPage with _$CategoryPage {
+  const factory CategoryPage({
     required int count,
-    String? next,
-    String? previous,
+    int? next,
+    int? previous,
     required List<Category> results,
-  }) = _CategoryList;
+  }) = _CategoryPage;
 
-  factory CategoryList.fromJson(Map<String, dynamic> json) => _$CategoryListFromJson(json);
 }
 
 @freezed
 class Category with _$Category {
-  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Category({
     required int id,
-    @JsonKey(
-      name: 'mobile_image',
-    )
     String? mobileImage,
-    @JsonKey(
-      name: 'name',
-    )
     required String name,
-    @JsonKey(
-      name: 'description',
-    )
     required String description,
-    @JsonKey() String? image,
-    @JsonKey(
-      name: 'slug',
-    )
+    String? image,
     required String slug,
-    @JsonKey(name: 'created_at') required DateTime createdAt,
-    @JsonKey(name: 'updated_at') required DateTime updatedAt,
-    @JsonKey(name: 'subcategory') int? subcategoryId,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    int? subcategoryId,
   }) = _Category;
-
-  factory Category.fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);
 }

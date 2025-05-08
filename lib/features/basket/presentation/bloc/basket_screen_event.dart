@@ -4,25 +4,11 @@ part of 'basket_screen_bloc.dart';
 class BasketScreenEvent with _$BasketScreenEvent {
 
   const factory BasketScreenEvent.init() = _BasketScreenInitEvent;
-  const factory BasketScreenEvent.error(String message) = _BasketScreenErrorEvent;
-  const factory BasketScreenEvent.load() = _BasketScreenLoadEvent;
 
-  const factory BasketScreenEvent.loaded(
-      Map<Category,List<BasketItem>> items
-      ) = _BasketScreenLoadedEvent;
-
-  const factory BasketScreenEvent.loadedEmpty() = _BasketScreenLoadedEmptyEvent;
+  const factory BasketScreenEvent.refresh() = _BasketScreenRefreshEvent;
 
   const factory BasketScreenEvent.removeItem(int itemId) = _BasketScreenRemoveItemEvent;
 
-  const factory BasketScreenEvent.incrementQuantity(int itemId) = _BasketScreenIncrementQuantityEvent;
-
-  const factory BasketScreenEvent.decrementQuantity(int itemId) = _BasketScreenDecrementQuantityEvent;
-
-  // Оформление заказа
-  const factory BasketScreenEvent.checkout({
-    required String userId,
-    required String deliveryAddress,
-  }) = _BasketScreenCheckoutEvent;
+  const factory BasketScreenEvent.updateQuantity(int itemId, int amount) = _BasketScreenUpdateQuantityEvent;
 }
 

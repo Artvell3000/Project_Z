@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:project_z/core/domain/entity/basket/basket.dart';
-import 'package:project_z/core/domain/entity/category/category.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_z/features/basket/domain/entity/basket.dart';
+import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
+import 'package:project_z/shared/widgets/loading_button.dart';
 
 class PaymentCard extends StatelessWidget {
-  const PaymentCard({super.key, required this.categoryPrice, required this.fullPrice, required this.fullPriceWithDiscount});
-  final Map<String,String> categoryPrice;
-  final double fullPrice;
-  final double fullPriceWithDiscount;
+  const PaymentCard(this._basket, {super.key});
+
+  final Basket _basket;
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +34,16 @@ class PaymentCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text( //цена со скидкой
-                      '$fullPriceWithDiscount so\'m',
+                    Text(
+                      '${_basket.fullPriceWithDiscount} so\'m',
                       style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black
                       ),
                     ),
-                    Text( // полная цена
-                      '$fullPrice so\'m',
+                    Text(
+                      '${_basket.fullPrice} so\'m',
                       style: const TextStyle(
                         fontSize: 12,
                         decoration: TextDecoration.lineThrough,
@@ -55,40 +56,35 @@ class PaymentCard extends StatelessWidget {
               ],
             ),
             const Divider(height: 24, thickness: 1),
-
-            Column(
-              children: categoryPrice.entries.map((en){
-                return Column(
-                  children: [
-                    _buildItem(en.key, '${en.value} so\'m'),
-                    const Divider(height: 24, thickness: 1),
-                  ],
-                );
-              }).toList(),
+            ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final product = _basket.items[index].product;
+                  return _buildItem(
+                      product.name,
+                      '${product.formattedFinalPrice} so\'m'
+                  );
+                },
+                separatorBuilder: (context, index) => const SizedBox(height: 15),
+                itemCount: _basket.items.length
             ),
-
             const SizedBox(height: 20),
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.indigo[900],
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                onPressed: () {
-                  // TODO: Implement button action
+              child: BlocBuilder<ShellScreenBloc, ShellScreenState>(
+                builder: (context, state) {
+                  final isLoading = state.mapOrNull(
+                    loading: (d) => true,
+                    addingToBasket: (d) => true,
+                    creatingOrder: (d) => true
+                  ) ?? false;
+
+                  if(isLoading){
+                    return const LoadingButton();
+                  }
+                  return const PaymentButton();
                 },
-                child: const Text(
-                  'Rasmiylashtirish',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
               ),
             ),
           ],
@@ -103,23 +99,48 @@ class PaymentCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: Colors.black
+          SizedBox(
+            width: 170,
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: Colors.black,
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
           ),
           Text(
             price,
             style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
                 color: Colors.black
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class PaymentButton extends StatelessWidget {
+  const PaymentButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        final bloc = BlocProvider.of<ShellScreenBloc>(context);
+        bloc.add(const ShellScreenEvent.createOrder());
+      },
+      child: const Text(
+        'Rasmiylashtirish',
+        style: TextStyle(
+          color: Colors.white,
+        ),
       ),
     );
   }

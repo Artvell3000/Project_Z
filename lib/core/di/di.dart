@@ -1,33 +1,32 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-import 'package:project_z/core/domain/repositories/repositories.dart';
-import 'package:project_z/core/network/api/mock/mock_api_service.dart';
+import 'package:project_z/core/domain/repositories/category_repository.dart';
+import 'package:project_z/core/domain/repositories/product_repository.dart';
 import 'package:project_z/core/network/api/service/api_service.dart';
-import 'package:project_z/data/repositories/repositories.dart';
-import 'package:project_z/features/product/presentation/bloc/product_screen_bloc.dart';
 import 'package:project_z/features/search/domain/entity/search_filter.dart';
-import 'package:project_z/features/search/presentation/bloc/search_screen_bloc.dart';
+import 'package:project_z/features/search/presentation/bloc/filter_widget/filter_screen_bloc.dart';
+import 'package:project_z/features/search/presentation/bloc/search_screen/search_screen_bloc.dart';
 import 'di.config.dart';
 
 final getIt = GetIt.instance;
 
 @InjectableInit(
-  initializerName: 'init', // Функция инициализации
+  initializerName: 'init',
   preferRelativeImports: true,
-  asExtension: false, // Для совместимости
+  asExtension: false,
 )
 void configureDependencies() {
   init(getIt);
   getIt.unregister<SearchScreenBloc>();
-  getIt.registerFactoryParam<SearchScreenBloc, SearchFilter?, void>(
-        (filter, _) => SearchScreenBloc(getIt<ApiService>(), initFilter: filter,),
+  getIt.registerFactoryParam<SearchScreenBloc, SearchFilter, void>(
+        (filter, _) => SearchScreenBloc(getIt<IProductRepository>(),filter,),
   );
-  getIt.unregister<ProductScreenBloc>();
-  getIt.registerFactoryParam<ProductScreenBloc, int, void>(
-        (id,_) => ProductScreenBloc(id, getIt<ApiService>()),
+
+  getIt.unregister<FilterScreenBloc>();
+  getIt.registerFactoryParam<FilterScreenBloc, SearchFilter, void>(
+        (filter, _) => FilterScreenBloc(getIt<ICategoryRepository>(),filter,),
   );
-  //getIt.registerSingleton<ITokenRepository>(TokensFromJsonRepository());
 }
 
 @module
@@ -36,17 +35,5 @@ abstract class AppModule {
   Dio get dio => Dio();
 
   @singleton
-  ApiService get apiService => MockApiService();
-
-  @singleton
-  ITokenRepository get iTokenRepository => TokensFromJsonRepository();
-
-  @singleton
-  IAuthRepository get iAuthRepository => ApiAuthRepository(apiService);
-
-  @singleton
-  IBasketRepository get iBasketRepository => ApiBasketRepository(apiService);
-
-  @singleton
-  IOrderRepository get iOrderRepository => ApiOrderRepository(apiService);
+  ApiService get apiService => ApiService(dio);
 }

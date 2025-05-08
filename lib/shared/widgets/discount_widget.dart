@@ -6,11 +6,11 @@ class DiscountWidget extends StatelessWidget {
     required this.value,
   });
 
-  final String? value;
+  final double? value;
 
   @override
   Widget build(BuildContext context) {
-    return (value == null || value == '' || value == '0')
+    return (value == null || value == 0)
         ? const SizedBox()
         : Container(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),

@@ -1,0 +1,20 @@
+{
+  "searchTitle": "Все продукты",
+  "basketTitle": "Моя корзина",
+  "ordersTitle": "История покупок",
+  "profileTitle": "Моя страница",
+
+  "authAlertDialogTitle" : "Требуется авторизация",
+  "authAlertDialogContent" : "Для получения информации о товаре или совершения покупки необходимо зарегистрироваться. Пожалуйста, войдите в систему, чтобы продолжить.",
+  "authAlertDialogBackButton" : "Назад",
+  "authAlertDialogContinueButton" : "Продолжить",
+  "productNotFoundAlertTitle": "Товар отсутствует",
+  "productNotFoundAlertContent": "Извините, запрашиваемый товар отсутствует или был удалён. Пожалуйста, посмотрите другие товары.",
+
+   "profileFullNameLabel": "Имя и фамилия",
+     "profilePhoneLabel": "Телефон",
+     "profileUserInfoTitle": "Ваши данные",
+     "profileGeoTitle": "Ваше местоположение",
+     "profileDistinct": "Район",
+     "profileTown": "Область / Город"
+}

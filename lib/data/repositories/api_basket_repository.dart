@@ -1,111 +1,67 @@
+import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:project_z/core/domain/entity/basket/basket.dart';
 import 'package:project_z/core/domain/repositories/basket_repository.dart';
+import 'package:project_z/core/error/entity/domain_exception.dart';
+import 'package:project_z/core/error/mappers/domain_exceptions_mapper.dart';
+import 'package:project_z/core/network/api/mappers/basket_mapper.dart';
+import 'package:project_z/core/network/api/entity/entity.dart';
 import 'package:project_z/core/network/api/service/api_service.dart';
 
+@Injectable(as: IBasketRepository)
 class ApiBasketRepository implements IBasketRepository {
   ApiBasketRepository(this._apiService);
+
   final ApiService _apiService;
 
   @override
-  Future<Either<Exception, PaginatedBasketItems>> getBasketList({
-    String? search,
-    int? page,
-    required String token
-  }) async {
+  Future<Either<DomainError, List<BasketItem>>> getMyBasket(String token, {int? page}) async {
     try {
-      final response = await _apiService.getBasketList(
-        search: search,
-        page: page,
-        token: 'Bearer $token'
-      );
-      return Either.right(response);
+      final response = await _apiService.getMyBasketItems(token: 'Bearer $token', page: page);
+      return Right(response.toDomain());
+    } on DioException catch (e) {
+      return Left(DomainErrorMapper.mapDio(e));
     } on Exception catch (e) {
-      return Either.left(e);
+      return Left(DomainErrorMapper.mapUnknown(e));
     }
   }
 
   @override
-  Future<Either<Exception, PaginatedBasketItems>> getMyBasketItems({
-    String? search,
-    int? page,
-    required String token
-  }) async {
+  Future<Either<DomainError, BasketItem>> addToBasket(String token, int productId) async {
     try {
-      final response = await _apiService.getMyBasketItems(
-        search: search,
-        page: page,
-          token: 'Bearer $token'
-      );
-      return Either.right(response);
+      final response = await _apiService.createBasketItem('Bearer $token', BasketItemCompanion(productId: productId));
+      return Right(response.toDomain());
+    } on DioException catch (e) {
+      return Left(DomainErrorMapper.mapDio(e));
     } on Exception catch (e) {
-      return Either.left(e);
+      return Left(DomainErrorMapper.mapUnknown(e));
     }
   }
 
   @override
-  Future<Either<Exception, BasketItem>> getBasketItem(int basketItemId, String token) async {
+  Future<Either<DomainError, void>> remove(String token, int id) async {
     try {
-      final response = await _apiService.getBasketItem('Bearer $token',basketItemId);
-      return Either.right(response);
+      await _apiService.deleteBasketItem('Bearer $token', id);
+      return const Right(null);
+    } on DioException catch (e) {
+      return Left(DomainErrorMapper.mapDio(e));
     } on Exception catch (e) {
-      return Either.left(e);
+      return Left(DomainErrorMapper.mapUnknown(e));
     }
   }
 
   @override
-  Future<Either<Exception, BasketItem>> addToBasket(BasketItemRequest request, String token) async {
-    try {
-      final response = await _apiService.createBasketItem('Bearer $token',request);
-      return Either.right(response);
-    } on Exception catch (e) {
-      return Either.left(e);
-    }
-  }
-
-  @override
-  Future<Either<Exception, BasketItem>> updateBasketItem(
-      int basketItemId,
-      BasketItemRequest request,
-      String token
-      ) async {
+  Future<Either<DomainError, BasketItem>> updateAmount(String token,
+      {required int id, required int productId, required int amount}) async {
     try {
       final response = await _apiService.updateBasketItem(
-        'Bearer $token',
-        basketItemId,
-        request,
-      );
-      return Either.right(response);
+          'Bearer $token', id, BasketItemCompanion(productId: productId, amount: amount));
+      return Right(response.toDomain());
+    } on DioException catch (e) {
+      return Left(DomainErrorMapper.mapDio(e));
     } on Exception catch (e) {
-      return Either.left(e);
-    }
-  }
-
-  @override
-  Future<Either<Exception, BasketItem>> partialUpdateBasketItem(
-      int basketItemId,
-      BasketItemRequest request,
-      String token
-      ) async {
-    try {
-      final response = await _apiService.partialUpdateBasketItem(
-        'Bearer $token',
-        basketItemId,
-        request,
-      );
-      return Either.right(response);
-    } on Exception catch (e) {
-      return Either.left(e);
-    }
-  }
-
-  @override
-  Future<Either<Exception, void>> removeFromBasket(int basketItemId, String token) async {
-    try {
-      await _apiService.deleteBasketItem('Bearer $token',basketItemId);
-      return Either.right(null);
-    } on Exception catch (e) {
-      return Either.left(e);
+      return Left(DomainErrorMapper.mapUnknown(e));
     }
   }
 }

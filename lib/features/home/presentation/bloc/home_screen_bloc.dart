@@ -6,7 +6,9 @@ import 'package:project_z/core/domain/entity/category/category.dart';
 import 'package:project_z/core/domain/entity/entity.dart';
 import 'package:project_z/core/domain/entity/news/news.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:project_z/core/network/api/service/api_service.dart';
+import 'package:project_z/core/domain/repositories/category_repository.dart';
+import 'package:project_z/core/domain/repositories/news_repository.dart';
+import 'package:project_z/core/domain/repositories/product_repository.dart';
 
 part 'home_screen_event.dart';
 
@@ -16,79 +18,58 @@ part 'home_screen_bloc.freezed.dart';
 
 @injectable
 class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
-  final ApiService api;
+  HomeScreenBloc(this._iCategoryRepository, this._iProductRepository, this._iNewsRepository) : super(const HomeScreenState.loading()) {
+    on<HomeScreenEvent>((event, emit) async {
+      await event.map(
+        init: (d) => _onInit(d, emit),
+        refresh: (d) => _onRefresh(d, emit),
+      );
+    });
+    add(const HomeScreenEvent.init());
+  }
 
-  late List<Category> categories;
-  late List<News> news;
-  late List<Product> newProducts;
-  late List<Product> specialOffer;
+  final ICategoryRepository _iCategoryRepository;
+  final IProductRepository _iProductRepository;
+  final INewsRepository _iNewsRepository;
+
+  late Map<Category,List<Category>> _categories;
+  late NewsPage _news;
+  late ProductPage _newProducts;
+  late ProductPage _specialOffer;
   late String error;
 
-  late Map<int, List<Category>> _struct;
-
-  HomeScreenBloc(this.api) : super(const HomeScreenState.loading()) {
-    Logger().i('[HomeScreenBloc] init');
-    on<HomeScreenEvent>((event, emit) async {
-      event.map(
-          loaded: (d) => _onLoadedData(d, emit),
-          error: (data) {
-            emit(HomeScreenState.error(productsError: data.error));
-          },
-          moveTo: (d) => _onMoveTo(d, emit));
-    });
-
-    loadData();
+  List<Category> getSubcategories(Category category){
+    return _categories[category] ?? [category];
   }
 
-  List<Category> getSubcategories(int parentId){
-    return _struct[parentId] ?? [];
+
+  Future<void> _onInit(_InitEvent d, Emitter<HomeScreenState> emit) async {
+    await _update(emit);
   }
 
-  void _onLoadedData(_LoadedEvent d, Emitter<HomeScreenState> emit) {
-    final mainCategories = d.categories.where((c) => c.subcategoryId == null).toList();
-    emit(HomeScreenState.loaded(
-      categories: mainCategories,
-      news: d.news,
-      newProducts: d.newProducts,
-      specialOffer: d.specialOffer,
-    ));
+  Future<void> _onRefresh(_RefreshEvent d, Emitter<HomeScreenState> emit) async {
+    await _update(emit);
   }
 
-  void _onMoveTo(_MoveToEvent d, Emitter<HomeScreenState> emit) {
-    if (d.toSearchWithCategory) {
-      emit(HomeScreenState.moveTo(toSearchWithCategory: d.toSearchWithCategory, parentCategoryId: d.parentCategoryId));
-    }
-  }
-
-  Future<void> loadData() async {
+  Future<void> _update(Emitter<HomeScreenState> emit) async {
     try {
-      newProducts = (await api.searchProducts(status: newProductStatus)).results;
-      specialOffer = (await api.searchProducts(status: specialOfferStatus)).results;
-
-
-
-      categories = (await api.getCategories()).results;
-
-      Map<int, List<Category>> struct = {};
-
-      for(final el in categories){
-        if(el.subcategoryId == null){
-          struct[el.id] = [];
-        } else {
-          if(struct[el.subcategoryId] == null){
-            struct[el.subcategoryId!] = [el];
-          } else {
-            struct[el.subcategoryId!]!.add(el);
-          }
-        }
-      }
-      _struct = struct;
-
-      news = (await api.getNews()).results;
-      add(HomeScreenEvent.loaded(
-          categories: categories, news: news, newProducts: newProducts, specialOffer: specialOffer));
-    } catch (e) {
-      add(HomeScreenEvent.error(e.toString()));
+      _newProducts = (await _iProductRepository.getByStatus(newProductStatus)).getOrElse((e)=>throw(e));
+      _specialOffer = (await _iProductRepository.getByStatus(specialOfferStatus)).getOrElse((e)=>throw(e));
+      _categories = (await _iCategoryRepository.getStructured()).getOrElse((e)=>throw(e));
+      _news = (await _iNewsRepository.get()).getOrElse((e)=>throw(e));
+      Logger().i('$_specialOffer');
+      emit(HomeScreenState.loaded(
+          categories: _categories.keys.toList(),
+          news: _news.results,
+          newProducts: _newProducts.results,
+          specialOffer: _specialOffer.results
+      ));
+    } on Exception catch (e) {
+      _loadError(e, emit);
     }
+  }
+
+  void _loadError(e,Emitter<HomeScreenState> emit){
+    emit(HomeScreenState.error(e));
   }
 }

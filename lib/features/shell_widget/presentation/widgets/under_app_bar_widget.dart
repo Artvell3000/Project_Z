@@ -4,17 +4,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/flutter_app_icons.dart';
 
-const String textLogo = 'Logo \ncompany';
+const String _textLogo = 'Logo \ncompany';
 
 
 
-const searchTextStyle = TextStyle(
+const _searchTextStyle = TextStyle(
   color: Colors.black,
   fontWeight: FontWeight.w400,
   fontSize: 16,
 );
 
-final textFieldDecoration =  InputDecoration(
+final _textFieldDecoration =  InputDecoration(
   hintText: 'Qidirish',
   hintStyle: const TextStyle(
     color: Color.fromRGBO(125, 125, 125, 1),
@@ -63,12 +63,12 @@ class _UnderAppBarWidgetState extends State<UnderAppBarWidget> {
     super.dispose();
   }
 
-  bool tapedOnSearch = false;
+  bool _tapedOnSearch = false;
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if(tapedOnSearch) _textFieldFocusNode.requestFocus();
+      if(_tapedOnSearch) _textFieldFocusNode.requestFocus();
     });
     return ColoredBox(
       color: Colors.white,
@@ -80,14 +80,14 @@ class _UnderAppBarWidgetState extends State<UnderAppBarWidget> {
               alignment: Alignment.centerLeft,
               child: SizedBox(
                 height: 57,
-                child: (tapedOnSearch) ? SizedBox(
+                child: (_tapedOnSearch) ? SizedBox(
                   width: 290,
                   child: TextField(
                     focusNode: _textFieldFocusNode,
-                    decoration: textFieldDecoration,
-                    style: searchTextStyle,
+                    decoration: _textFieldDecoration,
+                    style: _searchTextStyle,
                   )): const Text(
-                  textLogo,
+                  _textLogo,
                   style: TextStyle(
                     color: Color.fromRGBO(16, 53, 91, 1),
                     fontSize: 20,
@@ -105,7 +105,7 @@ class _UnderAppBarWidgetState extends State<UnderAppBarWidget> {
                   UnderAppBarActionButton(
                     onTap: () {
                       setState(() {
-                        tapedOnSearch = !tapedOnSearch;
+                        _tapedOnSearch = !_tapedOnSearch;
                       });
                     },
                     padding: const EdgeInsets.only(right: 5),
@@ -121,7 +121,7 @@ class _UnderAppBarWidgetState extends State<UnderAppBarWidget> {
                       height: 25.0,
                     ),
                     onTap: () {
-                      AutoRouter.of(context).push(const MenuRoute());
+                      //AutoRouter.of(context).push(const MenuRoute());
                     },
                   ),
                 ],

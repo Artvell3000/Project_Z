@@ -24,7 +24,7 @@ class ProductTitle extends StatelessWidget {
             style: titleTextStyle,
           ),
         ),
-        QuantityWidget(quantity: quantity)
+        QuantityWidget(quantity)
       ],
     );
   }

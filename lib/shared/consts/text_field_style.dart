@@ -8,7 +8,7 @@ var textFieldStyle = OutlineInputBorder(
   ),
 );
 
-const textStyleForTextFieldStyle = TextStyle(
+const textStyleForTextField = TextStyle(
   color: Color.fromRGBO(16, 53, 91, 1),
   fontSize: 14,
   fontWeight: FontWeight.w600,

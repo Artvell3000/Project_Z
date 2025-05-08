@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
 class QuantityWidget extends StatelessWidget {
-  const QuantityWidget({
+  const QuantityWidget(this._quantity, {
     super.key,
-    required this.quantity,
   });
 
-  final int quantity;
+  final int _quantity;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,7 @@ class QuantityWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5.0),
         child: Center(
-          child: Text('$quantity Maxsulot', style: const TextStyle(
+          child: Text('$_quantity Maxsulot', style: const TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 12,
               color: Color.fromRGBO(167, 167, 167, 1)

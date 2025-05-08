@@ -2,19 +2,7 @@ part of 'home_screen_bloc.dart';
 
 @freezed
 class HomeScreenEvent with _$HomeScreenEvent {
-  const factory HomeScreenEvent.loaded({
-    required List<Category> categories,
-    required List<News> news,
-    required List<Product> newProducts,
-    required List<Product> specialOffer,
-  }) = _LoadedEvent;
+  const factory HomeScreenEvent.init() = _InitEvent;
 
-  const factory HomeScreenEvent.error(
-    String error,
-  ) = _ErrorEvent;
-
-  const factory HomeScreenEvent.moveTo({
-    @Default(false) bool toSearchWithCategory,
-    int? parentCategoryId
-  }) = _MoveToEvent;
+  const factory HomeScreenEvent.refresh() = _RefreshEvent;
 }

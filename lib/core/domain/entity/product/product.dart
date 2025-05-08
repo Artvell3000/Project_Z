@@ -3,66 +3,56 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'product.freezed.dart';
 
-part 'product.g.dart';
-
-@freezed
-class ProductImage with _$ProductImage {
-  @JsonSerializable(fieldRename: FieldRename.snake)
-  const factory ProductImage({
-    required int id,
-    required String image,
-    required int product,
-  }) = _ProductImage;
-
-  factory ProductImage.fromJson(Map<String, dynamic> json) => _$ProductImageFromJson(json);
-}
-
 @freezed
 class Product with _$Product {
   const Product._();
 
-  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Product({
     required int id,
-    required List<ProductImage> images,
+    required List<String> images,
     required String name,
     required Map<String, String> description,
     required Map<String, String> characteristics,
-    required String price,
-    required String discount,
+    required double price,
+    required double discount,
     required int quantity,
-    @JsonKey(name: 'product_code') required int productCode,
+    required int productCode,
     required String? status,
     required String slug,
-    @JsonKey(name: 'created_at') required DateTime createdAt,
-    @JsonKey(name: 'updated_at') required DateTime updatedAt,
+    required DateTime createdAt,
+    required DateTime updatedAt,
     required int? subcategory,
   }) = _Product;
 
-  factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
+  double get finalPrice => price * (1 - discount / 100);
 
-  // Метод для расчёта итоговой цены
-  double get finalPrice {
-    final priceValue = double.tryParse(price) ?? 0.0;
-    final discountValue = double.tryParse(discount) ?? 0.0;
-    return priceValue * (1 - discountValue / 100);
-  }
+  String get formattedFinalPrice => finalPrice.toStringAsFixed(2);
 
-  // Форматированная строка с итоговой ценой
-  String get formattedFinalPrice {
-    return finalPrice.toStringAsFixed(2); // 2 знака после запятой
+  String get formattedPrice => price.toStringAsFixed(2);
+
+  String? get formattedStatus{
+    if(status == null) return null;
+    final formatted = status!
+        .replaceAll('_', ' ')
+        .trim();
+
+    return formatted.isNotEmpty
+        ? formatted[0].toUpperCase() + formatted.substring(1).toLowerCase()
+        : '';
   }
 }
 
 @freezed
-class ProductList with _$ProductList {
-  @JsonSerializable(fieldRename: FieldRename.snake)
-  const factory ProductList({
-    required int count,
-    required String? next,
-    required String? previous,
-    required List<Product> results,
-  }) = _ProductList;
+class ProductPage with _$ProductPage {
+  const ProductPage._();
 
-  factory ProductList.fromJson(Map<String, dynamic> json) => _$ProductListFromJson(json);
+  const factory ProductPage({
+    required int count,
+    required int? nextPage,
+    required int? prevPage,
+    required List<Product> results,
+  }) = _ProductPage;
+
+  bool get isLast => (nextPage == null);
+  bool get isFirst => (prevPage == null);
 }
