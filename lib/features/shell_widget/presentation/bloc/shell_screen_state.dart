@@ -17,6 +17,7 @@ class ShellScreenState with _$ShellScreenState {
     @Default(false) bool isUpdatedBasket,
     @Default(false) bool isUpdatedOrders,
     @Default(false) bool isUpdatedProfile,
+    @Default(false) bool isTryingCreateOrder,
 }) = _UpdatedAuthState;
 
   const factory ShellScreenState.needAuth() = _NeedAuthState;

@@ -19,7 +19,7 @@ class ShowBottomDrawerFunction {
         maxHeight: MediaQuery.of(context).size.height * (500 / 624),
       ),
       backgroundColor: Colors.transparent,
-      builder: (context) => BottomDrawer(initFilter),
+      builder: (context) => BottomDrawer(initFilter.copyWith()),
     );
   }
 }

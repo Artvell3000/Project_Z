@@ -7,6 +7,7 @@ import 'package:project_z/features/home/presentation/bloc/home_screen_bloc.dart'
 import 'package:project_z/features/home/presentation/widgets/part_title_widget.dart';
 import 'package:project_z/features/search/domain/entity/search_filter.dart';
 import 'package:project_z/shared/widgets/loading_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CategoriesWidget extends StatelessWidget {
   CategoriesWidget({
@@ -26,7 +27,7 @@ class CategoriesWidget extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        PartTitleWidget(title: 'Kategoriya.', onTapMore: onTapMoreCategories),
+        PartTitleWidget(title: AppLocalizations.of(context)!.homeCategoryTitle, onTapMore: onTapMoreCategories),
         BlocBuilder<HomeScreenBloc, HomeScreenState>(
           builder: (context, state) => state.when(
             error: (e) => Center(child: Text(e.toString())),

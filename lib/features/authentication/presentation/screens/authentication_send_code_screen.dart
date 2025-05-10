@@ -8,6 +8,7 @@ import 'package:project_z/features/authentication/presentation/widgets/widgets.d
 import 'package:project_z/shared/consts/text_field_style.dart';
 import 'package:project_z/shared/consts/text_style_title.dart';
 import 'package:project_z/shared/widgets/loading_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
 class AuthenticationSendCodeScreen extends StatelessWidget {
@@ -49,7 +50,7 @@ class AuthenticationSendCodeScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Telefon raqamingizni kiriting", style: titleTextStyle),
+                              Text(AppLocalizations.of(context)!.authSendCodeTitle, style: titleTextStyle),
                               IconButton(
                                 icon: const Icon(Icons.close_rounded, size: 30, color: Color.fromRGBO(16, 53, 91, 1)),
                                 onPressed: () {
@@ -58,9 +59,9 @@ class AuthenticationSendCodeScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 12.0),
-                            child: Text('Telefon', style: textStyleForLabel),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 12.0),
+                            child: Text(AppLocalizations.of(context)!.authSendCodePhone, style: textStyleForLabel),
                           ),
                           BlocBuilder<AuthenticationSendCodeScreenBloc, AuthenticationSendCodeScreenState>(
                             buildWhen: (_, state){
@@ -104,7 +105,7 @@ class AuthenticationSendCodeScreen extends StatelessWidget {
                               onPressed: (){
                                 BlocProvider.of<AuthenticationSendCodeScreenBloc>(context).add(const AuthenticationSendCodeScreenEvent.sendCode());
                               }, 
-                              child: const Center(child: Text('Ro\'yxatdan o\'tish', style: TextStyle(color: Colors.white),))
+                              child: Center(child: Text(AppLocalizations.of(context)!.registerButtonText, style: const TextStyle(color: Colors.white),))
                           );
                         },
                       ),
@@ -112,19 +113,19 @@ class AuthenticationSendCodeScreen extends StatelessWidget {
                             padding: const EdgeInsets.only(top: 12),
                             child: Center(
                               child: RichText(
-                                text: const TextSpan(
+                                text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: "Akkauntingiz yo'q? ",
-                                      style: TextStyle(
+                                      text: AppLocalizations.of(context)!.authSendCodeQuestion1,
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 12,
                                         color: Color.fromRGBO(129, 129, 129, 1),
                                       ),
                                     ),
                                     TextSpan(
-                                      text: "Avtorizatsiyadan o'tish",
-                                      style: TextStyle(
+                                      text: AppLocalizations.of(context)!.authSendCodeQuestion2,
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 12,
                                         color: Color.fromRGBO(16, 53, 91, 1),

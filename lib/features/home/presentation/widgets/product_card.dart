@@ -7,8 +7,10 @@ import 'package:project_z/core/domain/entity/entity.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
 import 'package:project_z/flutter_app_icons.dart';
+import 'package:project_z/shared/functions/show_alert_dialog/show_create_order_alert_dialog.dart';
 import 'package:project_z/shared/functions/show_alert_dialog/show_has_not_product_alert_dialog_function.dart';
 import 'package:project_z/shared/widgets/loading_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProductCard extends StatefulWidget {
   const ProductCard({
@@ -23,21 +25,18 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
-
-  void _onCreateOrderClick(BuildContext context) {
-    if(widget.info.quantity == 0){
+  Future<void> _onCreateOrderClick(BuildContext context) async {
+    if (widget.info.quantity == 0) {
       ShowHasNotProductAlertDialogFunction.body(context);
       return;
     }
 
     final bloc = BlocProvider.of<ShellScreenBloc>(context);
-    bloc.add(ShellScreenEvent.addToBasket(widget.info.id));
-    AutoRouter.of(context).replace(BasketRoute(count: bloc.countItems + 1));
-    getIt<TabsRouter>().setActiveIndex(2);
+    bloc.add(ShellScreenEvent.addToBasket(widget.info.id, withCreateOrder: true));
   }
 
   void _onAddToBasketClick(BuildContext context) {
-    if(widget.info.quantity == 0){
+    if (widget.info.quantity == 0) {
       ShowHasNotProductAlertDialogFunction.body(context);
       return;
     }
@@ -123,9 +122,9 @@ class _ProductCardState extends State<ProductCard> {
                       Expanded(
                           flex: 100,
                           child: ButtonForProductCard(
-                              child: const Text(
-                                'Sotib olish',
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!.createOrderText,
+                                style: const TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
@@ -134,24 +133,22 @@ class _ProductCardState extends State<ProductCard> {
                         flex: 3,
                         child: SizedBox(),
                       ),
-
                       Expanded(
                         flex: 30,
                         child: BlocBuilder<ShellScreenBloc, ShellScreenState>(
                           builder: (context, state) {
-                            final bool isLoading = state.mapOrNull(
-                                addingToBasket: (d){
+                            final bool isLoading = state.mapOrNull(addingToBasket: (d) {
                                   return d.productId == widget.info.id;
-                                }
-                            ) ?? false;
+                                }) ??
+                                false;
 
                             return ButtonForProductCard(
                                 isLoading: isLoading,
                                 onClick: () => _onAddToBasketClick(context),
                                 child: const Icon(
-                                CustomIcons.basket,
-                                color: Colors.white,
-                            ));
+                                  CustomIcons.basket,
+                                  color: Colors.white,
+                                ));
                           },
                         ),
                       ),
@@ -177,16 +174,22 @@ class ButtonForProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(6),
+        ),
+      ),
       onPressed: onClick,
       child: Center(
-          child: (isLoading) ? const SizedBox(
-            height: 13,
-            width: 13,
-            child: CircularProgressIndicator(
-              color: Colors.white,
-            ),
-          ) : child
-      ),
+          child: (isLoading)
+              ? const SizedBox(
+                  height: 13,
+                  width: 13,
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                )
+              : child),
     );
   }
 }

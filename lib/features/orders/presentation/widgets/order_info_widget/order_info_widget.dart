@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:project_z/core/domain/entity/order/order.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/orders/presentation/widgets/status_widget.dart';
 import 'package:project_z/shared/widgets/discount_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const labelTextStyle = TextStyle(color: Color.fromRGBO(125, 125, 125, 1), fontWeight: FontWeight.w400, fontSize: 12);
 
@@ -92,68 +92,69 @@ class _OrderInfoContainerState extends State<OrderInfoContainer> with TickerProv
                 child: showProduct ? Column(
                   children: [
                     const SizedBox(height: 80,),
-                    SizedBox(
-                      //height: 82,
-                      child: ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: widget.info.items.length,
-                        itemBuilder: (context, index) {
-                          final product = widget.info.items[index].product;
-                          return Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  AutoRouter.of(context).push(
-                                      ProductRoute(productId: product.id)
-                                  );
-                                },
-                                child: Image.network(product.images.first, height: 82),
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: widget.info.items.length,
+                      itemBuilder: (context, index) {
+                        final product = widget.info.items[index].product;
+                        return Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                AutoRouter.of(context).push(
+                                    ProductRoute(productId: product.id)
+                                );
+                              },
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  clipBehavior: Clip.hardEdge,
+                                  child: Image.network(product.images.first, height: 82)
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 15),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          width: (product.discount == 0) ? 190 : 140,
-                                          child: Text(
-                                            product.name,
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 1,
-                                            style: const TextStyle(
-                                                fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black),
-                                          ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: (product.discount == 0) ? 190 : 140,
+                                        child: Text(
+                                          product.name,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          style: const TextStyle(
+                                              fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black),
                                         ),
-                                        DiscountWidget(value: product.discount,)
-                                      ],
-                                    ),
-                                    Text(
-                                      'ID ${product.id}',
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color.fromRGBO(97, 97, 97, 1),
                                       ),
+                                      DiscountWidget(value: product.discount,)
+                                    ],
+                                  ),
+                                  Text(
+                                    'ID ${product.id}',
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color.fromRGBO(97, 97, 97, 1),
                                     ),
-                                    const Text(
-                                      'Maxsulot narxi',
-                                      style: labelTextStyle,
-                                    ),
-                                    Text(
-                                      '${product.finalPrice} so\'m',
-                                      style: valueTextStyle,
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          );
-                        },
-                      ),
+                                  ),
+                                  Text(
+                                    AppLocalizations.of(context)!.orderScreenProductPriceText,
+                                    style: labelTextStyle,
+                                  ),
+                                  Text(
+                                    '${product.finalPrice} so\'m',
+                                    style: valueTextStyle,
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        );
+                      },
                     ),
                   ],
                 ) : const SizedBox(),
@@ -223,14 +224,14 @@ class _OrderInfoContainerState extends State<OrderInfoContainer> with TickerProv
                           ],
                         ),
                         const SizedBox(height: 10.0),
-                        const Text('Sana', style: labelTextStyle),
+                        Text(AppLocalizations.of(context)!.orderScreenDateText, style: labelTextStyle),
                         Text(
                           _formatIso8601String(order.createdAt),
                           style: valueTextStyle,
                         ),
                         const SizedBox(height: 10.0),
-                        const Text(
-                          'Buyurtma ID raqami',
+                        Text(
+                          AppLocalizations.of(context)!.orderScreenOrderIdText,
                           style: labelTextStyle,
                         ),
                         Text(
@@ -238,8 +239,8 @@ class _OrderInfoContainerState extends State<OrderInfoContainer> with TickerProv
                           style: valueTextStyle,
                         ),
                         const SizedBox(height: 10.0),
-                        const Text(
-                          'Buyurtma narxi',
+                        Text(
+                          AppLocalizations.of(context)!.orderScreenOrderPriceText,
                           style: labelTextStyle,
                         ),
                         Text(

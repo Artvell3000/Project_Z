@@ -42,6 +42,8 @@ class OrderScreenBloc extends Bloc<OrderScreenEvent, OrderScreenState> {
 
   Future<void> _onRefresh(_OrderScreenRefreshEvent d, Emitter<OrderScreenState> emit) async {
     emit(const OrderScreenState.loading());
+    _orders.clear();
+    _nextPage = 1;
     await _update(emit);
   }
 

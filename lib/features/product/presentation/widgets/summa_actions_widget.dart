@@ -1,12 +1,21 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
 import 'package:project_z/shared/consts/text_style_for_elevation_button.dart';
+import 'package:project_z/shared/widgets/loading_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class SummaActionsWidget extends StatelessWidget {
-  const SummaActionsWidget({super.key, required this.summa});
+class SummaActionsWidget extends StatefulWidget {
+  const SummaActionsWidget(this.productId,{super.key, required this.summa});
 
   final String summa;
+  final int productId;
 
+  @override
+  State<SummaActionsWidget> createState() => _SummaActionsWidgetState();
+}
+
+class _SummaActionsWidgetState extends State<SummaActionsWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,51 +28,60 @@ class SummaActionsWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '$summa сум',
+            '${widget.summa} сум',
             style: const TextStyle(
                 fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
           ),
           const SizedBox(height: 10),
           SizedBox(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 150,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      
-                    },
-                    child: const SizedBox(
-                      height: 60,
-                      child: Center(
-                          child: Text(
-                            'Savatchaga \nqoshish',
-                            style: textStyleForElevationButton,
-                            textAlign: TextAlign.center,
-                          )),
-                    ),
-                  ),
-                ),
-                const Expanded(flex: 8, child: SizedBox()),
-                Expanded(
-                  flex: 150,
-                  child: ElevatedButton(
-                    onPressed: () {
+            height: 60,
+            child: BlocBuilder<ShellScreenBloc, ShellScreenState>(
+              builder: (context, state) {
+                final bloc = BlocProvider.of<ShellScreenBloc>(context);
+                if(state.mapOrNull(
+                  loading: (d) => true,
+                  addingToBasket: (d) => true,
+                  creatingOrder: (d) => true
+                ) ?? false){
+                  return const LoadingButton();
+                }
 
-                    },
-                    child: const SizedBox(
-                      height: 60,
-                      child: Center(
-                          child: Text(
-                            'Sotib olish',
-                            style: textStyleForElevationButton,
-                            textAlign: TextAlign.center,
-                          )),
+
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 150,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          bloc.add(ShellScreenEvent.addToBasket(widget.productId));
+                        },
+                        child: Center(
+                            child: Text(
+                              AppLocalizations.of(context)!.addToBasketText,
+                              style: textStyleForElevationButton,
+                              textAlign: TextAlign.center,
+                            )),
+                      ),
                     ),
-                  ),
-                ),
-              ],
+                    const Expanded(flex: 8, child: SizedBox()),
+                    Expanded(
+                      flex: 150,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          bloc.add(const ShellScreenEvent.createOrder());
+                        },
+                        child: Center(
+                            child: Text(
+                              AppLocalizations.of(context)!.createOrderText,
+                              style: textStyleForElevationButton,
+                              textAlign: TextAlign.center,
+                            )),
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ],

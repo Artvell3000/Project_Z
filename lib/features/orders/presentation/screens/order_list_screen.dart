@@ -50,41 +50,44 @@ class _OrderListScreenState extends State<OrderListScreen> {
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   controller: _scrollController,
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 30.0, bottom: 15),
-                          child: Text(AppLocalizations.of(context)!.ordersTitle, style: titleTextStyle),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 30.0, bottom: 15),
+                            child: Text(AppLocalizations.of(context)!.ordersTitle, style: titleTextStyle),
+                          ),
                         ),
-                      ),
-                      BlocBuilder<OrderScreenBloc, OrderScreenState>(
-                          builder: (context, state) => state.map(
-                              needAuth: (d) =>
-                                  const Padding(padding: EdgeInsets.only(top: 60.0), child: UnAuthPlaceholder()),
-                              loading: (d) => const SizedBox(
-                                  width: double.infinity,
-                                  height: 200,
-                                  child: Center(
-                                      child: CircularProgressIndicator(
-                                    color: mainColor,
-                                  ))),
-                              loaded: (d) => ListView.separated(
-                                    physics: const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: d.items.length,
-                                    separatorBuilder: (BuildContext context, int index) {
-                                      return const SizedBox(height: 10.0);
-                                    },
-                                    itemBuilder: (BuildContext context, int index) {
-                                      return OrderInfoContainer(info: d.items[index]);
-                                    },
-                                  ),
-                              error: (d) => Center(
-                                    child: Text(d.e.toString()),
-                                  )))
-                    ],
+                        BlocBuilder<OrderScreenBloc, OrderScreenState>(
+                            builder: (context, state) => state.map(
+                                needAuth: (d) =>
+                                    const Padding(padding: EdgeInsets.only(top: 65.0), child: UnAuthPlaceholder()),
+                                loading: (d) => const SizedBox(
+                                    width: double.infinity,
+                                    height: 200,
+                                    child: Center(
+                                        child: CircularProgressIndicator(
+                                      color: mainColor,
+                                    ))),
+                                loaded: (d) => ListView.separated(
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: d.items.length,
+                                      separatorBuilder: (BuildContext context, int index) {
+                                        return const SizedBox(height: 10.0);
+                                      },
+                                      itemBuilder: (BuildContext context, int index) {
+                                        return OrderInfoContainer(info: d.items[index]);
+                                      },
+                                    ),
+                                error: (d) => Center(
+                                      child: Text(d.e.toString()),
+                                    )))
+                      ],
+                    ),
                   ),
                 ),
               );

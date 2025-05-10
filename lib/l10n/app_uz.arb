@@ -16,5 +16,49 @@
   "profileUserInfoTitle" : "Sizning ma'lumotlaringiz",
   "profileGeoTitle" : "Sizning ma'lumotlaringiz",
   "profileDistinct" : "Tuman",
-  "profileTown" : "Viloyat / Shahar"
+  "profileTown" : "Viloyat / Shahar",
+
+  "homeGoToAll": "Barchasi",
+  "homeCategoryTitle": "Kategoriya.",
+  "homeNewProductsTitle": "Yangi mahsulotlar.",
+  "homeSpecialOfferTitle": "Mahsus taklif.",
+  "addToBasketText" : "Savatchaga \nqoshish",
+  "createOrderText" : "Sotib olish",
+
+  "productDescriptionTitle" : "Maxsulot haqida maʼlumot",
+  "productCharacteristicTitle" : "Maxsulot xarakteristikasi",
+  "quantity" : "Maxsulot",
+
+  "locale" : "Uz",
+
+  "authSendCodeTitle" : "Telefon raqamingizni kiriting",
+  "authSendCodePhone" : "Telefon",
+  "registerButtonText" : "Ro'yxatdan o'tish",
+  "authSendCodeQuestion1" : "Akkauntingiz yo'q? ",
+  "authSendCodeQuestion2" : "Avtorizatsiyadan o'tish",
+
+  "authVerifyCodeTitle" : "Kodni kiriting",
+  "authVerifyCodeDescription": "Telefonni tasdiqlash uchun \nCompanyBot 6 xonali kod yuborildi",
+  "authVerifyCodePS" : "Agar kod kelmasa, siz 120 soniya orqali\nyangisini olishingiz mumkin",
+
+  "unauthText" : "Tizimga kirish kerak",
+  "unauthButtonText" : "Tizimga kirish",
+
+  "searchScreenFilterButtonText" : "Filtrlar",
+  "searchScreenAllButtonText" : "Barchasi",
+
+  "orderScreenDateText": "Sana",
+  "orderScreenOrderIdText": "Buyurtma ID raqami",
+  "orderScreenOrderPriceText": "Buyurtma narxi",
+  "orderScreenProductPriceText": "Maxsulot narxi",
+
+  "basketScreenCreateOrderButtonText" : "Rasmiylashtirish",
+  "basketScreenFinalPriceText" : "Jami",
+
+  "createOrderAlertDialogTitle": "Buyurtma yaratish",
+    "createOrderAlertDialogBasketText": "Savatda:",
+    "createOrderAlertDialogFinalPrice": "Jami:",
+
+    "changePhoneAlertDialogTitle": "Telefon raqamini o'zgartirish",
+      "changePhoneAlertDialogContent": "Telefon raqamini o'zgartirish hozircha mobil ilova orqali amalga oshirib bo'lmaydi. Iltimos, bu amalni bajarish uchun bizning Telegram-botimizdan foydalaning."
 }

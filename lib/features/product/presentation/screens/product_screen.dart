@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_z/core/di/di.dart';
 import 'package:project_z/features/product/presentation/bloc/product_screen_bloc.dart';
 import 'package:project_z/features/product/presentation/widgets/widgets.dart';
-import 'package:project_z/shared/app_bar/app_bar_builder.dart';
 import 'package:project_z/shared/consts/colors.dart';
 
 @RoutePage()
@@ -48,6 +47,7 @@ class ProductScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: SummaActionsWidget(
+                        product.id,
                         summa: product.formattedFinalPrice,
                       ),
                     ),

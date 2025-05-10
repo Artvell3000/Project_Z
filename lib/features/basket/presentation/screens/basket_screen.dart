@@ -65,71 +65,74 @@ class BasketScreen extends StatelessWidget {
                         bloc.add(const BasketScreenEvent.refresh());
                         await bloc.stream.first;
                       },
-                      child: SingleChildScrollView(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 30.0, bottom: 20),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    AppLocalizations.of(context)!.basketTitle,
-                                    style: titleTextStyle,
-                                  ),
-                                  BlocBuilder<BasketScreenBloc, BasketScreenState>(
-                                    builder: (context, state) {
-                                      return state.mapOrNull(loaded: (d) => QuantityWidget(d.basket.fullAmount)) ??
-                                          const SizedBox();
-                                    },
-                                  )
-                                ],
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: SingleChildScrollView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 30.0, bottom: 20),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      AppLocalizations.of(context)!.basketTitle,
+                                      style: titleTextStyle,
+                                    ),
+                                    BlocBuilder<BasketScreenBloc, BasketScreenState>(
+                                      builder: (context, state) {
+                                        return state.mapOrNull(loaded: (d) => QuantityWidget(d.basket.fullAmount)) ??
+                                            const SizedBox();
+                                      },
+                                    )
+                                  ],
+                                ),
                               ),
-                            ),
-                            BlocBuilder<BasketScreenBloc, BasketScreenState>(builder: (context, state) {
-                              return state.mapOrNull(
-                                needAuth: (d) =>
-                                const Padding(padding: EdgeInsets.only(top: 60.0), child: UnAuthPlaceholder()),
-                                loaded: (d) {
-                                  final items = d.basket.items;
-                                  return ListView.builder(
-                                    shrinkWrap: true,
-                                    physics: const NeverScrollableScrollPhysics(),
-                                    itemBuilder: (context, index) {
-                                      return BasketItemWidget(
-                                        key: ValueKey('${items[index].id} ${items[index].amount}'),
-                                        item: items[index],
-                                      );
-                                    },
-                                    itemCount: items.length,
-                                  );
-                                },
-                                loadedEmpty: (d) => const EmptyBasketImage(),
-                                loading: (d) {
-                                  return ListView.builder(
+                              BlocBuilder<BasketScreenBloc, BasketScreenState>(builder: (context, state) {
+                                return state.mapOrNull(
+                                  needAuth: (d) =>
+                                  const Padding(padding: EdgeInsets.only(top: 60.0), child: UnAuthPlaceholder()),
+                                  loaded: (d) {
+                                    final items = d.basket.items;
+                                    return ListView.builder(
                                       shrinkWrap: true,
-                                      itemCount: 2,
+                                      physics: const NeverScrollableScrollPhysics(),
                                       itemBuilder: (context, index) {
-                                        return const LoadingBasketItemWidget();
-                                      });
-                                },
-                                error: (d) {
-                                  return Center(
-                                    child: Text(d.e.toString()),
-                                  );
-                                },
-                              ) ??
-                                  const SizedBox();
-                            }),
-                            BlocBuilder<BasketScreenBloc, BasketScreenState>(builder: (context, state) {
-                              return state.mapOrNull(
-                                loaded: (d) => PaymentCard(d.basket),
-                              ) ??
-                                  const SizedBox();
-                            })
-                          ],
+                                        return BasketItemWidget(
+                                          key: ValueKey('${items[index].id} ${items[index].amount}'),
+                                          item: items[index],
+                                        );
+                                      },
+                                      itemCount: items.length,
+                                    );
+                                  },
+                                  loadedEmpty: (d) => const EmptyBasketImage(),
+                                  loading: (d) {
+                                    return ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: 2,
+                                        itemBuilder: (context, index) {
+                                          return const LoadingBasketItemWidget();
+                                        });
+                                  },
+                                  error: (d) {
+                                    return Center(
+                                      child: Text(d.e.toString()),
+                                    );
+                                  },
+                                ) ??
+                                    const SizedBox();
+                              }),
+                              BlocBuilder<BasketScreenBloc, BasketScreenState>(builder: (context, state) {
+                                return state.mapOrNull(
+                                  loaded: (d) => PaymentCard(d.basket),
+                                ) ??
+                                    const SizedBox();
+                              })
+                            ],
+                          ),
                         ),
                       ),
                     );

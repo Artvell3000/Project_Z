@@ -1,21 +1,52 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
+import 'package:project_z/app/app.dart';
 import 'package:project_z/core/di/di.dart';
-import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/authentication/presentation/bloc/verify_code/authentication_verify_code_bloc.dart';
 import 'package:project_z/features/authentication/presentation/widgets/loading_pin_code_input_widget.dart';
 import 'package:project_z/features/authentication/presentation/widgets/widgets.dart';
 import 'package:project_z/shared/consts/grey_elevated_button_style.dart';
 import 'package:project_z/shared/consts/text_field_style.dart';
 import 'package:project_z/shared/consts/text_style_title.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
-class AuthenticationVerifyCodeScreen extends StatelessWidget {
+class AuthenticationVerifyCodeScreen extends StatefulWidget {
   const AuthenticationVerifyCodeScreen(this._username, {super.key});
 
   final String _username;
+
+  @override
+  State<AuthenticationVerifyCodeScreen> createState() => _AuthenticationVerifyCodeScreenState();
+}
+
+class _AuthenticationVerifyCodeScreenState extends State<AuthenticationVerifyCodeScreen> {
+
+  late Timer _timer;
+
+  @override
+  void initState() {
+    _startTimer();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  void _startTimer() {
+    _timer = Timer(const Duration(seconds: 120), () {
+      if (mounted) {
+        _goBack(context);
+      }
+    });
+  }
 
   void _goBack(BuildContext context) {
     final router = AutoRouter.of(context);
@@ -25,10 +56,10 @@ class AuthenticationVerifyCodeScreen extends StatelessWidget {
   }
 
   void _goToApp(BuildContext context) {
-    Logger().i(AutoRouter.of(context).stack.toString());
-    AutoRouter.of(context).replaceAll([const ProjectZShellRoute()]);
-    Logger().i(AutoRouter.of(context).stack.toString());
+    _timer.cancel();
+    RestartAppFunction.body(context);
   }
+
 
   void _onClickTelegram() {
     //todo
@@ -43,7 +74,7 @@ class AuthenticationVerifyCodeScreen extends StatelessWidget {
           child: Center(
               child: AuthShellCard(
                   child: BlocProvider(
-            create: (context) => getIt<AuthenticationVerifyCodeBloc>(param1: _username),
+            create: (context) => getIt<AuthenticationVerifyCodeBloc>(param1: widget._username),
             child: BlocListener<AuthenticationVerifyCodeBloc, AuthenticationVerifyCodeState>(
               listener: (context, state) {
                 Logger().i('[AuthenticationVerifyCodeState] $state');
@@ -59,7 +90,7 @@ class AuthenticationVerifyCodeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("Kodni kiriting", style: titleTextStyle),
+                        Text(AppLocalizations.of(context)!.authVerifyCodeTitle, style: titleTextStyle),
                         IconButton(
                           icon: const Icon(Icons.close_rounded, size: 30, color: Color.fromRGBO(16, 53, 91, 1)),
                           onPressed: () {
@@ -68,10 +99,10 @@ class AuthenticationVerifyCodeScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 12.0),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12.0),
                       child: Text(
-                        'Telefonni tasdiqlash uchun \nCompanyBot 6 xonali kod yuborildi',
+                        AppLocalizations.of(context)!.authVerifyCodeDescription,
                         style: textStyleForLabel,
                         textAlign: TextAlign.start,
                       ),
@@ -127,10 +158,9 @@ class AuthenticationVerifyCodeScreen extends StatelessWidget {
                                         BlocProvider.of<AuthenticationVerifyCodeBloc>(context)
                                             .add(const AuthenticationVerifyCodeEvent.verifyCode());
                                       },
-                                      child: const Center(
-                                          child: Text(
-                                        'Ro\'yxatdan o\'tish',
-                                        style: TextStyle(color: Colors.white),
+                                      child: Center(
+                                          child: Text(AppLocalizations.of(context)!.registerButtonText,
+                                        style: const TextStyle(color: Colors.white),
                                       ))),
                                   loading: (d) => ElevatedButton(
                                       onPressed: () {},
@@ -146,11 +176,11 @@ class AuthenticationVerifyCodeScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 10),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
                       child: Center(
-                        child: Text('Agar kod kelmasa, siz 120 soniya orqali\nyangisini olishingiz mumkin',
-                            style: TextStyle(
+                        child: Text(AppLocalizations.of(context)!.authVerifyCodePS,
+                            style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
                               color: Color.fromRGBO(129, 129, 129, 1),

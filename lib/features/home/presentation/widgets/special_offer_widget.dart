@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_z/features/home/presentation/widgets/products_with_status_preview.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SpecialOffersWidget extends StatelessWidget {
   const SpecialOffersWidget({super.key, required this.onTapMoreSpecialOffers});
@@ -10,7 +11,7 @@ class SpecialOffersWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProductsWithStatusPreview(
       onTapMoreProducts: onTapMoreSpecialOffers,
-      title: 'Mahsus taklif.',
+      title: AppLocalizations.of(context)!.homeSpecialOfferTitle,
       status: 'mahsus_taklif',
     );
   }

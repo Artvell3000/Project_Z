@@ -115,8 +115,8 @@ class _LanguageSwitchState extends State<LanguageSwitch> {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('Ру',
-                  style: TextStyle(
+                Text(AppLocalizations.of(context)!.locale,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                     color: mainColor,

@@ -15,8 +15,13 @@ class BasketItem with _$BasketItem {
   }) = _BasketItem;
 }
 
-extension GetCountExtension on List<BasketItem> {
+extension BasketItemExtension on List<BasketItem> {
   int countProducts() {
     return fold(0, (sum, item) => sum + item.amount);
+  }
+
+  String getFullAmount(){
+    final s = fold(0.0, (sum, item) => sum + (item.amount * item.product.finalPrice));
+    return s.toStringAsFixed(2);
   }
 }

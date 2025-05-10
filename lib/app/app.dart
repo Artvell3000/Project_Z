@@ -17,6 +17,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Locale _currentLocale = const Locale('ru');
 
+  void restartApp(){
+    setState((){});
+  }
+
   void changeLanguage(Locale newLocale) {
     setState(() {
       _currentLocale = newLocale;
@@ -46,8 +50,17 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
+class RestartAppFunction{
+  static void body(BuildContext context){
+    final myAppState = context.findAncestorStateOfType<_MyAppState>();
+    if (myAppState != null) {
+      myAppState.restartApp();
+    }
+  }
+}
+
 class ChangeLocalizationFunction{
-  static Future<void> body(context, Localization l) async {
+  static Future<void> body(BuildContext context, Localization l) async {
     final myAppState = context.findAncestorStateOfType<_MyAppState>();
     if (myAppState != null) {
       myAppState.changeLanguage(Locale(l.name));

@@ -26,7 +26,9 @@ class ShellScreenBloc extends Bloc<ShellScreenEvent, ShellScreenState> {
 
   List<BasketItem> _basketItems  = [];
   String _geo = '';
+
   int get countItems => _basketItems.countProducts();
+  List<BasketItem> get basketItems => List<BasketItem>.from(_basketItems);
 
   ShellScreenBloc(this._iTokenRepository, this._iBasketRepository, this._iUserRepository, this._iOrderRepository) : super(const ShellScreenState.loading()) {
     on<ShellScreenEvent>((event, emit) async {
@@ -36,7 +38,8 @@ class ShellScreenBloc extends Bloc<ShellScreenEvent, ShellScreenState> {
           addToBasket: (d) async => await _onAddToBasket(d, emit),
           createOrder: (d) async => await _onCreateOrder(d, emit),
           error: (d) async => await _onError(d, emit),
-          updateBasket: (d) async => await _onUpdateBasket(d, emit)
+          updateBasket: (d) async => await _onUpdateBasket(d, emit),
+          tryCreateOrder: (d) async => await _onTryingCreateOrder(emit)
       );
     });
     add(const ShellScreenEvent.init());
@@ -69,14 +72,26 @@ class ShellScreenBloc extends Bloc<ShellScreenEvent, ShellScreenState> {
         _handleError(e,emit);
         }, (result) async {
         await _updateBasket(_tokens!.accessToken, emit);
+        Logger().i(
+          _basketItems.map((el) => el.product.name).toList().toString()
+        );
         emit(ShellScreenState.updated(
             geo: _geo,
             amountItems:  _basketItems.countProducts(),
             isUpdatedBasket: true,
-            addedProduct: d.productId
+            addedProduct: d.productId,
+            isTryingCreateOrder: d.withCreateOrder
         ));
       });
     }
+  }
+
+  Future<void> _onTryingCreateOrder(Emitter<ShellScreenState> emit) async {
+    emit(ShellScreenState.updated(
+        geo: _geo,
+        amountItems:  _basketItems.countProducts(),
+        isTryingCreateOrder: true
+    ));
   }
 
   Future<void> _onCreateOrder(_CreateOrderEvent d, Emitter<ShellScreenState> emit) async {

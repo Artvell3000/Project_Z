@@ -24,19 +24,11 @@ class AppRouter extends RootStackRouter {
       page: ProjectZShellRoute.page,
       initial: true,
       children: [
-        AutoRoute(path: 'home', page: HomeRoute.page, children: [
-          AutoRoute(path: 'search/:initFilter', page: SearchRoute.page),
-          AutoRoute(path: 'basket/:count', page: BasketRoute.page),
-          AutoRoute(path: 'product/:productId', page: ProductRoute.page),
-        ]),
+        AutoRoute(path: 'home', page: HomeRoute.page),
         AutoRoute(path: 'search/:initFilter', page: SearchRoute.page, children: [
           AutoRoute(path: 'search/:initFilter', page: SearchRoute.page),
-          AutoRoute(path: 'basket/:count', page: BasketRoute.page),
-          AutoRoute(path: 'product/:productId', page: ProductRoute.page),
         ]),
-        AutoRoute(path: 'basket/:count', page: BasketRoute.page, children: [
-          AutoRoute(path: 'product/:productId', page: ProductRoute.page),
-        ]),
+        AutoRoute(path: 'basket/:count', page: BasketRoute.page),
         AutoRoute(path: 'orders', page: OrderListRoute.page),
         AutoRoute(path: 'profile', page: ProfileRoute.page),
         AutoRoute(path: 'product/:productId', page: ProductRoute.page),

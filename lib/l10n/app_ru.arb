@@ -16,5 +16,49 @@
      "profileUserInfoTitle": "Ваши данные",
      "profileGeoTitle": "Ваше местоположение",
      "profileDistinct": "Район",
-     "profileTown": "Область / Город"
+     "profileTown": "Область / Город",
+
+     "homeGoToAll": "Все",
+     "homeCategoryTitle": "Категории.",
+     "homeNewProductsTitle": "Новые продукты.",
+     "homeSpecialOfferTitle": "Специальное предложение.",
+     "addToBasketText": "В корзину",
+     "createOrderText": "Заказ",
+
+     "productDescriptionTitle": "Описание товара",
+     "productCharacteristicTitle": "Характеристики товара",
+     "quantity": "Количество",
+
+     "locale" : "Ру",
+
+     "authSendCodeTitle": "Ваш номер телефона",
+     "authSendCodePhone": "Телефон",
+     "registerButtonText": "Зарегистрироваться",
+     "authSendCodeQuestion1": "Нет аккаунта? ",
+     "authSendCodeQuestion2": "Пройти авторизацию",
+
+     "authVerifyCodeTitle": "Введите код",
+       "authVerifyCodeDescription": "Для подтверждения телефона\nCompanyBot отправил 6-значный код",
+       "authVerifyCodePS": "Если код не пришёл, вы можете\nзапросить новый через 120 секунд",
+
+       "unauthText" : "Необходимо войти в систему",
+       "unauthButtonText" : "Войти",
+
+       "searchScreenFilterButtonText" : "Фильтры",
+       "searchScreenAllButtonText" : "Все продукты",
+
+       "orderScreenDateText": "Дата",
+       "orderScreenOrderIdText": "Номер заказа",
+       "orderScreenOrderPriceText": "Стоимость заказа",
+       "orderScreenProductPriceText": "Цена товара",
+
+       "basketScreenCreateOrderButtonText": "Оформить заказ",
+       "basketScreenFinalPriceText": "Итого",
+
+       "createOrderAlertDialogTitle" : "Создание заказа",
+       "createOrderAlertDialogBasketText" : "В вашей корзине: ",
+       "createOrderAlertDialogFinalPrice" : "Итог: ",
+
+       "changePhoneAlertDialogContent" : "Изменение номера телефона временно недоступно в мобильном приложении. Пожалуйста, воспользуйтесь нашим Telegram-ботом для этой операции.",
+       "changePhoneAlertDialogTitle" : "Изменение номера телефона"
 }

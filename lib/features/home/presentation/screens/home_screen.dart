@@ -10,7 +10,7 @@ import 'package:project_z/features/home/presentation/bloc/home_screen_bloc.dart'
 import 'package:project_z/features/home/presentation/widgets/widgets.dart';
 import 'package:project_z/features/search/domain/entity/search_filter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project_z/shared/consts/colors.dart';
+
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -58,38 +58,46 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: NewsWidget(
-                  onTap: onTapNewsWidget,
-                  currentNews: 0,
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: NewsWidget(
+                        onTap: onTapNewsWidget,
+                        currentNews: 0,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: CategoriesWidget(
+                        onTapMoreCategories: () => onTapMoreCategories(context),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: NewProductsWidget(
+                        onTapMoreNewProducts: () => onTapMoreNewProducts(context),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: NewsWidget(
+                        onTap: onTapNewsWidget,
+                        currentNews: 1,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: SpecialOffersWidget(
+                        onTapMoreSpecialOffers: () => onTapMoreSpecialOffers(context),
+                      ),
+                    ),
+                    //MessageWidget(),
+                  ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: CategoriesWidget(
-                  onTapMoreCategories: () => onTapMoreCategories(context),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: NewProductsWidget(
-                  onTapMoreNewProducts: () => onTapMoreNewProducts(context),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: NewsWidget(
-                  onTap: onTapNewsWidget,
-                  currentNews: 1,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: SpecialOffersWidget(
-                  onTapMoreSpecialOffers: () => onTapMoreSpecialOffers(context),
-                ),
-              ),
-              MessageWidget(),
               Padding(
                 padding: const EdgeInsets.only(top: 40.0),
                 child: SizedBox(
@@ -99,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     fit: BoxFit.fitWidth,
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_z/features/basket/domain/entity/basket.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
 import 'package:project_z/shared/widgets/loading_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PaymentCard extends StatelessWidget {
   const PaymentCard(this._basket, {super.key});
@@ -23,9 +24,9 @@ class PaymentCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Jami',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.basketScreenFinalPriceText,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: Color.fromRGBO(40, 47, 60, 1),
@@ -134,11 +135,11 @@ class PaymentButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () {
         final bloc = BlocProvider.of<ShellScreenBloc>(context);
-        bloc.add(const ShellScreenEvent.createOrder());
+        bloc.add(const ShellScreenEvent.tryCreateOrder());
       },
-      child: const Text(
-        'Rasmiylashtirish',
-        style: TextStyle(
+      child: Text(
+        AppLocalizations.of(context)!.basketScreenCreateOrderButtonText,
+        style: const TextStyle(
           color: Colors.white,
         ),
       ),

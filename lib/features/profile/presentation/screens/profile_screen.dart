@@ -44,157 +44,167 @@ class ProfileScreen extends StatelessWidget {
                   needAuth: (d) => true
                 ) ?? false;
                 if(isUnAuth){
-                  return Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30, bottom: 80),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            AppLocalizations.of(context)!.profileTitle,
-                            style: titleTextStyle,
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 30, bottom: 80),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.profileTitle,
+                                style: titleTextStyle,
+                              ),
+                              const LanguageSwitch()
+                            ],
                           ),
                         ),
-                      ),
-                      const UnAuthPlaceholder(),
-                    ],
+                        const UnAuthPlaceholder(),
+                      ],
+                    ),
                   );
                 }
 
                 return SingleChildScrollView(
-                  child: Column(children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30, bottom: 20),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.profileTitle,
-                            style: titleTextStyle,
-                          ),
-                          const LanguageSwitch()
-                        ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Column(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 30, bottom: 20),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.profileTitle,
+                              style: titleTextStyle,
+                            ),
+                            const LanguageSwitch()
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.white),
-                      padding: const EdgeInsets.only(left: 15, right: 15, top: 12, bottom: 19),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              const Icon(CustomIcons.information),
-                              Text(
-                                AppLocalizations.of(context)!.profileUserInfoTitle,
-                                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
-                              )
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 13),
-                            child: Text(
-                              AppLocalizations.of(context)!.profileFullNameLabel,
-                              style: const TextStyle(
-                                color: Color.fromRGBO(125, 125, 125, 1),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
+                      Container(
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.white),
+                        padding: const EdgeInsets.only(left: 15, right: 15, top: 12, bottom: 19),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(CustomIcons.information),
+                                Text(
+                                  AppLocalizations.of(context)!.profileUserInfoTitle,
+                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+                                )
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 13),
+                              child: Text(
+                                AppLocalizations.of(context)!.profileFullNameLabel,
+                                style: const TextStyle(
+                                  color: Color.fromRGBO(125, 125, 125, 1),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
-                          ),
-                          BlocBuilder<ProfileScreenBloc, ProfileScreenState>(
-                            builder: (BuildContext context, ProfileScreenState state) {
-                              return state.whenOrNull(
-                                  loading: () {
-                                    return const SizedBox(
-                                      width: double.infinity,
-                                      height: 50,
-                                      child: LoadingCard(),
-                                    );
-                                  },
-                                  loaded: (profile) {
-                                    return ProfileSurnameTextField(
-                                      context: context,
-                                      name: profile?.fullName ?? '',
-                                      onFullNameEntered: (name) {
-                                        BlocProvider.of<ProfileScreenBloc>(context)
-                                            .add(ProfileScreenEvent.refreshFullName(name));
-                                      },
-                                    );
-                                  },
-                                  error: (e) =>
-                                      Center(
-                                        child: Text(e.toString()),
-                                      )) ?? const SizedBox();
-                            },
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Text(
-                              AppLocalizations.of(context)!.profilePhoneLabel,
-                              style: const TextStyle(
-                                color: Color.fromRGBO(125, 125, 125, 1),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
+                            BlocBuilder<ProfileScreenBloc, ProfileScreenState>(
+                              builder: (BuildContext context, ProfileScreenState state) {
+                                return state.whenOrNull(
+                                    loading: () {
+                                      return const SizedBox(
+                                        width: double.infinity,
+                                        height: 50,
+                                        child: LoadingCard(),
+                                      );
+                                    },
+                                    loaded: (profile) {
+                                      return ProfileSurnameTextField(
+                                        context: context,
+                                        name: profile.fullName ?? '',
+                                        onFullNameEntered: (name) {
+                                          BlocProvider.of<ProfileScreenBloc>(context)
+                                              .add(ProfileScreenEvent.refreshFullName(name));
+                                        },
+                                      );
+                                    },
+                                    error: (e) =>
+                                        Center(
+                                          child: Text(e.toString()),
+                                        )) ?? const SizedBox();
+                              },
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Text(
+                                AppLocalizations.of(context)!.profilePhoneLabel,
+                                style: const TextStyle(
+                                  color: Color.fromRGBO(125, 125, 125, 1),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
-                          ),
-                          BlocBuilder<ProfileScreenBloc, ProfileScreenState>(
-                            builder: (BuildContext context, ProfileScreenState state) {
-                              return state.whenOrNull(
-                                  loading: () {
-                                    return const SizedBox(
-                                      width: double.infinity,
-                                      height: 50,
-                                      child: LoadingCard(),
-                                    );
-                                  },
-                                  loaded: (profile) {
-                                    return ProfilePhoneTextField(
-                                      phone: profile?.username ?? '',
-                                      onPhoneEntered: (phone) {
-                                        BlocProvider.of<ProfileScreenBloc>(context)
-                                            .add(ProfileScreenEvent.refreshUsername(phone));
-                                      },
-                                    );
-                                  },
-                                  error: (e) =>
-                                      Center(
-                                        child: Text(e.toString()),
-                                      )) ?? const SizedBox();
-                            },
-                          ),
-                        ],
+                            BlocBuilder<ProfileScreenBloc, ProfileScreenState>(
+                              builder: (BuildContext context, ProfileScreenState state) {
+                                return state.whenOrNull(
+                                    loading: () {
+                                      return const SizedBox(
+                                        width: double.infinity,
+                                        height: 50,
+                                        child: LoadingCard(),
+                                      );
+                                    },
+                                    loaded: (profile) {
+                                      return ProfilePhoneTextField(
+                                        phone: profile.username ?? '',
+                                        onPhoneEntered: (phone) {
+                                          BlocProvider.of<ProfileScreenBloc>(context)
+                                              .add(ProfileScreenEvent.refreshUsername(phone));
+                                        },
+                                      );
+                                    },
+                                    error: (e) =>
+                                        Center(
+                                          child: Text(e.toString()),
+                                        )) ?? const SizedBox();
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    BlocBuilder<ProfileScreenBloc, ProfileScreenState>(
-                      builder: (context, state) {
-                        return state.whenOrNull(
-                          loading: () => const SizedBox(),
-                          loaded: (user) {
-                            return AddGeoContainer(
-                              userIsNull: user == null,
-                              town: user.town ?? '',
-                              district: user.district ?? '',
-                              onDistinctEntered: (distinct) {
-                                BlocProvider.of<ProfileScreenBloc>(context)
-                                    .add(ProfileScreenEvent.refreshDistrict(distinct));
-                              },
-                              onTownEntered: (town) {
-                                BlocProvider.of<ProfileScreenBloc>(context).add(ProfileScreenEvent.refreshTown(town));
-                              },
-                            );
-                          },
-                          error: (e) =>
-                              Center(
-                                child: Text(e.toString()),
-                              ),
+                      BlocBuilder<ProfileScreenBloc, ProfileScreenState>(
+                        builder: (context, state) {
+                          return state.whenOrNull(
+                            loading: () => const SizedBox(),
+                            loaded: (user) {
+                              return AddGeoContainer(
+                                userIsNull: user == null,
+                                town: user.town ?? '',
+                                district: user.district ?? '',
+                                onDistinctEntered: (distinct) {
+                                  BlocProvider.of<ProfileScreenBloc>(context)
+                                      .add(ProfileScreenEvent.refreshDistrict(distinct));
+                                },
+                                onTownEntered: (town) {
+                                  BlocProvider.of<ProfileScreenBloc>(context).add(ProfileScreenEvent.refreshTown(town));
+                                },
+                              );
+                            },
+                            error: (e) =>
+                                Center(
+                                  child: Text(e.toString()),
+                                ),
 
-                        ) ?? const SizedBox();
-                      },
-                    ),
-                  ]),
+                          ) ?? const SizedBox();
+                        },
+                      ),
+                    ]),
+                  ),
                 );
               },
             ),

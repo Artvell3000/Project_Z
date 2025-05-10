@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 import 'package:project_z/core/di/di.dart';
-import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/home/presentation/widgets/product_card.dart';
 import 'package:project_z/features/search/domain/entity/search_filter.dart';
 import 'package:project_z/features/search/presentation/bloc/search_screen/search_screen_bloc.dart';
@@ -28,26 +27,31 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   final _scrollController = ScrollController();
   BuildContext? contextWithBloc;
+  late SearchFilter currentFilter;
   bool _isLoading = false;
 
   Future<void> _showFilter(BuildContext context) async {
-    final filter = await ShowBottomDrawerFunction.body(context, widget._initFilter);
-    if (filter != null) {
-      Logger().i(filter.toString());
-      context.router.push(SearchRoute(initFilter: filter));
+    final filter = await ShowBottomDrawerFunction.body(context, currentFilter);
+    Logger().i(filter.toString());
+    if (context.mounted && filter != null && currentFilter != filter) {
+      Logger().i('[refresh search]');
+      currentFilter = filter;
+      BlocProvider.of<SearchScreenBloc>(context).add(SearchScreenEvent.refresh(filter));
     }
   }
 
-  void _showAll(BuildContext context){
+  void _showAll(BuildContext context) {
     if (context.mounted) {
-      AutoRouter.of(context).push(SearchRoute(initFilter: SearchFilter.empty));
+      currentFilter = SearchFilter.empty;
+      BlocProvider.of<SearchScreenBloc>(context).add(SearchScreenEvent.refresh(currentFilter));
     }
   }
 
   @override
   void initState() {
-    super.initState();
     _scrollController.addListener(_scrollListener);
+    currentFilter = widget._initFilter.copyWith();
+    super.initState();
   }
 
   @override
@@ -62,16 +66,14 @@ class _SearchScreenState extends State<SearchScreen> {
     final currentScroll = _scrollController.position.pixels;
     const threshold = 150.0;
 
-    if (maxScroll - currentScroll <= threshold && !_isLoading && contextWithBloc!=null) {
+    if (maxScroll - currentScroll <= threshold && !_isLoading && contextWithBloc != null) {
       _isLoading = true;
-      BlocProvider.of<SearchScreenBloc>(contextWithBloc!).add(
-        const SearchScreenEvent.loadMore()
-      );
+      BlocProvider.of<SearchScreenBloc>(contextWithBloc!).add(const SearchScreenEvent.loadMore());
     }
   }
 
-  int getCountLoadingCard(int length, bool isAll){
-    if(isAll) return 0;
+  int getCountLoadingCard(int length, bool isAll) {
+    if (isAll) return 0;
     return (length % 2 == 0) ? 2 : 3;
   }
 
@@ -85,89 +87,100 @@ class _SearchScreenState extends State<SearchScreen> {
             return SingleChildScrollView(
               controller: _scrollController,
               physics: const AlwaysScrollableScrollPhysics(),
-              child: Column(children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 30.0, bottom: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.searchTitle,
-                        style: titleTextStyle,
-                      ),
-                      BlocBuilder<SearchScreenBloc, SearchScreenState>(
-                        buildWhen: (_, state) =>
-                            state.mapOrNull(
-                              loaded: (d) => true,
-                            ) ??
-                            false,
-                        builder: (context, state) {
-                          return state.mapOrNull(
-                                loaded: (d) => QuantityWidget(d.quantity),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Column(children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30.0, bottom: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.searchTitle,
+                          style: titleTextStyle,
+                        ),
+                        BlocBuilder<SearchScreenBloc, SearchScreenState>(
+                          buildWhen: (_, state) =>
+                              state.mapOrNull(
+                                loaded: (d) => true,
                               ) ??
-                              const SizedBox();
-                        },
-                      )
+                              false,
+                          builder: (context, state) {
+                            return state.mapOrNull(
+                                  loaded: (d) => QuantityWidget(d.quantity),
+                                ) ??
+                                const SizedBox();
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          flex: 1,
+                          child: SearchElevatedButton(
+                            imgLeft: 'assets/search/filter.svg',
+                            text: AppLocalizations.of(context)!.searchScreenFilterButtonText,
+                            onClick: (context) => _showFilter(context),
+                          )),
+                      const SizedBox(width: 8.0),
+                      Expanded(
+                          flex: 1,
+                          child: BlocBuilder<SearchScreenBloc, SearchScreenState>(
+                            builder: (context, state) {
+                              return SearchElevatedButton(
+                                iconSize: 10,
+                                imgRight: 'assets/search/arrow_down.svg',
+                                text: AppLocalizations.of(context)!.searchScreenAllButtonText,
+                                isActive: !currentFilter.isEmpty,
+                                onClick: (context) => _showAll(context),
+                              );
+                            },
+                          )),
                     ],
                   ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                        flex: 1,
-                        child: SearchElevatedButton(
-                          imgLeft: 'assets/search/filter.svg',
-                          text: 'Фильтры',
-                          onClick: (context) => _showFilter(context),
-                        )),
-                    const SizedBox(width: 8.0),
-                    Expanded(
-                        flex: 1,
-                        child: SearchElevatedButton(
-                          iconSize: 10,
-                          imgRight: 'assets/search/arrow_down.svg',
-                          text: 'Barchasi',
-                          isActive: !widget._initFilter.isEmpty,
-                          onClick: (context) => _showAll(context),
-                        )),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 5.0),
-                  child: BlocBuilder<SearchScreenBloc, SearchScreenState>(
-                    builder: (context, state) {
-                      return state.map(
-                        error: (d) => Center(child: Text(d.e.toString())),
-                        loading: (d) => const LoadingProductsGrid(),
-                        loaded: (d) {
-                          _isLoading = false;
-                          contextWithBloc = context;
-                          return GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2, crossAxisSpacing: 4, mainAxisSpacing: 4, childAspectRatio: 156 / 270),
-                          itemCount: d.products.length + getCountLoadingCard(d.products.length, d.isAllProducts),
-                          itemBuilder: (context, index) {
-                            if(index >= d.products.length){
-                              return const LoadingProductWidget();
-                            }
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5.0),
+                    child: BlocBuilder<SearchScreenBloc, SearchScreenState>(
+                      builder: (context, state) {
+                        return state.map(
+                          error: (d) => Center(child: Text(d.e.toString())),
+                          loading: (d) => const LoadingProductsGrid(),
+                          loaded: (d) {
+                            _isLoading = false;
+                            contextWithBloc = context;
+                            return GridView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 4,
+                                  mainAxisSpacing: 4,
+                                  childAspectRatio: 156 / 270),
+                              itemCount: d.products.length + getCountLoadingCard(d.products.length, d.isAllProducts),
+                              itemBuilder: (context, index) {
+                                if (index >= d.products.length) {
+                                  return const LoadingProductWidget();
+                                }
 
-                            final product = d.products[index];
-                            return GridTile(
-                              key: ValueKey(product.id),
-                              child: ProductCard(
-                                info: product,
-                              ),
+                                final product = d.products[index];
+                                return GridTile(
+                                  key: ValueKey(product.id),
+                                  child: ProductCard(
+                                    info: product,
+                                  ),
+                                );
+                              },
                             );
                           },
-                        );},
-                      );
-                    },
-                  ),
-                )
-              ]),
+                        );
+                      },
+                    ),
+                  )
+                ]),
+              ),
             );
           },
         ),

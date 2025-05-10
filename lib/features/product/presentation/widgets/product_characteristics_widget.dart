@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const elTextStyle = TextStyle(
   fontSize: 12,
@@ -18,7 +19,7 @@ class ProductCharacteristicsWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(width: double.infinity,),
-        const Text('Maxsulot xarakteristikasi', style: TextStyle(
+        Text( AppLocalizations.of(context)!.productCharacteristicTitle, style: const TextStyle(
             color: Colors.black,
           fontWeight: FontWeight.w700,
           fontSize: 16
@@ -34,9 +35,9 @@ class ProductCharacteristicsWidget extends StatelessWidget {
           ),
         ),
 
-        const Padding(
-          padding: EdgeInsets.only(top: 30),
-          child: Text('Maxsulot haqida maʼlumot', style: TextStyle(
+        Padding(
+          padding: const EdgeInsets.only(top: 30),
+          child: Text( AppLocalizations.of(context)!.productDescriptionTitle, style: const TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.w700,
               fontSize: 16

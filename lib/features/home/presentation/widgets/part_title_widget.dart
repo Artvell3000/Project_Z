@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_z/flutter_app_icons.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_z/shared/consts/colors.dart';
 
 class PartTitleWidget extends StatelessWidget {
@@ -16,7 +16,7 @@ class PartTitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           title,
@@ -27,16 +27,16 @@ class PartTitleWidget extends StatelessWidget {
         ),
         GestureDetector(
           onTap: onTapMore,
-          child: const Row(
+          child: Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                'Barchasi',
-                style: TextStyle(fontSize: 14, color: Colors.black),
+                AppLocalizations.of(context)!.homeGoToAll,
+                style: const TextStyle(fontSize: 14, color: Colors.black),
               ),
-              Icon(
+              const Icon(
                 Icons.chevron_right_rounded,
                 size: 32,
                 color: mainColor,

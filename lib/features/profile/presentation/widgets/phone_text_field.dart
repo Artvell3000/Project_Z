@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_z/shared/functions/checker_phone.dart';
+import 'package:project_z/shared/functions/show_alert_dialog/show_cant_change_phone_alert_dialog_function.dart';
 
 class ProfilePhoneTextField extends StatefulWidget {
   const ProfilePhoneTextField({super.key, required this.phone, required this.onPhoneEntered});
@@ -48,47 +49,54 @@ class _ProfilePhoneTextFieldState extends State<ProfilePhoneTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 4.0),
-      child: SizedBox(
-        height: 40,
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: SizedBox(
-                width: 300,
-                child: TextField(
-                  keyboardType: TextInputType.number,
-                  controller: _controllerLastNum,
-                  focusNode: _focusNodeLast,
-                  decoration: decorationFirst,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
+    return GestureDetector(
+      onTap: (){
+        ShowChangePhoneAlertDialogFunction.body(context);
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(top: 4.0),
+        child: SizedBox(
+          height: 40,
+          child: Stack(
+            children: [
+              Align(
+                alignment: Alignment.centerRight,
+                child: SizedBox(
+                  width: 300,
+                  child: TextField(
+                    readOnly: true,
+                    keyboardType: TextInputType.number,
+                    controller: _controllerLastNum,
+                    focusNode: _focusNodeLast,
+                    decoration: decorationFirst,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: SizedBox(
-                width: 65,
-                child: TextField(
-                  keyboardType: TextInputType.number,
-                  controller: _controllerFirstNum,
-                  focusNode: _focusNodeFirst,
-                  decoration: decorationLast,
-                  style: const TextStyle(
-                    color: Color.fromRGBO(16, 53, 91, 1),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
+              Align(
+                alignment: Alignment.centerLeft,
+                child: SizedBox(
+                  width: 65,
+                  child: TextField(
+                    readOnly: true,
+                    keyboardType: TextInputType.number,
+                    controller: _controllerFirstNum,
+                    focusNode: _focusNodeFirst,
+                    decoration: decorationLast,
+                    style: const TextStyle(
+                      color: Color.fromRGBO(16, 53, 91, 1),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
