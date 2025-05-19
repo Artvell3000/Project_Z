@@ -44,6 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
     AutoRouter.of(context).push(SearchRoute(
         initFilter: const SearchFilter(status: specialOfferStatus)
     ));
+    if(context.mounted){
+      getIt<TabsRouter>().setActiveIndex(1);
+    }
   }
 
   bool isSwitched = false;

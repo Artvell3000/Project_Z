@@ -9,8 +9,10 @@ class SearchElevatedButton extends StatelessWidget {
     required this.text,
     this.imgLeft,
     this.imgRight,
-    this.iconSize = 12.0,
-    this.iconColor = Colors.white,
+    this.iconRightSize = 12.0,
+    this.iconLeftSize = 9.0,
+    this.activeContentColor = mainColor,
+    this.contentColor = Colors.white,
     this.spaceBetween = 8.0,
     this.isActive = true
   });
@@ -19,8 +21,10 @@ class SearchElevatedButton extends StatelessWidget {
   final String text;
   final String? imgLeft;
   final String? imgRight;
-  final double iconSize;
-  final Color iconColor;
+  final double iconRightSize;
+  final double iconLeftSize;
+  final Color activeContentColor;
+  final Color contentColor;
   final double spaceBetween;
   final bool isActive;
 
@@ -30,34 +34,38 @@ class SearchElevatedButton extends StatelessWidget {
       onPressed: () => onClick(context),
 
       style: ElevatedButton.styleFrom(
-        backgroundColor: (isActive) ? mainColor : Colors.grey,
+        backgroundColor: (isActive) ? activeContentColor : contentColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
       ),
-      child: Center(
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (imgLeft != null) ...[
-              SvgPicture.asset(
-                imgLeft!,
-                height: iconSize,
-                color: iconColor,
+      child: SizedBox(
+        height: 46,
+        child: Center(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (imgLeft != null) ...[
+                SvgPicture.asset(
+                  imgLeft!,
+                  height: iconRightSize,
+                  color: (isActive) ? contentColor : activeContentColor,
+                ),
+                SizedBox(width: spaceBetween),
+              ],
+              Text(
+                text,
+                style: TextStyle(color: (isActive) ? contentColor : activeContentColor),
               ),
-              SizedBox(width: spaceBetween),
+              if (imgRight != null) ...[
+                SizedBox(width: spaceBetween),
+                SvgPicture.asset(
+                  imgRight!,
+                  height: iconLeftSize,
+                  color: (isActive) ? contentColor : activeContentColor,
+                ),
+              ],
             ],
-            Text(
-              text,
-              style: const TextStyle(color: Colors.white),
-            ),
-            if (imgRight != null) ...[
-              SizedBox(width: spaceBetween),
-              SvgPicture.asset(
-                imgRight!,
-                height: iconSize,
-                color: iconColor,
-              ),
-            ],
-          ],
+          ),
         ),
       ),
     );

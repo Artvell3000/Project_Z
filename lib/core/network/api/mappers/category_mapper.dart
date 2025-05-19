@@ -12,7 +12,6 @@ extension CategoryMapper on CategoryDTO {
       name: name,
       description: description,
       image: image,
-      slug: slug,
       createdAt: DateTime.parse(createdAt),
       updatedAt: DateTime.parse(updatedAt),
       subcategoryId: subcategory,

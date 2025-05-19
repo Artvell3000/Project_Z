@@ -107,6 +107,13 @@ class _TextFieldForPhoneState extends State<TextFieldForPhone> with TickerProvid
                   width: 1,
                 ),
               ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(
+                  color: Color.fromRGBO(197, 197, 197, 1),
+                  width: 1,
+                ),
+              ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: const BorderSide(

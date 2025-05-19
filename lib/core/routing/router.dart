@@ -4,6 +4,7 @@ import 'package:project_z/features/authentication/presentation/screens/authentic
 import 'package:project_z/features/authentication/presentation/screens/authentication_verify_code_screen.dart';
 import 'package:project_z/features/features.dart';
 import 'package:project_z/features/search/domain/entity/search_filter.dart';
+import 'package:project_z/features/shell_widget/presentation/screens/tabs/tabs.dart';
 part 'router.gr.dart';
 
 
@@ -24,14 +25,26 @@ class AppRouter extends RootStackRouter {
       page: ProjectZShellRoute.page,
       initial: true,
       children: [
-        AutoRoute(path: 'home', page: HomeRoute.page),
-        AutoRoute(path: 'search/:initFilter', page: SearchRoute.page, children: [
-          AutoRoute(path: 'search/:initFilter', page: SearchRoute.page),
+        AutoRoute(page: HomeTabRoute.page, children: [
+          AutoRoute(page: HomeRoute.page, initial: true),
+          AutoRoute(page: SearchRoute.page),
+          AutoRoute(page: ProductRoute.page),
         ]),
-        AutoRoute(path: 'basket/:count', page: BasketRoute.page),
-        AutoRoute(path: 'orders', page: OrderListRoute.page),
-        AutoRoute(path: 'profile', page: ProfileRoute.page),
-        AutoRoute(path: 'product/:productId', page: ProductRoute.page),
+        AutoRoute(page: SearchTabRoute.page, children: [
+          AutoRoute(page: SearchRoute.page, initial: true),
+          AutoRoute(page: ProductRoute.page),
+        ]),
+        AutoRoute(page: BasketTabRoute.page, children: [
+          AutoRoute(page: BasketRoute.page, initial: true),
+          AutoRoute(page: ProductRoute.page),
+        ]),
+        AutoRoute(page: OrdersTabRoute.page, children: [
+          AutoRoute(page: OrderListRoute.page, initial: true),
+          AutoRoute(page: ProductRoute.page),
+        ]),
+        AutoRoute(page: ProfileTabRoute.page, children: [
+          AutoRoute(page: ProfileRoute.page, initial: true),
+        ]),
       ],
     ),
 

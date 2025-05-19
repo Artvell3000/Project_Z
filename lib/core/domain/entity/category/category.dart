@@ -22,7 +22,6 @@ class Category with _$Category {
     required String name,
     required String description,
     String? image,
-    required String slug,
     required DateTime createdAt,
     required DateTime updatedAt,
     int? subcategoryId,

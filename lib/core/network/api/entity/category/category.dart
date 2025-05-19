@@ -27,7 +27,6 @@ class CategoryDTO with _$CategoryDTO {
     required String name,
     required String description,
     String? image,
-    required String slug,
     required String createdAt,
     required String updatedAt,
     int? subcategory,

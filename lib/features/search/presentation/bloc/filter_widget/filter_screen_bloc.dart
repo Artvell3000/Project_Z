@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:project_z/core/domain/entity/category/category.dart';
-import 'package:project_z/core/domain/entity/product/product.dart';
 import 'package:project_z/core/domain/repositories/category_repository.dart';
 import 'package:project_z/core/error/entity/domain_exception.dart';
 import 'package:project_z/features/search/domain/entity/search_filter.dart';

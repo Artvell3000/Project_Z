@@ -27,16 +27,14 @@ class HiveSearchHistoryService {
     return history ?? HiveSearchHistory(items: []);
   }
 
-  Future<void> add(String newItem) async {
+  Future<void> add(String item) async {
     final box = await _box;
     HiveSearchHistory? history = box.get(_key);
     List<String> items = history?.items ?? [];
-
     if (items.length >= 10) {
       items.removeAt(0);
     }
-    items.add(newItem);
-
+    items.add(item);
     await box.put(_key, HiveSearchHistory(items: items));
   }
 

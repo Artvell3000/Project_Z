@@ -15,9 +15,14 @@ import 'package:project_z/shared/widgets/quantity_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
-class BasketScreen extends StatelessWidget {
-  const BasketScreen({super.key, required this.count});
-  final int count;
+class BasketScreen extends StatefulWidget {
+  const BasketScreen({super.key});
+
+  @override
+  State<BasketScreen> createState() => _BasketScreenState();
+}
+
+class _BasketScreenState extends State<BasketScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +31,6 @@ class BasketScreen extends StatelessWidget {
           create: (context) => getIt<BasketScreenBloc>(),
           child: BlocListener<ShellScreenBloc, ShellScreenState>(
             listener: (context, state) {
-              Logger().i('shell state $state');
               state.mapOrNull(
                 updated: (d){
                   if(d.isUpdatedBasket){

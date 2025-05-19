@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_z/core/di/di.dart';
 import 'package:project_z/core/routing/router.dart';
-import 'package:project_z/features/search/domain/entity/search_filter.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
 import 'package:project_z/features/shell_widget/presentation/widgets/widgets.dart';
-import 'package:project_z/shared/app_bar/app_bar_builder.dart';
+import 'package:project_z/features/shell_widget/presentation/widgets/app_bar_builder.dart';
 import 'package:project_z/shared/functions/show_alert_dialog/show_auth_alert_dialog_function.dart';
 import 'package:project_z/shared/functions/show_alert_dialog/show_create_order_alert_dialog.dart';
 
@@ -53,14 +52,12 @@ class _ProjectZShellScreenState extends State<ProjectZShellScreen> {
           transitionBuilder: (context, child, _) {
             return child;
           },
-          routes: [
-            const HomeRoute(),
-            SearchRoute(initFilter: SearchFilter.empty),
-            BasketRoute(count: 0),
-            const OrderListRoute(),
-            const ProfileRoute(),
-
-            ProductRoute(productId: -1)
+          routes: const [
+            HomeTabRoute(),
+            SearchTabRoute(),
+            BasketTabRoute(),
+            OrdersTabRoute(),
+            ProfileTabRoute(),
           ],
           bottomNavigationBuilder: (_, tabsRouter) {
             if(!getIt.isRegistered<TabsRouter>()){
