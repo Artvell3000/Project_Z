@@ -5,10 +5,10 @@ import 'package:project_z/core/di/di.dart';
 import 'package:project_z/features/orders/presentation/bloc/order_screen_bloc.dart';
 import 'package:project_z/features/orders/presentation/widgets/widgets.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
+import 'package:project_z/l10n/app_localizations.dart';
 import 'package:project_z/shared/auth/un_auth_placeholder.dart';
 import 'package:project_z/shared/consts/colors.dart';
 import 'package:project_z/shared/consts/text_style_title.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
 class OrderListScreen extends StatefulWidget {

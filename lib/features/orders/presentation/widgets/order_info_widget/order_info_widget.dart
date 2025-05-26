@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:project_z/core/domain/entity/order/order.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/orders/presentation/widgets/status_widget.dart';
+import 'package:project_z/l10n/app_localizations.dart';
 import 'package:project_z/shared/widgets/discount_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const labelTextStyle = TextStyle(color: Color.fromRGBO(125, 125, 125, 1), fontWeight: FontWeight.w400, fontSize: 12);
 

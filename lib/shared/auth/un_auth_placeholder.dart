@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:project_z/core/routing/router.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:project_z/l10n/app_localizations.dart';
 
 class UnAuthPlaceholder extends StatelessWidget {
   const UnAuthPlaceholder({

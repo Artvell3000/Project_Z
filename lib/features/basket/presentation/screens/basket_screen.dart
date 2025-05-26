@@ -7,12 +7,12 @@ import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/basket/presentation/bloc/basket_screen_bloc.dart';
 import 'package:project_z/features/basket/presentation/widgets/widgets.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
+import 'package:project_z/l10n/app_localizations.dart';
 import 'package:project_z/shared/auth/un_auth_placeholder.dart';
 import 'package:project_z/shared/consts/colors.dart';
 import 'package:project_z/shared/consts/text_style_title.dart';
 import 'package:project_z/shared/functions/show_alert_dialog/show_auth_alert_dialog_function.dart';
 import 'package:project_z/shared/widgets/quantity_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
 class BasketScreen extends StatefulWidget {

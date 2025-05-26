@@ -6,7 +6,7 @@ import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/home/presentation/widgets/part_title_widget.dart';
 import 'package:project_z/features/home/presentation/widgets/product_card.dart';
 import 'package:project_z/features/product/presentation/bloc/product_screen_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:project_z/l10n/app_localizations.dart';
 
 class NewProductsWidget extends StatelessWidget {
   const NewProductsWidget({super.key, required this.products});

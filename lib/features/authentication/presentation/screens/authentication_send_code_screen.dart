@@ -5,10 +5,10 @@ import 'package:project_z/core/di/di.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/authentication/presentation/bloc/send_code/authentication_send_code_screen_bloc.dart';
 import 'package:project_z/features/authentication/presentation/widgets/widgets.dart';
+import 'package:project_z/l10n/app_localizations.dart';
 import 'package:project_z/shared/consts/text_field_style.dart';
 import 'package:project_z/shared/consts/text_style_title.dart';
 import 'package:project_z/shared/widgets/loading_card.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
 class AuthenticationSendCodeScreen extends StatelessWidget {

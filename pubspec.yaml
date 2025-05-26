@@ -36,6 +36,7 @@ dependencies:
   intl: any
   flutter_localizations:
     sdk: flutter
+  flutter_gen: ^5.10.0
 
   #build_runner: ^2.4.13
 

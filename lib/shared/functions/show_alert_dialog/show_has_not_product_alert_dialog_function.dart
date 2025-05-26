@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:project_z/l10n/app_localizations.dart';
 import 'package:project_z/shared/consts/colors.dart';
 import 'package:project_z/shared/consts/grey_elevated_button_style.dart';
 import 'package:project_z/shared/consts/text_style_title.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ShowHasNotProductAlertDialogFunction {
   static const contentTextStyle = TextStyle(

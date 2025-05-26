@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
+import 'package:project_z/l10n/app_localizations.dart';
 import 'package:project_z/shared/consts/text_style_for_elevation_button.dart';
 import 'package:project_z/shared/widgets/loading_button.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SummaActionsWidget extends StatefulWidget {
   const SummaActionsWidget(this.productId,{super.key, required this.summa});

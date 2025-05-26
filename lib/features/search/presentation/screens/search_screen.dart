@@ -10,9 +10,9 @@ import 'package:project_z/features/home/presentation/widgets/product_card.dart';
 import 'package:project_z/features/search/domain/entity/search_filter.dart';
 import 'package:project_z/features/search/presentation/bloc/search_screen/search_screen_bloc.dart';
 import 'package:project_z/features/search/presentation/widgets/widgets.dart';
+import 'package:project_z/l10n/app_localizations.dart';
 import 'package:project_z/shared/consts/text_style_title.dart';
 import 'package:project_z/shared/widgets/quantity_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @RoutePage()
 class SearchScreen extends StatefulWidget {

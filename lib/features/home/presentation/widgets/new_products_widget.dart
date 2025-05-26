@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_z/features/home/presentation/widgets/products_with_status_preview.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:project_z/l10n/app_localizations.dart';
 
 class NewProductsWidget extends StatelessWidget {
   const NewProductsWidget({super.key, required this.onTapMoreNewProducts});

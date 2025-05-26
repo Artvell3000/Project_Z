@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:logger/logger.dart';
 import 'package:project_z/app/app.dart';
+import 'package:project_z/l10n/app_localizations.dart';
 import 'package:project_z/shared/consts/colors.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LanguageSwitch extends StatefulWidget {
   const LanguageSwitch({super.key});

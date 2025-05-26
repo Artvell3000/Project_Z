@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger/logger.dart';
 import 'package:project_z/features/authentication/presentation/bloc/verify_code/authentication_verify_code_bloc.dart';
-import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
 
 class PinCodeInputRow extends StatefulWidget {
   const PinCodeInputRow({super.key, required this.toVerify, required this.initWithErrorAnimation, });

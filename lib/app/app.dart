@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:project_z/config/theme/theme.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:project_z/l10n/app_localizations.dart';
 
 late AppRouter appRouter;
 

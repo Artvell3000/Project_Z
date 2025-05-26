@@ -7,10 +7,10 @@ import 'package:project_z/core/domain/entity/entity.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
 import 'package:project_z/flutter_app_icons.dart';
+import 'package:project_z/l10n/app_localizations.dart';
 import 'package:project_z/shared/functions/show_alert_dialog/show_create_order_alert_dialog.dart';
 import 'package:project_z/shared/functions/show_alert_dialog/show_has_not_product_alert_dialog_function.dart';
 import 'package:project_z/shared/widgets/loading_card.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProductCard extends StatefulWidget {
   const ProductCard({

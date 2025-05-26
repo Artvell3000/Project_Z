@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_z/features/basket/domain/entity/basket.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
+import 'package:project_z/l10n/app_localizations.dart';
 import 'package:project_z/shared/widgets/loading_button.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PaymentCard extends StatelessWidget {
   const PaymentCard(this._basket, {super.key});
