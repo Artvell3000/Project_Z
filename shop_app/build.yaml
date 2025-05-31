@@ -1,0 +1,7 @@
+targets:
+  $default:
+    builders:
+      auto_route_generator:auto_route_generator:
+        options:
+          custom_route_types:
+            - 'package:shop_domain/domain/entity/search_filter/search_filter.dart'
