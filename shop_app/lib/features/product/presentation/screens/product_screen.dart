@@ -16,6 +16,7 @@ class ProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(245,245,247,1),
       body: BlocProvider(
         create: (context) => getIt<ProductScreenBloc>(param1: productId),
         child: Padding(

@@ -28,6 +28,7 @@ class _BasketScreenState extends State<BasketScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Color.fromRGBO(245,245,247,1),
         body: BlocProvider(
           create: (context) => getIt<BasketScreenBloc>(),
           child: BlocListener<ShellScreenBloc, ShellScreenState>(

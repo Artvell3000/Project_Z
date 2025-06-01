@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:project_z/core/di/di.dart';
 import 'package:shop_domain/domain/entity/product/product.dart';
 import 'package:shop_domain/domain/entity/search_filter/search_filter.dart';
 import 'package:shop_domain/domain/repositories/product_repository.dart';
+import 'package:shop_domain/domain/use_case/search_product_use_case.dart';
 import 'package:shop_domain/error/entity/domain_exception.dart';
 
 
@@ -15,7 +17,7 @@ part 'search_screen_bloc.freezed.dart';
 
 @injectable
 class SearchScreenBloc extends Bloc<SearchScreenEvent, SearchScreenState> {
-  SearchScreenBloc(this._iProductRepository, this._initFilter) : super(const SearchScreenState.loading()) {
+  SearchScreenBloc(this._searchProducts ,this._initFilter) : super(const SearchScreenState.loading()) {
     on<SearchScreenEvent>((event, emit) async {
       await event.map(
           init: (d) async => await _onInit(emit),
@@ -28,7 +30,7 @@ class SearchScreenBloc extends Bloc<SearchScreenEvent, SearchScreenState> {
   }
 
   SearchFilter _initFilter;
-  final IProductRepository _iProductRepository;
+  final SearchProductUseCase _searchProducts;
   final List<Product> _products = [];
   int? _nextPageNum = 1;
   int _count = 0;
@@ -62,7 +64,7 @@ class SearchScreenBloc extends Bloc<SearchScreenEvent, SearchScreenState> {
       return;
     }
 
-    final response = await _iProductRepository.getByFilter(_initFilter, page: _nextPageNum);
+    final response = await _searchProducts(_initFilter, _nextPageNum);
     response.fold((e) {
       emit(SearchScreenState.error(e));
     }, (page) {

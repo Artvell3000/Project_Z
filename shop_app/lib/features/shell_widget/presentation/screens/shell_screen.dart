@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_z/core/di/di.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
+import 'package:project_z/features/shell_widget/presentation/screens/tabs/tabs.dart';
 import 'package:project_z/features/shell_widget/presentation/widgets/widgets.dart';
 import 'package:project_z/features/shell_widget/presentation/widgets/app_bar/presentation/screen/app_bar_builder.dart';
 import 'package:project_z/shared/functions/show_alert_dialog/show_auth_alert_dialog_function.dart';
@@ -63,11 +64,26 @@ class _ProjectZShellScreenState extends State<ProjectZShellScreen> {
             ProfileTabRoute(),
           ],
           bottomNavigationBuilder: (_, tabsRouter) {
-            if(!getIt.isRegistered<TabsRouter>()){
-              getIt.registerSingleton<TabsRouter>(tabsRouter);
-            }
-
             return CustomBottomBar(
+              onDoubleTap: (index){
+                // перезагрузка вкладки
+            switch (index) {
+              case 0: // Домашняя вкладка
+                homeTabKey.currentState?.resetTab();
+                break;
+              case 1: // Поиск
+                searchTabKey.currentState?.resetTab();
+                break;
+              case 2: // Корзина
+                basketTabKey.currentState?.resetTab();
+                break;
+              case 3: // Заказы
+                ordersTabKey.currentState?.resetTab();
+                break;
+              case 4: // Профиль
+                profileTabKey.currentState?.resetTab();
+                break;
+              }},
               onTap: (index) {
                 tabsRouter.setActiveIndex(index);
               },

@@ -84,6 +84,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return ColoredBox(
       color: const Color.fromRGBO(245, 245, 247, 1),
       child: Scaffold(
+        backgroundColor: const Color.fromRGBO(245,245,247,1),
         body: BlocProvider(
           create: (context) => getIt<SearchScreenBloc>(param1: currentFilter),
           child: Builder(

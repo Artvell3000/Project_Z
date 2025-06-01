@@ -24,6 +24,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(245,245,247,1),
       body: BlocProvider(
         create: (context) => getIt<OrderScreenBloc>(),
         child: BlocListener<ShellScreenBloc, ShellScreenState>(

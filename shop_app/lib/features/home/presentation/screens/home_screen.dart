@@ -54,6 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(245,245,247,1),
       body: BlocProvider(
         create: (context) => getIt<HomeScreenBloc>(),
         child: SingleChildScrollView(

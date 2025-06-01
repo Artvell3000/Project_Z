@@ -52,6 +52,7 @@ abstract class ApiService {
 
   @GET('products/')
   Future<PaginatedProductDTO> searchProducts({
+    @Query('lang') String? lang,
     @Query('name') String? name,
     @Query('subcategory') String? subcategory,
     @Query('status') String? status,

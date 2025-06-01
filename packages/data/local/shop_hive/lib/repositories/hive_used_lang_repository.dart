@@ -9,10 +9,10 @@ class HiveLocalLangRepository implements ILocalLangRepository{
   final HiveLocalLangService _loader;
 
   @override
-  Future<Either<DomainError, String?>> find() async {
+  Future<Either<DomainError, String>> find() async {
     try{
-      final phone = await _loader.find();
-      return Right(phone);
+      final lang = await _loader.find();
+      return Right(lang);
     } on hive.HiveError catch (e) {
       return Left(DomainError.hiveError(message: e.toString()));
     } catch (e) {

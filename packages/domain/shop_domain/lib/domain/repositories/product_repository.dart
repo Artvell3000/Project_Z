@@ -7,5 +7,5 @@ abstract interface class IProductRepository{
   Future<Either<DomainError, Product>> getById(int id);
   Future<Either<DomainError, ProductPage>> getByPage({int? page});
   Future<Either<DomainError, ProductPage>> getByStatus(String status,{ int? page});
-  Future<Either<DomainError, ProductPage>> getByFilter(SearchFilter filter, {int? page});
+  Future<Either<DomainError, ProductPage>> getByFilter(SearchFilter filter, String lang, {int? page});
 }

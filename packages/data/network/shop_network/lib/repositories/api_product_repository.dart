@@ -14,7 +14,7 @@ class ApiProductRepository implements IProductRepository{
   final ApiService _apiService;
 
   @override
-  Future<Either<DomainError, ProductPage>> getByFilter(SearchFilter filter, {int? page}) async {
+  Future<Either<DomainError, ProductPage>> getByFilter(SearchFilter filter, String lang, {int? page}) async {
     try{
       final response = await _apiService.searchProducts(
         page: page,
@@ -22,7 +22,8 @@ class ApiProductRepository implements IProductRepository{
         minPrice: filter.from?.toString(),
         maxPrice: filter.to?.toString(),
         subcategory: filter.enabled?.id.toString(),
-        name: filter.search
+        name: filter.search,
+        lang: lang
       );
       return Right(response.toDomain());
     } on DioException catch (e){

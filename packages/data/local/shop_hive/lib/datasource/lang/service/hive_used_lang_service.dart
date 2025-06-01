@@ -20,8 +20,8 @@ class HiveLocalLangService {
     if(lang!=null){
       return lang;
     } else {
-      await box.put(_key, 'Uz');
-      return 'Uz';
+      await box.put(_key, 'uz');
+      return 'uz';
     }
   }
 

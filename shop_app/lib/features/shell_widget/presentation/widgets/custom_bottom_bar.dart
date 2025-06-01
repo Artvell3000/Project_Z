@@ -6,11 +6,13 @@ import 'package:project_z/flutter_app_icons.dart';
 class CustomBottomBar extends StatefulWidget {
   final int currentIndex;
   final Function(int) onTap;
+  final Function(int) onDoubleTap;
 
   const CustomBottomBar({
     super.key,
     required this.currentIndex,
-    required this.onTap,
+    required this.onTap, 
+    required this.onDoubleTap,
   });
 
   @override
@@ -18,6 +20,8 @@ class CustomBottomBar extends StatefulWidget {
 }
 
 class _CustomBottomBarState extends State<CustomBottomBar> {
+  int prevIndex = -200;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,6 +59,12 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
     final isSelected = widget.currentIndex == index;
     return GestureDetector(
       onTap: () {
+        if(prevIndex == index){
+          widget.onDoubleTap(index);
+          return;
+        }
+
+        prevIndex = index;
         widget.onTap(index);
       },
       child: Stack(
