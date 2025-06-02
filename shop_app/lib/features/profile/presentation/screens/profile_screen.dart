@@ -1,7 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:logger/logger.dart';
 import 'package:project_z/core/di/di.dart';
 import 'package:project_z/features/profile/presentation/bloc/profile_screen_bloc.dart';
@@ -10,7 +9,6 @@ import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_b
 import 'package:project_z/flutter_app_icons.dart';
 import 'package:project_z/l10n/app_localizations.dart';
 import 'package:project_z/shared/auth/un_auth_placeholder.dart';
-import 'package:project_z/shared/consts/colors.dart';
 import 'package:project_z/shared/consts/text_style_title.dart';
 import 'package:project_z/shared/widgets/loading_card.dart';
 

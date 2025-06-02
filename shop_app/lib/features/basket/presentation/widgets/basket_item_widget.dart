@@ -9,7 +9,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:project_z/features/basket/presentation/bloc/basket_screen_bloc.dart';
 import 'package:project_z/shared/consts/text_style_title.dart';
 import 'package:project_z/shared/widgets/discount_widget.dart';
-import 'package:project_z/shared/widgets/loading_card.dart';
 import 'package:shop_domain/domain/entity/basket/basket.dart';
 
 part 'basket_item_widget.freezed.dart';

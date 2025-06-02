@@ -1,39 +1,46 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:shop_hive/datasource/hive_config.dart';
 import 'package:shop_hive/datasource/search_history/entity/search_history/search_history.dart';
 
 
 class HiveSearchHistoryService {
   static const String _boxName = 'searchHistory';
-  static const String _key = 'history';
+  static const String _key = 'history'; 
 
-  Future<Box<HiveSearchHistory>> get _box async {
+  static Future<void> initHive() async {
     await Hive.initFlutter();
+    Hive.registerAdapter(HiveSearchHistoryItemAdapter()); 
+  }
 
-    if(!Hive.isAdapterRegistered(HiveConfig.searchHistoryTypeId)){
-      Hive.registerAdapter(HiveSearchHistoryAdapter());
-    }
-
+  
+  Future<Box<List<dynamic>>> get _box async { 
     if (!Hive.isBoxOpen(_boxName)) {
-      return await Hive.openBox<HiveSearchHistory>(_boxName);
+      return await Hive.openBox<List<dynamic>>(_boxName);
     }
-    return Hive.box<HiveSearchHistory>(_boxName);
+    return Hive.box<List<dynamic>>(_boxName);
   }
 
-  Future<HiveSearchHistory> find() async {
+  
+  Future<List<HiveSearchHistoryItem>> find() async {
     final box = await _box;
-    final history = box.get(_key);
-    return history ?? HiveSearchHistory(items: []);
+    final List<dynamic>? rawHistory = box.get(_key);
+
+    if (rawHistory == null) {
+      return [];
+    }
+
+    
+    return rawHistory.whereType<HiveSearchHistoryItem>().toList();
   }
 
-  Future<void> save(HiveSearchHistory history) async {
+  
+  Future<void> save(List<HiveSearchHistoryItem> history) async {
     final box = await _box;
-
-    await box.put(_key, history);
+    await box.put(_key, history); 
   }
 
+ 
   Future<void> clear() async {
     final box = await _box;
-    await box.delete(_key);
+    await box.delete(_key); 
   }
 }

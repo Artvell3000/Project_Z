@@ -2,12 +2,16 @@ import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
 import 'package:shop_network/datasource/entity/entity.dart';
 import 'package:shop_network/datasource/service/api_config.dart';
+import 'package:shop_network/datasource/service/logging_interceptor.dart';
 
 part 'api_service.g.dart';
 
 @RestApi(baseUrl: ApiConfig.baseUrl)
 abstract class ApiService {
-  factory ApiService(Dio dio, {String? baseUrl}) = _ApiService;
+  factory ApiService(Dio dio, {String? baseUrl}) {
+    dio.interceptors.add(LoggingInterceptor());
+    return _ApiService(dio, baseUrl: baseUrl);
+  }
 
   @GET('categories/')
   Future<PaginatedCategoryDTO> getCategories({

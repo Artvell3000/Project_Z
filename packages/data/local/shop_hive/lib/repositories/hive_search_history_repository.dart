@@ -24,8 +24,7 @@ class HiveSearchHistoryRepository implements ISearchHistoryRepository {
   @override
   Future<Either<Exception, void>> clear() async {
     try {
-      await _loader.clear();
-      return const Right(null);
+      return Right(await _loader.clear());
     } on HiveError catch (e) {
       return Left(Exception('Hive error: ${e.message}'));
     } catch (e) {

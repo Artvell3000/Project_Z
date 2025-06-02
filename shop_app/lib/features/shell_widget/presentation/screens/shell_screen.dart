@@ -6,7 +6,7 @@ import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
 import 'package:project_z/features/shell_widget/presentation/screens/tabs/tabs.dart';
 import 'package:project_z/features/shell_widget/presentation/widgets/widgets.dart';
-import 'package:project_z/features/shell_widget/presentation/widgets/app_bar/presentation/screen/app_bar_builder.dart';
+import 'package:project_z/features/shell_widget/presentation/widgets/app_bar/presentation/widget/app_bar.dart';
 import 'package:project_z/shared/functions/show_alert_dialog/show_auth_alert_dialog_function.dart';
 import 'package:project_z/shared/functions/show_alert_dialog/show_create_order_alert_dialog.dart';
 

@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger/logger.dart';
 import 'package:project_z/core/di/di.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/basket/presentation/bloc/basket_screen_bloc.dart';
@@ -28,7 +27,7 @@ class _BasketScreenState extends State<BasketScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromRGBO(245,245,247,1),
+        backgroundColor: const Color.fromRGBO(245,245,247,1),
         body: BlocProvider(
           create: (context) => getIt<BasketScreenBloc>(),
           child: BlocListener<ShellScreenBloc, ShellScreenState>(

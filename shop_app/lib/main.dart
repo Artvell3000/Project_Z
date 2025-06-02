@@ -18,7 +18,7 @@ void main() async {
   // Инициализация Hive
   await Hive.initFlutter();
   Hive.registerAdapter(HiveAuthTokensAdapter());
-  Hive.registerAdapter(HiveSearchHistoryAdapter());
+  Hive.registerAdapter(HiveSearchHistoryItemAdapter());
   //getIt<ITokenRepository>().clear();
   // Отключение автоповорота
    await SystemChrome.setPreferredOrientations([

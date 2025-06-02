@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:project_z/core/di/di.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
+import 'package:project_z/features/shell_widget/presentation/widgets/app_bar/presentation/bloc/app_bar_bloc.dart';
 import 'package:project_z/flutter_app_icons.dart';
 import 'package:project_z/shared/consts/colors.dart';
 
@@ -15,10 +17,11 @@ class GeoText extends StatelessWidget {
     if (geo.isEmpty) {
       return const SizedBox();
     }
-    return Text(': $geo', style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 12, color: Colors.white));
+    return Text(': $geo',
+        style: const TextStyle(
+            fontWeight: FontWeight.w500, fontSize: 12, color: Colors.white));
   }
 }
-
 
 class ShopAppBar extends StatefulWidget implements PreferredSizeWidget {
   const ShopAppBar({super.key});
@@ -34,7 +37,9 @@ class ShopAppBar extends StatefulWidget implements PreferredSizeWidget {
 
 class _ShopAppBarState extends State<ShopAppBar> {
   final FocusNode _searchFocusNode = FocusNode();
+  final showSearch = false;
   OverlayEntry? _overlayEntry;
+
 
   @override
   void initState() {
@@ -158,7 +163,10 @@ class _ShopAppBarState extends State<ShopAppBar> {
                         padding: EdgeInsets.only(left: 5),
                         child: Text(
                           'Uzbekiston',
-                          style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w400),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400),
                         ),
                       ),
                       BlocBuilder<ShellScreenBloc, ShellScreenState>(
@@ -189,50 +197,65 @@ class _ShopAppBarState extends State<ShopAppBar> {
               width: double.infinity,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    //SvgPicture.asset('assets/app_bar/logo.svg', width: 30, color: mainColor),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 269 / 360,
-                          child: TextField(
-                            focusNode: _searchFocusNode,
-                            decoration: InputDecoration(
-                              hintText: 'Qidirish',
-                              hintStyle: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: Color.fromRGBO(125, 125, 125, 1),
-                              ),
-                              border: _textFiledBorder,
-                              enabledBorder: _textFiledBorder,
-                              focusedBorder: _textFiledBorder,
-                              contentPadding: const EdgeInsets.only(left: 20, right: 10),
-                              suffixIcon: FractionalTranslation(
-                                translation: const Offset(-0.025, 0),
-                                child: SvgPicture.asset(
-                                  'assets/app_bar/search.svg',
-                                  height: 46.0,
+                child: BlocProvider(
+                  create: (context) => getIt<SearchAppBarBloc>(),
+                  child: BlocBuilder<SearchAppBarBloc, SearchAppBarState>(
+                    builder: (context, state) {
+                      
+                      final showSearch = state.mapOrNull(
+
+                      ) ?? false;
+
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          //SvgPicture.asset('assets/app_bar/logo.svg', width: 30, color: mainColor),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width *
+                                    269 /
+                                    360,
+                                child: TextField(
+                                  focusNode: _searchFocusNode,
+                                  decoration: InputDecoration(
+                                    hintText: 'Qidirish',
+                                    hintStyle: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color.fromRGBO(125, 125, 125, 1),
+                                    ),
+                                    border: _textFiledBorder,
+                                    enabledBorder: _textFiledBorder,
+                                    focusedBorder: _textFiledBorder,
+                                    contentPadding: const EdgeInsets.only(
+                                        left: 20, right: 10),
+                                    suffixIcon: FractionalTranslation(
+                                      translation: const Offset(-0.025, 0),
+                                      child: SvgPicture.asset(
+                                        'assets/app_bar/search.svg',
+                                        height: 46.0,
+                                      ),
+                                    ),
+                                    suffixIconConstraints: const BoxConstraints(
+                                      maxHeight: 46.0,
+                                    ),
+                                  ),
                                 ),
                               ),
-                              suffixIconConstraints: const BoxConstraints(
-                                maxHeight: 46.0,
+                              const SizedBox(width: 5),
+                              SvgPicture.asset(
+                                'assets/app_bar/menu.svg',
+                                height: 46.0,
                               ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 5),
-                        SvgPicture.asset(
-                          'assets/app_bar/menu.svg',
-                          height: 46.0,
-                        ),
-                      ],
-                    )
-                  ],
+                            ],
+                          )
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
