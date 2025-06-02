@@ -7,6 +7,7 @@ class ShowBottomDrawerFunction {
     return await showModalBottomSheet<SearchFilter?>(
       enableDrag: false,
       isDismissible: false,
+      useRootNavigator: true,
       context: context,
       isScrollControlled: true,
       constraints: BoxConstraints(

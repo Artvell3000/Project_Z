@@ -1,165 +1,148 @@
 name: project_z
 description: "Flutter project."
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none' 
 
 version: 1.0.0+1
 
 environment:
   sdk: ^3.5.4
 
+# Основные зависимости
 dependencies:
   flutter:
     sdk: flutter
-
-  shop_domain:
-    path: ../packages/domain/shop_domain
-
-  shop_hive:
-    path: ../packages/data/local/shop_hive
-
-  shop_network:
-    path: ../packages/data/network/shop_network
-  cupertino_icons: ^1.0.8
-  flutter_svg: ^2.0.17
-  flutter_bloc: ^9.1.0
-  provider: ^6.1.2
-  fpdart: ^1.1.1
-  auto_route: ^9.3.0+1
-  equatable: ^2.0.7
-  dev: ^1.0.0
-  freezed: ^2.5.7
-  logger: ^2.5.0
-  injectable: ^2.5.0
-  get_it: ^8.0.3
-  mask_text_input_formatter: ^2.9.0
-  rxdart: ^0.28.0
-  shimmer: ^3.0.0
-  intl: any
   flutter_localizations:
     sdk: flutter
-  flutter_gen: ^5.10.0
+
+  # Локальные пакеты
+  shop_domain:
+    path: ../packages/domain/shop_domain
+  shop_hive:
+    path: ../packages/data/local/shop_hive
+  shop_network:
+    path: ../packages/data/network/shop_network
+
+  # Управление состоянием
+  flutter_bloc: ^9.1.0
   bloc: ^9.0.0
+  provider: ^6.1.2
+
+  # Навигация
+  auto_route: ^9.3.0+1
+
+  # UI компоненты
+  flutter_svg: ^2.0.17
+  cupertino_icons: ^1.0.8
+  shimmer: ^3.0.0
+  mask_text_input_formatter: ^2.9.0
+
+  # Утилиты и инструменты
+  fpdart: ^1.1.1
+  equatable: ^2.0.7
+  freezed: ^2.5.7
+  logger: ^2.0.0
+  injectable: ^2.5.0
+  get_it: ^8.0.3
+  rxdart: ^0.28.0
+  intl: any
+  flutter_gen: ^5.10.0
   hive_flutter: ^1.1.0
 
-  #build_runner: ^2.4.13
-
+# Зависимости для разработки
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  analyzer: ^7.4.5
   build_runner: ^2.4.13
   flutter_lints: ^4.0.0
   auto_route_generator: ^9.0.0
   injectable_generator: ^2.6.2
 
+# Flutter конфигурация
 flutter:
   uses-material-design: true
   generate: true
 
+  # Ресурсы приложения
   assets:
-     - assets/app_bar/
-     - assets/mock/news/
-     - assets/mock/categories/
-     - assets/mock/products/
-     - assets/footer/
-     - assets/icons/
-     - assets/basket/
-     - assets/order/
-     - assets/search/
-     - assets/authentication/
+    - assets/app_bar/
+    - assets/mock/
+    - assets/mock/news/
+    - assets/mock/categories/
+    - assets/mock/products/
+    - assets/footer/
+    - assets/icons/
+    - assets/basket/
+    - assets/order/
+    - assets/search/
+    - assets/authentication/
+
+  # Конфигурация шрифтов
   fonts:
     - family: CustomIcons
       fonts:
         - asset: assets/icons/icons.ttf
+
     - family: Neometric
       fonts:
-        - asset: assets/fonts/neometric/Neometric Alt Black (Regular).otf
-          weight: 900
-        - asset: assets/fonts/neometric/Neometric Alt Black Italic (Bold Italic).otf
-          weight: 900
-          style: italic
-        - asset: assets/fonts/neometric/Neometric Alt Bold (Regular).otf
-          weight: 700
-        - asset: assets/fonts/neometric/Neometric Alt Bold Italic (Bold Italic).otf
-          weight: 700
-          style: italic
-        - asset: assets/fonts/neometric/Neometric Alt Extra Bold (Bold).otf
-          weight: 800
-        - asset: assets/fonts/neometric/Neometric Alt Extra Bold Italic (Bold Italic).otf
-          weight: 800
-          style: italic
-        - asset: assets/fonts/neometric/Neometric Alt Extra Light (Regular).otf
-          weight: 200
-        - asset: assets/fonts/neometric/Neometric Alt ExtraLight Italic (Italic).otf
-          weight: 200
-          style: italic
-        - asset: assets/fonts/neometric/Neometric Alt Hairline (Regular).otf
-          weight: 100
-        - asset: assets/fonts/neometric/Neometric Alt Hairline Italic (Italic).otf
-          weight: 100
-          style: italic
-        - asset: assets/fonts/neometric/Neometric Alt Heavy (Bold).otf
-          weight: 900
-        - asset: assets/fonts/neometric/Neometric Alt Heavy Italic (Bold Italic).otf
-          weight: 900
-          style: italic
-        - asset: assets/fonts/neometric/Neometric Alt Italic (Italic).otf
-          weight: 400
-          style: italic
-        - asset: assets/fonts/neometric/Neometric Alt Light (Regular).otf
-          weight: 300
-        - asset: assets/fonts/neometric/Neometric Alt Light Italic (Italic).otf
-          weight: 300
-          style: italic
-        - asset: assets/fonts/neometric/Neometric Alt Medium (Regular).otf
-          weight: 500
-        - asset: assets/fonts/neometric/Neometric Alt Medium Italic (Italic).otf
-          weight: 500
-          style: italic
-        - asset: assets/fonts/neometric/Neometric Black (Regular).otf
-          weight: 900
-        - asset: assets/fonts/neometric/Neometric Black Italic (Bold Italic).otf
-          weight: 900
-          style: italic
-        - asset: assets/fonts/neometric/Neometric Bold Italic (Bold Italic).otf
-          weight: 700
-          style: italic
-        - asset: assets/fonts/neometric/Neometric Extra Bold (Bold).otf
-          weight: 800
-        - asset: assets/fonts/neometric/Neometric Extra Bold Italic (Bold Italic).otf
-          weight: 800
-          style: italic
-        - asset: assets/fonts/neometric/Neometric Extra Light (Regular).otf
-          weight: 200
-        - asset: assets/fonts/neometric/Neometric Extra Light Italic (Italic).otf
-          weight: 200
-          style: italic
-        - asset: assets/fonts/neometric/Neometric Hairline (Regular).otf
-          weight: 100
-        - asset: assets/fonts/neometric/Neometric Hairline Italic (Italic).otf
-          weight: 100
-          style: italic
-        - asset: assets/fonts/neometric/Neometric Heavy (Bold).otf
-          weight: 900
-        - asset: assets/fonts/neometric/Neometric Heavy Italic (Bold Italic).otf
-          weight: 900
-          style: italic
-        - asset: assets/fonts/neometric/Neometric Italic (Italic).otf
-          weight: 400
-          style: italic
-        - asset: assets/fonts/neometric/Neometric Light (Regular).otf
-          weight: 300
-        - asset: assets/fonts/neometric/Neometric Light Italic (Italic).otf
-          weight: 300
-          style: italic
-        - asset: assets/fonts/neometric/Neometric Medium (Regular).otf
-          weight: 500
-        - asset: assets/fonts/neometric/Neometric Medium Italic (Italic).otf
-          weight: 500
-          style: italic
-        - asset: assets/fonts/neometric/Neometric-AltRegular.otf
-          weight: 400
+        # Regular styles
         - asset: assets/fonts/neometric/Neometric-Regular.otf
           weight: 400
-        - asset: assets/fonts/neometric/Unnamed Bold (Regular).otf
+        - asset: assets/fonts/neometric/Neometric-AltRegular.otf
+          weight: 400
+
+        # Thin (Hairline) styles
+        - asset: assets/fonts/neometric/Neometric-Hairline.otf
+          weight: 100
+        - asset: assets/fonts/neometric/Neometric-HairlineItalic.otf
+          weight: 100
+          style: italic
+
+        # Extra Light styles
+        - asset: assets/fonts/neometric/Neometric-ExtraLight.otf
+          weight: 200
+        - asset: assets/fonts/neometric/Neometric-ExtraLightItalic.otf
+          weight: 200
+          style: italic
+
+        # Light styles
+        - asset: assets/fonts/neometric/Neometric-Light.otf
+          weight: 300
+        - asset: assets/fonts/neometric/Neometric-LightItalic.otf
+          weight: 300
+          style: italic
+
+        # Medium styles
+        - asset: assets/fonts/neometric/Neometric-Medium.otf
+          weight: 500
+        - asset: assets/fonts/neometric/Neometric-MediumItalic.otf
+          weight: 500
+          style: italic
+
+        # Bold styles
+        - asset: assets/fonts/neometric/Neometric-Bold.otf
           weight: 700
+        - asset: assets/fonts/neometric/Neometric-BoldItalic.otf
+          weight: 700
+          style: italic
+
+        # Extra Bold styles
+        - asset: assets/fonts/neometric/Neometric-ExtraBold.otf
+          weight: 800
+        - asset: assets/fonts/neometric/Neometric-ExtraBoldItalic.otf
+          weight: 800
+          style: italic
+
+        # Black styles
+        - asset: assets/fonts/neometric/Neometric-Black.otf
+          weight: 900
+        - asset: assets/fonts/neometric/Neometric-BlackItalic.otf
+          weight: 900
+          style: italic
+
+        # Heavy styles (Alternative Black)
+        - asset: assets/fonts/neometric/Neometric-Heavy.otf
+          weight: 900
+        - asset: assets/fonts/neometric/Neometric-HeavyItalic.otf
+          weight: 900
+          style: italic

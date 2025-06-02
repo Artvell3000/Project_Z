@@ -1,10 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:project_z/core/di/di.dart';
 import 'package:shop_domain/domain/entity/product/product.dart';
 import 'package:shop_domain/domain/entity/search_filter/search_filter.dart';
-import 'package:shop_domain/domain/repositories/product_repository.dart';
 import 'package:shop_domain/domain/use_case/search_product_use_case.dart';
 import 'package:shop_domain/error/entity/domain_exception.dart';
 
@@ -64,7 +62,7 @@ class SearchScreenBloc extends Bloc<SearchScreenEvent, SearchScreenState> {
       return;
     }
 
-    final response = await _searchProducts(_initFilter, _nextPageNum);
+    final response = await _searchProducts(_initFilter, page: _nextPageNum);
     response.fold((e) {
       emit(SearchScreenState.error(e));
     }, (page) {

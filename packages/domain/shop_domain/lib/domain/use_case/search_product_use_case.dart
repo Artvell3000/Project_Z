@@ -10,7 +10,7 @@ class SearchProductUseCase{
     final ILocalLangRepository _langRepository;
     final IProductRepository _productRepository;
 
-    Future<Either<DomainError, ProductPage>> call(SearchFilter filter, int? page) async {
+    Future<Either<DomainError, ProductPage>> call(SearchFilter filter, {int? page}) async {
       try{
         final lang = (await _langRepository.find()).getOrElse((e) => throw(e));
 
