@@ -1,17 +1,19 @@
 
 import 'package:dio/dio.dart';
-import 'package:fpdart/src/either.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:shop_domain/domain/entity/tokens/tokens.dart';
 import 'package:shop_domain/domain/repositories/auth_repository.dart';
 import 'package:shop_domain/error/entity/domain_exception.dart';
-import 'package:shop_network/datasource/entity/send_code/send_code_request.dart';
-import 'package:shop_network/datasource/entity/verify_code/verify_code_request.dart';
-import 'package:shop_network/datasource/mappers/error_mapper.dart';
-import 'package:shop_network/datasource/service/api_service.dart';
+import 'package:shop_network/network/entity/send_code/send_code_request.dart';
+import 'package:shop_network/network/entity/verify_code/verify_code_request.dart';
+import 'package:shop_network/network/mappers/error_mapper.dart';
+import 'package:shop_network/network/service/auth_api_service/auth_api_service.dart';
 
+@Injectable(as: IAuthRepository)
 class ApiAuthRepository implements IAuthRepository{
   ApiAuthRepository(this._api);
-  final ApiService _api;
+  final AuthApiService _api;
 
 
   @override

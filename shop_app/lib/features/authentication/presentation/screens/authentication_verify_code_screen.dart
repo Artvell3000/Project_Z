@@ -179,7 +179,7 @@ class _AuthenticationVerifyCodeScreenState extends State<AuthenticationVerifyCod
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Center(
-                        child: Text(AppLocalizations.of(context)!.authVerifyCodePS,
+                        child: Text(AppLocalizations.of(context)!.authVerifyCodePS(120),
                             style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12,

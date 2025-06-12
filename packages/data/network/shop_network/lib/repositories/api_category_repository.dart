@@ -1,16 +1,17 @@
 import 'package:dio/dio.dart';
-import 'package:fpdart/src/either.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:shop_domain/domain/entity/category/category.dart';
 import 'package:shop_domain/domain/repositories/category_repository.dart';
 import 'package:shop_domain/error/entity/domain_exception.dart';
-import 'package:shop_network/datasource/mappers/category_mapper.dart';
-import 'package:shop_network/datasource/mappers/error_mapper.dart';
-import 'package:shop_network/datasource/service/api_service.dart';
+import 'package:shop_network/network/mappers/category_mapper.dart';
+import 'package:shop_network/network/mappers/error_mapper.dart';
+import 'package:shop_network/network/service/catalog_api_service/catalog_api_service.dart';
 
-
+@Injectable(as: ICategoryRepository)
 class ApiCategoryRepository implements ICategoryRepository{
   ApiCategoryRepository(this._apiService);
-  final ApiService _apiService;
+  final CatalogApiService _apiService;
 
   @override
   Future<Either<DomainError, Map<Category, List<Category>>>> getStructured() async {

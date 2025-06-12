@@ -98,299 +98,299 @@ abstract class AppLocalizations {
     Locale('uz')
   ];
 
-  /// No description provided for @searchTitle.
+  /// Title for the search tab in bottom navigation
   ///
   /// In ru, this message translates to:
   /// **'Все продукты'**
   String get searchTitle;
 
-  /// No description provided for @basketTitle.
+  /// Title for the basket tab in bottom navigation
   ///
   /// In ru, this message translates to:
   /// **'Моя корзина'**
   String get basketTitle;
 
-  /// No description provided for @ordersTitle.
+  /// Title for the orders history tab in bottom navigation
   ///
   /// In ru, this message translates to:
   /// **'История покупок'**
   String get ordersTitle;
 
-  /// No description provided for @profileTitle.
+  /// Title for the profile tab in bottom navigation
   ///
   /// In ru, this message translates to:
   /// **'Моя страница'**
   String get profileTitle;
 
-  /// No description provided for @authAlertDialogTitle.
-  ///
-  /// In ru, this message translates to:
-  /// **'Требуется авторизация'**
-  String get authAlertDialogTitle;
-
-  /// No description provided for @authAlertDialogContent.
-  ///
-  /// In ru, this message translates to:
-  /// **'Для получения информации о товаре или совершения покупки необходимо зарегистрироваться. Пожалуйста, войдите в систему, чтобы продолжить.'**
-  String get authAlertDialogContent;
-
-  /// No description provided for @authAlertDialogBackButton.
-  ///
-  /// In ru, this message translates to:
-  /// **'Назад'**
-  String get authAlertDialogBackButton;
-
-  /// No description provided for @authAlertDialogContinueButton.
-  ///
-  /// In ru, this message translates to:
-  /// **'Продолжить'**
-  String get authAlertDialogContinueButton;
-
-  /// No description provided for @productNotFoundAlertTitle.
-  ///
-  /// In ru, this message translates to:
-  /// **'Товар отсутствует'**
-  String get productNotFoundAlertTitle;
-
-  /// No description provided for @productNotFoundAlertContent.
-  ///
-  /// In ru, this message translates to:
-  /// **'Извините, запрашиваемый товар отсутствует или был удалён. Пожалуйста, посмотрите другие товары.'**
-  String get productNotFoundAlertContent;
-
-  /// No description provided for @profileFullNameLabel.
-  ///
-  /// In ru, this message translates to:
-  /// **'Имя и фамилия'**
-  String get profileFullNameLabel;
-
-  /// No description provided for @profilePhoneLabel.
-  ///
-  /// In ru, this message translates to:
-  /// **'Телефон'**
-  String get profilePhoneLabel;
-
-  /// No description provided for @profileUserInfoTitle.
-  ///
-  /// In ru, this message translates to:
-  /// **'Ваши данные'**
-  String get profileUserInfoTitle;
-
-  /// No description provided for @profileGeoTitle.
-  ///
-  /// In ru, this message translates to:
-  /// **'Ваше местоположение'**
-  String get profileGeoTitle;
-
-  /// No description provided for @profileDistinct.
-  ///
-  /// In ru, this message translates to:
-  /// **'Район'**
-  String get profileDistinct;
-
-  /// No description provided for @profileTown.
-  ///
-  /// In ru, this message translates to:
-  /// **'Область / Город'**
-  String get profileTown;
-
-  /// No description provided for @homeGoToAll.
-  ///
-  /// In ru, this message translates to:
-  /// **'Все'**
-  String get homeGoToAll;
-
-  /// No description provided for @homeCategoryTitle.
-  ///
-  /// In ru, this message translates to:
-  /// **'Категории.'**
-  String get homeCategoryTitle;
-
-  /// No description provided for @homeNewProductsTitle.
-  ///
-  /// In ru, this message translates to:
-  /// **'Новые продукты.'**
-  String get homeNewProductsTitle;
-
-  /// No description provided for @homeSpecialOfferTitle.
-  ///
-  /// In ru, this message translates to:
-  /// **'Специальное предложение.'**
-  String get homeSpecialOfferTitle;
-
-  /// No description provided for @addToBasketText.
-  ///
-  /// In ru, this message translates to:
-  /// **'В корзину'**
-  String get addToBasketText;
-
-  /// No description provided for @createOrderText.
-  ///
-  /// In ru, this message translates to:
-  /// **'Заказ'**
-  String get createOrderText;
-
-  /// No description provided for @productDescriptionTitle.
-  ///
-  /// In ru, this message translates to:
-  /// **'Описание товара'**
-  String get productDescriptionTitle;
-
-  /// No description provided for @productCharacteristicTitle.
-  ///
-  /// In ru, this message translates to:
-  /// **'Характеристики товара'**
-  String get productCharacteristicTitle;
-
-  /// No description provided for @quantity.
-  ///
-  /// In ru, this message translates to:
-  /// **'Количество'**
-  String get quantity;
-
-  /// No description provided for @locale.
-  ///
-  /// In ru, this message translates to:
-  /// **'Ру'**
-  String get locale;
-
-  /// No description provided for @authSendCodeTitle.
+  /// Title for the phone number input screen
   ///
   /// In ru, this message translates to:
   /// **'Ваш номер телефона'**
   String get authSendCodeTitle;
 
-  /// No description provided for @authSendCodePhone.
+  /// Label for phone number input field
   ///
   /// In ru, this message translates to:
   /// **'Телефон'**
   String get authSendCodePhone;
 
-  /// No description provided for @registerButtonText.
+  /// Text for registration button
   ///
   /// In ru, this message translates to:
   /// **'Зарегистрироваться'**
   String get registerButtonText;
 
-  /// No description provided for @authSendCodeQuestion1.
+  /// First part of the registration prompt
   ///
   /// In ru, this message translates to:
   /// **'Нет аккаунта? '**
   String get authSendCodeQuestion1;
 
-  /// No description provided for @authSendCodeQuestion2.
+  /// Second part of the registration prompt
   ///
   /// In ru, this message translates to:
   /// **'Пройти авторизацию'**
   String get authSendCodeQuestion2;
 
-  /// No description provided for @authVerifyCodeTitle.
+  /// Title for the verification code input screen
   ///
   /// In ru, this message translates to:
   /// **'Введите код'**
   String get authVerifyCodeTitle;
 
-  /// No description provided for @authVerifyCodeDescription.
+  /// Description of the verification process
   ///
   /// In ru, this message translates to:
   /// **'Для подтверждения телефона\nCompanyBot отправил 6-значный код'**
   String get authVerifyCodeDescription;
 
-  /// No description provided for @authVerifyCodePS.
+  /// Message about requesting a new code
   ///
   /// In ru, this message translates to:
-  /// **'Если код не пришёл, вы можете\nзапросить новый через 120 секунд'**
-  String get authVerifyCodePS;
+  /// **'Если код не пришёл, вы можете\nзапросить новый через {seconds} секунд'**
+  String authVerifyCodePS(int seconds);
 
-  /// No description provided for @unauthText.
+  /// Button text to view all items
   ///
   /// In ru, this message translates to:
-  /// **'Необходимо войти в систему'**
-  String get unauthText;
+  /// **'Все'**
+  String get homeGoToAll;
 
-  /// No description provided for @unauthButtonText.
+  /// Title for categories section
   ///
   /// In ru, this message translates to:
-  /// **'Войти'**
-  String get unauthButtonText;
+  /// **'Категории'**
+  String get homeCategoryTitle;
 
-  /// No description provided for @searchScreenFilterButtonText.
+  /// Title for new products section
   ///
   /// In ru, this message translates to:
-  /// **'Фильтры'**
-  String get searchScreenFilterButtonText;
+  /// **'Новые продукты'**
+  String get homeNewProductsTitle;
 
-  /// No description provided for @searchScreenAllButtonText.
+  /// Title for special offers section
   ///
   /// In ru, this message translates to:
-  /// **'Все продукты'**
-  String get searchScreenAllButtonText;
+  /// **'Специальное предложение'**
+  String get homeSpecialOfferTitle;
 
-  /// No description provided for @orderScreenDateText.
+  /// Text for add to basket button
+  ///
+  /// In ru, this message translates to:
+  /// **'В корзину'**
+  String get addToBasketText;
+
+  /// Text for create order button
+  ///
+  /// In ru, this message translates to:
+  /// **'Заказ'**
+  String get createOrderText;
+
+  /// Title for product description section
+  ///
+  /// In ru, this message translates to:
+  /// **'Описание товара'**
+  String get productDescriptionTitle;
+
+  /// Title for product characteristics section
+  ///
+  /// In ru, this message translates to:
+  /// **'Характеристики товара'**
+  String get productCharacteristicTitle;
+
+  /// Label for quantity selection
+  ///
+  /// In ru, this message translates to:
+  /// **'Количество'**
+  String get quantity;
+
+  /// Label for full name field in profile
+  ///
+  /// In ru, this message translates to:
+  /// **'Имя и фамилия'**
+  String get profileFullNameLabel;
+
+  /// Label for phone number field in profile
+  ///
+  /// In ru, this message translates to:
+  /// **'Телефон'**
+  String get profilePhoneLabel;
+
+  /// Title for user information section
+  ///
+  /// In ru, this message translates to:
+  /// **'Ваши данные'**
+  String get profileUserInfoTitle;
+
+  /// Title for location information section
+  ///
+  /// In ru, this message translates to:
+  /// **'Ваше местоположение'**
+  String get profileGeoTitle;
+
+  /// Label for district field
+  ///
+  /// In ru, this message translates to:
+  /// **'Район'**
+  String get profileDistinct;
+
+  /// Label for city/region field
+  ///
+  /// In ru, this message translates to:
+  /// **'Область / Город'**
+  String get profileTown;
+
+  /// Label for order date
   ///
   /// In ru, this message translates to:
   /// **'Дата'**
   String get orderScreenDateText;
 
-  /// No description provided for @orderScreenOrderIdText.
+  /// Label for order ID
   ///
   /// In ru, this message translates to:
   /// **'Номер заказа'**
   String get orderScreenOrderIdText;
 
-  /// No description provided for @orderScreenOrderPriceText.
+  /// Label for total order price
   ///
   /// In ru, this message translates to:
   /// **'Стоимость заказа'**
   String get orderScreenOrderPriceText;
 
-  /// No description provided for @orderScreenProductPriceText.
+  /// Label for individual product price
   ///
   /// In ru, this message translates to:
   /// **'Цена товара'**
   String get orderScreenProductPriceText;
 
-  /// No description provided for @basketScreenCreateOrderButtonText.
+  /// Text for checkout button
   ///
   /// In ru, this message translates to:
   /// **'Оформить заказ'**
   String get basketScreenCreateOrderButtonText;
 
-  /// No description provided for @basketScreenFinalPriceText.
+  /// Label for final price in basket
   ///
   /// In ru, this message translates to:
   /// **'Итого'**
   String get basketScreenFinalPriceText;
 
-  /// No description provided for @createOrderAlertDialogTitle.
+  /// Text for filters button
+  ///
+  /// In ru, this message translates to:
+  /// **'Фильтры'**
+  String get searchScreenFilterButtonText;
+
+  /// Text for all products button
+  ///
+  /// In ru, this message translates to:
+  /// **'Все продукты'**
+  String get searchScreenAllButtonText;
+
+  /// Title for authentication required dialog
+  ///
+  /// In ru, this message translates to:
+  /// **'Требуется авторизация'**
+  String get authAlertDialogTitle;
+
+  /// Content text for authentication required dialog
+  ///
+  /// In ru, this message translates to:
+  /// **'Для получения информации о товаре или совершения покупки необходимо зарегистрироваться. Пожалуйста, войдите в систему, чтобы продолжить.'**
+  String get authAlertDialogContent;
+
+  /// Text for back button in auth dialog
+  ///
+  /// In ru, this message translates to:
+  /// **'Назад'**
+  String get authAlertDialogBackButton;
+
+  /// Text for continue button in auth dialog
+  ///
+  /// In ru, this message translates to:
+  /// **'Продолжить'**
+  String get authAlertDialogContinueButton;
+
+  /// Title for product not found dialog
+  ///
+  /// In ru, this message translates to:
+  /// **'Товар отсутствует'**
+  String get productNotFoundAlertTitle;
+
+  /// Content text for product not found dialog
+  ///
+  /// In ru, this message translates to:
+  /// **'Извините, запрашиваемый товар отсутствует или был удалён. Пожалуйста, посмотрите другие товары.'**
+  String get productNotFoundAlertContent;
+
+  /// Title for create order dialog
   ///
   /// In ru, this message translates to:
   /// **'Создание заказа'**
   String get createOrderAlertDialogTitle;
 
-  /// No description provided for @createOrderAlertDialogBasketText.
+  /// Label for basket contents in order dialog
   ///
   /// In ru, this message translates to:
   /// **'В вашей корзине: '**
   String get createOrderAlertDialogBasketText;
 
-  /// No description provided for @createOrderAlertDialogFinalPrice.
+  /// Label for final price in order dialog
   ///
   /// In ru, this message translates to:
   /// **'Итог: '**
   String get createOrderAlertDialogFinalPrice;
 
-  /// No description provided for @changePhoneAlertDialogContent.
+  /// Title for change phone number dialog
+  ///
+  /// In ru, this message translates to:
+  /// **'Изменение номера телефона'**
+  String get changePhoneAlertDialogTitle;
+
+  /// Content text for change phone number dialog
   ///
   /// In ru, this message translates to:
   /// **'Изменение номера телефона временно недоступно в мобильном приложении. Пожалуйста, воспользуйтесь нашим Telegram-ботом для этой операции.'**
   String get changePhoneAlertDialogContent;
 
-  /// No description provided for @changePhoneAlertDialogTitle.
+  /// Short text for language selector
   ///
   /// In ru, this message translates to:
-  /// **'Изменение номера телефона'**
-  String get changePhoneAlertDialogTitle;
+  /// **'Ру'**
+  String get locale;
+
+  /// Message shown when authentication is required
+  ///
+  /// In ru, this message translates to:
+  /// **'Необходимо войти в систему'**
+  String get unauthText;
+
+  /// Text for login button
+  ///
+  /// In ru, this message translates to:
+  /// **'Войти'**
+  String get unauthButtonText;
 }
 
 class _AppLocalizationsDelegate

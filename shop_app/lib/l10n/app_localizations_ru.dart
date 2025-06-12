@@ -21,74 +21,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get profileTitle => 'Моя страница';
 
   @override
-  String get authAlertDialogTitle => 'Требуется авторизация';
-
-  @override
-  String get authAlertDialogContent =>
-      'Для получения информации о товаре или совершения покупки необходимо зарегистрироваться. Пожалуйста, войдите в систему, чтобы продолжить.';
-
-  @override
-  String get authAlertDialogBackButton => 'Назад';
-
-  @override
-  String get authAlertDialogContinueButton => 'Продолжить';
-
-  @override
-  String get productNotFoundAlertTitle => 'Товар отсутствует';
-
-  @override
-  String get productNotFoundAlertContent =>
-      'Извините, запрашиваемый товар отсутствует или был удалён. Пожалуйста, посмотрите другие товары.';
-
-  @override
-  String get profileFullNameLabel => 'Имя и фамилия';
-
-  @override
-  String get profilePhoneLabel => 'Телефон';
-
-  @override
-  String get profileUserInfoTitle => 'Ваши данные';
-
-  @override
-  String get profileGeoTitle => 'Ваше местоположение';
-
-  @override
-  String get profileDistinct => 'Район';
-
-  @override
-  String get profileTown => 'Область / Город';
-
-  @override
-  String get homeGoToAll => 'Все';
-
-  @override
-  String get homeCategoryTitle => 'Категории.';
-
-  @override
-  String get homeNewProductsTitle => 'Новые продукты.';
-
-  @override
-  String get homeSpecialOfferTitle => 'Специальное предложение.';
-
-  @override
-  String get addToBasketText => 'В корзину';
-
-  @override
-  String get createOrderText => 'Заказ';
-
-  @override
-  String get productDescriptionTitle => 'Описание товара';
-
-  @override
-  String get productCharacteristicTitle => 'Характеристики товара';
-
-  @override
-  String get quantity => 'Количество';
-
-  @override
-  String get locale => 'Ру';
-
-  @override
   String get authSendCodeTitle => 'Ваш номер телефона';
 
   @override
@@ -111,20 +43,54 @@ class AppLocalizationsRu extends AppLocalizations {
       'Для подтверждения телефона\nCompanyBot отправил 6-значный код';
 
   @override
-  String get authVerifyCodePS =>
-      'Если код не пришёл, вы можете\nзапросить новый через 120 секунд';
+  String authVerifyCodePS(int seconds) {
+    return 'Если код не пришёл, вы можете\nзапросить новый через $seconds секунд';
+  }
 
   @override
-  String get unauthText => 'Необходимо войти в систему';
+  String get homeGoToAll => 'Все';
 
   @override
-  String get unauthButtonText => 'Войти';
+  String get homeCategoryTitle => 'Категории';
 
   @override
-  String get searchScreenFilterButtonText => 'Фильтры';
+  String get homeNewProductsTitle => 'Новые продукты';
 
   @override
-  String get searchScreenAllButtonText => 'Все продукты';
+  String get homeSpecialOfferTitle => 'Специальное предложение';
+
+  @override
+  String get addToBasketText => 'В корзину';
+
+  @override
+  String get createOrderText => 'Заказ';
+
+  @override
+  String get productDescriptionTitle => 'Описание товара';
+
+  @override
+  String get productCharacteristicTitle => 'Характеристики товара';
+
+  @override
+  String get quantity => 'Количество';
+
+  @override
+  String get profileFullNameLabel => 'Имя и фамилия';
+
+  @override
+  String get profilePhoneLabel => 'Телефон';
+
+  @override
+  String get profileUserInfoTitle => 'Ваши данные';
+
+  @override
+  String get profileGeoTitle => 'Ваше местоположение';
+
+  @override
+  String get profileDistinct => 'Район';
+
+  @override
+  String get profileTown => 'Область / Город';
 
   @override
   String get orderScreenDateText => 'Дата';
@@ -145,6 +111,32 @@ class AppLocalizationsRu extends AppLocalizations {
   String get basketScreenFinalPriceText => 'Итого';
 
   @override
+  String get searchScreenFilterButtonText => 'Фильтры';
+
+  @override
+  String get searchScreenAllButtonText => 'Все продукты';
+
+  @override
+  String get authAlertDialogTitle => 'Требуется авторизация';
+
+  @override
+  String get authAlertDialogContent =>
+      'Для получения информации о товаре или совершения покупки необходимо зарегистрироваться. Пожалуйста, войдите в систему, чтобы продолжить.';
+
+  @override
+  String get authAlertDialogBackButton => 'Назад';
+
+  @override
+  String get authAlertDialogContinueButton => 'Продолжить';
+
+  @override
+  String get productNotFoundAlertTitle => 'Товар отсутствует';
+
+  @override
+  String get productNotFoundAlertContent =>
+      'Извините, запрашиваемый товар отсутствует или был удалён. Пожалуйста, посмотрите другие товары.';
+
+  @override
   String get createOrderAlertDialogTitle => 'Создание заказа';
 
   @override
@@ -154,9 +146,18 @@ class AppLocalizationsRu extends AppLocalizations {
   String get createOrderAlertDialogFinalPrice => 'Итог: ';
 
   @override
+  String get changePhoneAlertDialogTitle => 'Изменение номера телефона';
+
+  @override
   String get changePhoneAlertDialogContent =>
       'Изменение номера телефона временно недоступно в мобильном приложении. Пожалуйста, воспользуйтесь нашим Telegram-ботом для этой операции.';
 
   @override
-  String get changePhoneAlertDialogTitle => 'Изменение номера телефона';
+  String get locale => 'Ру';
+
+  @override
+  String get unauthText => 'Необходимо войти в систему';
+
+  @override
+  String get unauthButtonText => 'Войти';
 }

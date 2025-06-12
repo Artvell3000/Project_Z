@@ -21,74 +21,6 @@ class AppLocalizationsUz extends AppLocalizations {
   String get profileTitle => 'Mening sahifam';
 
   @override
-  String get authAlertDialogTitle => 'Avtorizatsiya talab qilinadi';
-
-  @override
-  String get authAlertDialogContent =>
-      'Mahsulot haqida ma\'lumot olish yoki xarid qilish uchun ro\'yxatdan o\'tish kerak. Iltimos Davom etish uchun tizimga kiring.';
-
-  @override
-  String get authAlertDialogBackButton => 'Ortga';
-
-  @override
-  String get authAlertDialogContinueButton => 'Davom eting';
-
-  @override
-  String get productNotFoundAlertTitle => 'Mahsulot topilmadi';
-
-  @override
-  String get productNotFoundAlertContent =>
-      'Uzr, soʻralgan mahsulot mavjud emas yoki oʻchirilgan. Boshqa mahsulotlarni koʻrib chiqing.';
-
-  @override
-  String get profileFullNameLabel => 'Ism va familiya';
-
-  @override
-  String get profilePhoneLabel => 'Telefon';
-
-  @override
-  String get profileUserInfoTitle => 'Sizning ma\'lumotlaringiz';
-
-  @override
-  String get profileGeoTitle => 'Sizning ma\'lumotlaringiz';
-
-  @override
-  String get profileDistinct => 'Tuman';
-
-  @override
-  String get profileTown => 'Viloyat / Shahar';
-
-  @override
-  String get homeGoToAll => 'Barchasi';
-
-  @override
-  String get homeCategoryTitle => 'Kategoriya.';
-
-  @override
-  String get homeNewProductsTitle => 'Yangi mahsulotlar.';
-
-  @override
-  String get homeSpecialOfferTitle => 'Mahsus taklif.';
-
-  @override
-  String get addToBasketText => 'Savatchaga \nqoshish';
-
-  @override
-  String get createOrderText => 'Sotib olish';
-
-  @override
-  String get productDescriptionTitle => 'Maxsulot haqida maʼlumot';
-
-  @override
-  String get productCharacteristicTitle => 'Maxsulot xarakteristikasi';
-
-  @override
-  String get quantity => 'Maxsulot';
-
-  @override
-  String get locale => 'Uz';
-
-  @override
   String get authSendCodeTitle => 'Telefon raqamingizni kiriting';
 
   @override
@@ -111,20 +43,54 @@ class AppLocalizationsUz extends AppLocalizations {
       'Telefonni tasdiqlash uchun \nCompanyBot 6 xonali kod yuborildi';
 
   @override
-  String get authVerifyCodePS =>
-      'Agar kod kelmasa, siz 120 soniya orqali\nyangisini olishingiz mumkin';
+  String authVerifyCodePS(int seconds) {
+    return 'Agar kod kelmasa, siz $seconds soniya orqali\nyangisini olishingiz mumkin';
+  }
 
   @override
-  String get unauthText => 'Tizimga kirish kerak';
+  String get homeGoToAll => 'Barchasi';
 
   @override
-  String get unauthButtonText => 'Tizimga kirish';
+  String get homeCategoryTitle => 'Kategoriya';
 
   @override
-  String get searchScreenFilterButtonText => 'Filtrlar';
+  String get homeNewProductsTitle => 'Yangi mahsulotlar';
 
   @override
-  String get searchScreenAllButtonText => 'Barchasi';
+  String get homeSpecialOfferTitle => 'Mahsus taklif';
+
+  @override
+  String get addToBasketText => 'Savatchaga \nqoshish';
+
+  @override
+  String get createOrderText => 'Sotib olish';
+
+  @override
+  String get productDescriptionTitle => 'Maxsulot haqida maʼlumot';
+
+  @override
+  String get productCharacteristicTitle => 'Maxsulot xarakteristikasi';
+
+  @override
+  String get quantity => 'Maxsulot';
+
+  @override
+  String get profileFullNameLabel => 'Ism va familiya';
+
+  @override
+  String get profilePhoneLabel => 'Telefon';
+
+  @override
+  String get profileUserInfoTitle => 'Sizning ma\'lumotlaringiz';
+
+  @override
+  String get profileGeoTitle => 'Sizning ma\'lumotlaringiz';
+
+  @override
+  String get profileDistinct => 'Tuman';
+
+  @override
+  String get profileTown => 'Viloyat / Shahar';
 
   @override
   String get orderScreenDateText => 'Sana';
@@ -145,6 +111,32 @@ class AppLocalizationsUz extends AppLocalizations {
   String get basketScreenFinalPriceText => 'Jami';
 
   @override
+  String get searchScreenFilterButtonText => 'Filtrlar';
+
+  @override
+  String get searchScreenAllButtonText => 'Barchasi';
+
+  @override
+  String get authAlertDialogTitle => 'Avtorizatsiya talab qilinadi';
+
+  @override
+  String get authAlertDialogContent =>
+      'Mahsulot haqida ma\'lumot olish yoki xarid qilish uchun ro\'yxatdan o\'tish kerak. Iltimos Davom etish uchun tizimga kiring.';
+
+  @override
+  String get authAlertDialogBackButton => 'Ortga';
+
+  @override
+  String get authAlertDialogContinueButton => 'Davom eting';
+
+  @override
+  String get productNotFoundAlertTitle => 'Mahsulot topilmadi';
+
+  @override
+  String get productNotFoundAlertContent =>
+      'Uzr, soʻralgan mahsulot mavjud emas yoki oʻchirilgan. Boshqa mahsulotlarni koʻrib chiqing.';
+
+  @override
   String get createOrderAlertDialogTitle => 'Buyurtma yaratish';
 
   @override
@@ -154,9 +146,18 @@ class AppLocalizationsUz extends AppLocalizations {
   String get createOrderAlertDialogFinalPrice => 'Jami:';
 
   @override
+  String get changePhoneAlertDialogTitle => 'Telefon raqamini o\'zgartirish';
+
+  @override
   String get changePhoneAlertDialogContent =>
       'Telefon raqamini o\'zgartirish hozircha mobil ilova orqali amalga oshirib bo\'lmaydi. Iltimos, bu amalni bajarish uchun bizning Telegram-botimizdan foydalaning.';
 
   @override
-  String get changePhoneAlertDialogTitle => 'Telefon raqamini o\'zgartirish';
+  String get locale => 'Uz';
+
+  @override
+  String get unauthText => 'Tizimga kirish kerak';
+
+  @override
+  String get unauthButtonText => 'Tizimga kirish';
 }

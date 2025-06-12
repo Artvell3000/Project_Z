@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:shop_domain/domain/repositories/repositories.dart';
-import 'package:shop_network/datasource/service/api_service.dart';
-import 'package:shop_network/repositories/repositories.dart';
+import 'package:shop_network/network/service/api_services.dart';
+import 'package:shop_network/network/service/interceptors/logging_interceptor.dart';
 
 @microPackageInit
 void initMicroPackage() {}
@@ -10,29 +9,17 @@ void initMicroPackage() {}
 @module
 abstract class NetworkModule {
   @singleton
-  Dio get dio => Dio();
+  TokenStorageService get tokenStorage => TokenStorageService();
 
   @singleton
-  ApiService get apiService => ApiService(dio);
+  AuthApiService get authApiService => AuthApiService(Dio()..interceptors.add(SaveTokenInterceptor(tokenStorage)));
 
   @singleton
-  IAuthRepository get iAuthRepository => ApiAuthRepository(apiService);
-
-  @singleton 
-  IBasketRepository get iBasketRepository => ApiBasketRepository(apiService);
-
-  @singleton 
-  ICategoryRepository get iCategoryRepository => ApiCategoryRepository(apiService);
-
-  @singleton 
-  INewsRepository get iNewsRepository => ApiNewsRepository(apiService);
+  UserApiService get userApiService => UserApiService(Dio()..interceptors.addAll([
+    AddTokenInterceptor(tokenStorage),
+    LoggingInterceptor(),
+  ]));
 
   @singleton
-  IOrderRepository get iOrderRepository => ApiOrderRepository(apiService);
-
-  @singleton
-  IProductRepository get iProductRepository => ApiProductRepository(apiService);
-
-  @singleton
-  IUserRepository get iUserRepository => ApiUserRepository(apiService);
+  CatalogApiService get catalogApiService => CatalogApiService(Dio()..interceptors.add(LoggingInterceptor()));
 }

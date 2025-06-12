@@ -1,8 +1,9 @@
 {
   "@@locale": "ru",
   
-  // Navigation Bar
-  "@__NAVIGATION": {},
+  "@_navigation": {
+    "description": "Navigation section"
+  },
   "searchTitle": "Все продукты",
   "@searchTitle": {
     "description": "Title for the search tab in bottom navigation"
@@ -20,8 +21,9 @@
     "description": "Title for the profile tab in bottom navigation"
   },
 
-  // Authentication
-  "@__AUTHENTICATION": {},
+  "@_authentication": {
+    "description": "Authentication section"
+  },
   "authSendCodeTitle": "Ваш номер телефона",
   "@authSendCodeTitle": {
     "description": "Title for the phone number input screen"
@@ -61,8 +63,9 @@
     }
   },
 
-  // Home Screen
-  "@__HOME": {},
+  "@_home": {
+    "description": "Home screen section"
+  },
   "homeGoToAll": "Все",
   "@homeGoToAll": {
     "description": "Button text to view all items"
@@ -80,8 +83,9 @@
     "description": "Title for special offers section"
   },
 
-  // Product
-  "@__PRODUCT": {},
+  "@_product": {
+    "description": "Product section"
+  },
   "addToBasketText": "В корзину",
   "@addToBasketText": {
     "description": "Text for add to basket button"
@@ -103,8 +107,9 @@
     "description": "Label for quantity selection"
   },
 
-  // Profile
-  "@__PROFILE": {},
+  "@_profile": {
+    "description": "Profile section"
+  },
   "profileFullNameLabel": "Имя и фамилия",
   "@profileFullNameLabel": {
     "description": "Label for full name field in profile"
@@ -130,8 +135,9 @@
     "description": "Label for city/region field"
   },
 
-  // Orders
-  "@__ORDERS": {},
+  "@_orders": {
+    "description": "Orders section"
+  },
   "orderScreenDateText": "Дата",
   "@orderScreenDateText": {
     "description": "Label for order date"
@@ -149,8 +155,9 @@
     "description": "Label for individual product price"
   },
 
-  // Basket
-  "@__BASKET": {},
+  "@_basket": {
+    "description": "Basket section"
+  },
   "basketScreenCreateOrderButtonText": "Оформить заказ",
   "@basketScreenCreateOrderButtonText": {
     "description": "Text for checkout button"
@@ -160,8 +167,9 @@
     "description": "Label for final price in basket"
   },
 
-  // Search
-  "@__SEARCH": {},
+  "@_search": {
+    "description": "Search section"
+  },
   "searchScreenFilterButtonText": "Фильтры",
   "@searchScreenFilterButtonText": {
     "description": "Text for filters button"
@@ -171,8 +179,9 @@
     "description": "Text for all products button"
   },
 
-  // Alert Dialogs
-  "@__DIALOGS": {},
+  "@_dialogs": {
+    "description": "Alert dialogs section"
+  },
   "authAlertDialogTitle": "Требуется авторизация",
   "@authAlertDialogTitle": {
     "description": "Title for authentication required dialog"
@@ -218,8 +227,9 @@
     "description": "Content text for change phone number dialog"
   },
 
-  // Misc
-  "@__MISC": {},
+  "@_misc": {
+    "description": "Miscellaneous section"
+  },
   "locale": "Ру",
   "@locale": {
     "description": "Short text for language selector"

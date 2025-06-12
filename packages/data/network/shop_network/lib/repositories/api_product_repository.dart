@@ -1,17 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:shop_domain/domain/entity/product/product.dart';
 import 'package:shop_domain/domain/entity/search_filter/search_filter.dart';
 import 'package:shop_domain/domain/repositories/product_repository.dart';
 import 'package:shop_domain/error/entity/domain_exception.dart';
-import 'package:shop_network/datasource/mappers/error_mapper.dart';
-import 'package:shop_network/datasource/mappers/product_mapper.dart';
-import 'package:shop_network/datasource/service/api_service.dart';
+import 'package:shop_network/network/mappers/error_mapper.dart';
+import 'package:shop_network/network/mappers/product_mapper.dart';
+import 'package:shop_network/network/service/api_services.dart';
 
-
+@Injectable(as: IProductRepository)
 class ApiProductRepository implements IProductRepository{
   ApiProductRepository(this._apiService);
-  final ApiService _apiService;
+  final CatalogApiService _apiService;
 
   @override
   Future<Either<DomainError, ProductPage>> getByFilter(SearchFilter filter, String lang, {int? page}) async {

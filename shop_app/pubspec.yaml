@@ -92,57 +92,57 @@ flutter:
           weight: 400
 
         # Thin (Hairline) styles
-        - asset: assets/fonts/neometric/Neometric-Hairline.otf
+        - asset: assets/fonts/neometric/Neometric Hairline (Regular).otf
           weight: 100
-        - asset: assets/fonts/neometric/Neometric-HairlineItalic.otf
+        - asset: assets/fonts/neometric/Neometric Hairline Italic (Italic).otf
           weight: 100
           style: italic
 
         # Extra Light styles
-        - asset: assets/fonts/neometric/Neometric-ExtraLight.otf
+        - asset: assets/fonts/neometric/Neometric Extra Light (Regular).otf
           weight: 200
-        - asset: assets/fonts/neometric/Neometric-ExtraLightItalic.otf
+        - asset: assets/fonts/neometric/Neometric Extra Light Italic (Italic).otf
           weight: 200
           style: italic
 
         # Light styles
-        - asset: assets/fonts/neometric/Neometric-Light.otf
+        - asset: assets/fonts/neometric/Neometric Light (Regular).otf
           weight: 300
-        - asset: assets/fonts/neometric/Neometric-LightItalic.otf
+        - asset: assets/fonts/neometric/Neometric Light Italic (Italic).otf
           weight: 300
           style: italic
 
         # Medium styles
-        - asset: assets/fonts/neometric/Neometric-Medium.otf
+        - asset: assets/fonts/neometric/Neometric Medium (Regular).otf
           weight: 500
-        - asset: assets/fonts/neometric/Neometric-MediumItalic.otf
+        - asset: assets/fonts/neometric/Neometric Medium Italic (Italic).otf
           weight: 500
           style: italic
 
         # Bold styles
-        - asset: assets/fonts/neometric/Neometric-Bold.otf
+        - asset: assets/fonts/neometric/Unnamed Bold (Regular).otf
           weight: 700
-        - asset: assets/fonts/neometric/Neometric-BoldItalic.otf
+        - asset: assets/fonts/neometric/Neometric Bold Italic (Bold Italic).otf
           weight: 700
           style: italic
 
         # Extra Bold styles
-        - asset: assets/fonts/neometric/Neometric-ExtraBold.otf
+        - asset: assets/fonts/neometric/Neometric Extra Bold (Bold).otf
           weight: 800
-        - asset: assets/fonts/neometric/Neometric-ExtraBoldItalic.otf
+        - asset: assets/fonts/neometric/Neometric Extra Bold Italic (Bold Italic).otf
           weight: 800
           style: italic
 
         # Black styles
-        - asset: assets/fonts/neometric/Neometric-Black.otf
+        - asset: assets/fonts/neometric/Neometric Black (Regular).otf
           weight: 900
-        - asset: assets/fonts/neometric/Neometric-BlackItalic.otf
+        - asset: assets/fonts/neometric/Neometric Black Italic (Bold Italic).otf
           weight: 900
           style: italic
 
         # Heavy styles (Alternative Black)
-        - asset: assets/fonts/neometric/Neometric-Heavy.otf
+        - asset: assets/fonts/neometric/Neometric Heavy (Bold).otf
           weight: 900
-        - asset: assets/fonts/neometric/Neometric-HeavyItalic.otf
+        - asset: assets/fonts/neometric/Neometric Heavy Italic (Bold Italic).otf
           weight: 900
           style: italic

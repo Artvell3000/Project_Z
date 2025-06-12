@@ -1,8 +1,9 @@
 {
   "@@locale": "uz",
   
-  // Navigation Bar
-  "@__NAVIGATION": {},
+  "@_navigation": {
+    "description": "Navigation section"
+  },
   "searchTitle": "Barcha mahsulotlar",
   "@searchTitle": {
     "description": "Title for the search tab in bottom navigation"
@@ -20,111 +21,123 @@
     "description": "Title for the profile tab in bottom navigation"
   },
 
-  // Authentication
-  "@__AUTHENTICATION": {},
-  "authAlertDialogTitle" : "Avtorizatsiya talab qilinadi",
-  "@authAlertDialogTitle": {
-    "description": "Title for authentication required dialog"
+  "@_authentication": {
+    "description": "Authentication section"
   },
-  "authAlertDialogContent" : "Mahsulot haqida ma'lumot olish yoki xarid qilish uchun ro'yxatdan o'tish kerak. Iltimos Davom etish uchun tizimga kiring.",
-  "@authAlertDialogContent": {
-    "description": "Content text for authentication required dialog"
+  "authSendCodeTitle": "Telefon raqamingizni kiriting",
+  "@authSendCodeTitle": {
+    "description": "Title for the phone number input screen"
   },
-  "authAlertDialogBackButton" : "Ortga",
-  "@authAlertDialogBackButton": {
-    "description": "Text for back button in auth dialog"
+  "authSendCodePhone": "Telefon",
+  "@authSendCodePhone": {
+    "description": "Label for phone number input field"
   },
-  "authAlertDialogContinueButton" : "Davom eting",
-  "@authAlertDialogContinueButton": {
-    "description": "Text for continue button in auth dialog"
+  "registerButtonText": "Ro'yxatdan o'tish",
+  "@registerButtonText": {
+    "description": "Text for registration button"
   },
-  "productNotFoundAlertTitle": "Mahsulot topilmadi",
-  "@productNotFoundAlertTitle": {
-    "description": "Title for product not found dialog"
+  "authSendCodeQuestion1": "Akkauntingiz yo'q? ",
+  "@authSendCodeQuestion1": {
+    "description": "First part of the registration prompt"
   },
-  "productNotFoundAlertContent": "Uzr, soʻralgan mahsulot mavjud emas yoki oʻchirilgan. Boshqa mahsulotlarni koʻrib chiqing.",
-  "@productNotFoundAlertContent": {
-    "description": "Content text for product not found dialog"
+  "authSendCodeQuestion2": "Avtorizatsiyadan o'tish",
+  "@authSendCodeQuestion2": {
+    "description": "Second part of the registration prompt"
   },
-
-  // Profile
-  "@__PROFILE": {},
-  "profileFullNameLabel" : "Ism va familiya",
-  "@profileFullNameLabel": {
-    "description": "Label for full name field in profile"
+  "authVerifyCodeTitle": "Kodni kiriting",
+  "@authVerifyCodeTitle": {
+    "description": "Title for the verification code input screen"
   },
-  "profilePhoneLabel" : "Telefon",
-  "@profilePhoneLabel": {
-    "description": "Label for phone number field in profile"
+  "authVerifyCodeDescription": "Telefonni tasdiqlash uchun \nCompanyBot 6 xonali kod yuborildi",
+  "@authVerifyCodeDescription": {
+    "description": "Description of the verification process"
   },
-  "profileUserInfoTitle" : "Sizning ma'lumotlaringiz",
-  "@profileUserInfoTitle": {
-    "description": "Title for user information section"
-  },
-  "profileGeoTitle" : "Sizning ma'lumotlaringiz",
-  "@profileGeoTitle": {
-    "description": "Title for location information section"
-  },
-  "profileDistinct" : "Tuman",
-  "@profileDistinct": {
-    "description": "Label for district field"
-  },
-  "profileTown" : "Viloyat / Shahar",
-  "@profileTown": {
-    "description": "Label for city/region field"
+  "authVerifyCodePS": "Agar kod kelmasa, siz {seconds} soniya orqali\nyangisini olishingiz mumkin",
+  "@authVerifyCodePS": {
+    "description": "Message about requesting a new code",
+    "placeholders": {
+      "seconds": {
+        "type": "int",
+        "example": "120"
+      }
+    }
   },
 
-  // Home Screen
-  "@__HOME": {},
+  "@_home": {
+    "description": "Home screen section"
+  },
   "homeGoToAll": "Barchasi",
   "@homeGoToAll": {
     "description": "Button text to view all items"
   },
-  "homeCategoryTitle": "Kategoriya.",
+  "homeCategoryTitle": "Kategoriya",
   "@homeCategoryTitle": {
     "description": "Title for categories section"
   },
-  "homeNewProductsTitle": "Yangi mahsulotlar.",
+  "homeNewProductsTitle": "Yangi mahsulotlar",
   "@homeNewProductsTitle": {
     "description": "Title for new products section"
   },
-  "homeSpecialOfferTitle": "Mahsus taklif.",
+  "homeSpecialOfferTitle": "Mahsus taklif",
   "@homeSpecialOfferTitle": {
     "description": "Title for special offers section"
   },
-  "addToBasketText" : "Savatchaga \nqoshish",
+
+  "@_product": {
+    "description": "Product section"
+  },
+  "addToBasketText": "Savatchaga \nqoshish",
   "@addToBasketText": {
     "description": "Text for add to basket button"
   },
-  "createOrderText" : "Sotib olish",
+  "createOrderText": "Sotib olish",
   "@createOrderText": {
     "description": "Text for create order button"
   },
-
-  // Product
-  "@__PRODUCT": {},
-  "productDescriptionTitle" : "Maxsulot haqida maʼlumot",
+  "productDescriptionTitle": "Maxsulot haqida maʼlumot",
   "@productDescriptionTitle": {
     "description": "Title for product description section"
   },
-  "productCharacteristicTitle" : "Maxsulot xarakteristikasi",
+  "productCharacteristicTitle": "Maxsulot xarakteristikasi",
   "@productCharacteristicTitle": {
     "description": "Title for product characteristics section"
   },
-  "quantity" : "Maxsulot",
+  "quantity": "Maxsulot",
   "@quantity": {
     "description": "Label for quantity selection"
   },
 
-  // Misc
-  "@__MISC": {},
-  "locale" : "Uz",
-  "@locale": {
-    "description": "Short text for language selector"
+  "@_profile": {
+    "description": "Profile section"
+  },
+  "profileFullNameLabel": "Ism va familiya",
+  "@profileFullNameLabel": {
+    "description": "Label for full name field in profile"
+  },
+  "profilePhoneLabel": "Telefon",
+  "@profilePhoneLabel": {
+    "description": "Label for phone number field in profile"
+  },
+  "profileUserInfoTitle": "Sizning ma'lumotlaringiz",
+  "@profileUserInfoTitle": {
+    "description": "Title for user information section"
+  },
+  "profileGeoTitle": "Sizning ma'lumotlaringiz",
+  "@profileGeoTitle": {
+    "description": "Title for location information section"
+  },
+  "profileDistinct": "Tuman",
+  "@profileDistinct": {
+    "description": "Label for district field"
+  },
+  "profileTown": "Viloyat / Shahar",
+  "@profileTown": {
+    "description": "Label for city/region field"
   },
 
-  // Orders
-  "@__ORDERS": {},
+  "@_orders": {
+    "description": "Orders section"
+  },
   "orderScreenDateText": "Sana",
   "@orderScreenDateText": {
     "description": "Label for order date"
@@ -142,30 +155,57 @@
     "description": "Label for individual product price"
   },
 
-  // Basket
-  "@__BASKET": {},
-  "basketScreenCreateOrderButtonText" : "Rasmiylashtirish",
+  "@_basket": {
+    "description": "Basket section"
+  },
+  "basketScreenCreateOrderButtonText": "Rasmiylashtirish",
   "@basketScreenCreateOrderButtonText": {
     "description": "Text for checkout button"
   },
-  "basketScreenFinalPriceText" : "Jami",
+  "basketScreenFinalPriceText": "Jami",
   "@basketScreenFinalPriceText": {
     "description": "Label for final price in basket"
   },
 
-  // Search
-  "@__SEARCH": {},
-  "searchScreenFilterButtonText" : "Filtrlar",
+  "@_search": {
+    "description": "Search section"
+  },
+  "searchScreenFilterButtonText": "Filtrlar",
   "@searchScreenFilterButtonText": {
     "description": "Text for filters button"
   },
-  "searchScreenAllButtonText" : "Barchasi",
+  "searchScreenAllButtonText": "Barchasi",
   "@searchScreenAllButtonText": {
     "description": "Text for all products button"
   },
 
-  // Alert Dialogs
-  "@__DIALOGS": {},
+  "@_dialogs": {
+    "description": "Alert dialogs section"
+  },
+  "authAlertDialogTitle": "Avtorizatsiya talab qilinadi",
+  "@authAlertDialogTitle": {
+    "description": "Title for authentication required dialog"
+  },
+  "authAlertDialogContent": "Mahsulot haqida ma'lumot olish yoki xarid qilish uchun ro'yxatdan o'tish kerak. Iltimos Davom etish uchun tizimga kiring.",
+  "@authAlertDialogContent": {
+    "description": "Content text for authentication required dialog"
+  },
+  "authAlertDialogBackButton": "Ortga",
+  "@authAlertDialogBackButton": {
+    "description": "Text for back button in auth dialog"
+  },
+  "authAlertDialogContinueButton": "Davom eting",
+  "@authAlertDialogContinueButton": {
+    "description": "Text for continue button in auth dialog"
+  },
+  "productNotFoundAlertTitle": "Mahsulot topilmadi",
+  "@productNotFoundAlertTitle": {
+    "description": "Title for product not found dialog"
+  },
+  "productNotFoundAlertContent": "Uzr, soʻralgan mahsulot mavjud emas yoki oʻchirilgan. Boshqa mahsulotlarni koʻrib chiqing.",
+  "@productNotFoundAlertContent": {
+    "description": "Content text for product not found dialog"
+  },
   "createOrderAlertDialogTitle": "Buyurtma yaratish",
   "@createOrderAlertDialogTitle": {
     "description": "Title for create order dialog"
@@ -187,13 +227,18 @@
     "description": "Content text for change phone number dialog"
   },
 
-  // Misc
-  "@__MISC": {},
-  "unauthText" : "Tizimga kirish kerak",
+  "@_misc": {
+    "description": "Miscellaneous section"
+  },
+  "locale": "Uz",
+  "@locale": {
+    "description": "Short text for language selector"
+  },
+  "unauthText": "Tizimga kirish kerak",
   "@unauthText": {
     "description": "Message shown when authentication is required"
   },
-  "unauthButtonText" : "Tizimga kirish",
+  "unauthButtonText": "Tizimga kirish",
   "@unauthButtonText": {
     "description": "Text for login button"
   }
