@@ -4,7 +4,7 @@ part of 'basket_screen_bloc.dart';
 class BasketScreenState with _$BasketScreenState {
   const factory BasketScreenState.loading() = _BasketScreenLoadingState;
 
-  const factory BasketScreenState.loaded(Basket basket, int countItems) = _BasketScreenLoadedState;
+  const factory BasketScreenState.loaded(List<BasketItem> basket, int countItems) = _BasketScreenLoadedState;
 
   const factory BasketScreenState.loadedEmpty() = _BasketScreenLoadedEmptyState;
 

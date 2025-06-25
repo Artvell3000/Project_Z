@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:project_z/features/authentication/presentation/bloc/send_code/authentication_send_code_screen_bloc.dart';
-import 'package:project_z/shared/consts/text_field_style.dart';
+import 'package:project_z/features/authentication/presentation/bloc/auth_screen_bloc.dart';
+import 'package:project_z/config/theme/text_styles_extension.dart';
 
 
 class TextFieldForPhone extends StatefulWidget {
@@ -74,10 +74,11 @@ class _TextFieldForPhoneState extends State<TextFieldForPhone> with TickerProvid
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthenticationSendCodeScreenBloc, AuthenticationSendCodeScreenState>(
+    final textStyles = Theme.of(context).extension<AppTextStyles>();
+    return BlocListener<AuthScreenBloc, AuthScreenState>(
       listener: (context, state) {
         state.mapOrNull(
-          wrongPhoneFormat: (d) => _startAnimation()
+          unsuccessSendCode: (d) => _startAnimation()
         );
       },
       child: AnimatedBuilder(
@@ -91,7 +92,7 @@ class _TextFieldForPhoneState extends State<TextFieldForPhone> with TickerProvid
               widget.onPhoneEntered(phone);
             },
             //focusNode: _focus,
-            style: textStyleForTextField,
+            style: textStyles?.textField ?? AppTextStyles.defaultTextField,
             decoration: InputDecoration(
               filled: true,
               fillColor: _colorAnimation.value,

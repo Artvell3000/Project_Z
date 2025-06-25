@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/orders/presentation/widgets/status_widget.dart';
-import 'package:project_z/l10n/app_localizations.dart';
+import 'package:project_z/gen_locales/app_localizations.dart';
 import 'package:project_z/shared/widgets/discount_widget.dart';
 import 'package:shop_domain/domain/entity/order/order.dart';
 
@@ -65,6 +65,9 @@ class _OrderInfoContainerState extends State<OrderInfoContainer> with TickerProv
 
   @override
   Widget build(BuildContext context) {
+
+    final S = AppLocalizations.of(context);
+
     return Stack(
       children: [
         Column(
@@ -142,7 +145,7 @@ class _OrderInfoContainerState extends State<OrderInfoContainer> with TickerProv
                                     ),
                                   ),
                                   Text(
-                                    AppLocalizations.of(context)!.orderScreenProductPriceText,
+                                    S.orderScreenProductPriceText,
                                     style: labelTextStyle,
                                   ),
                                   Text(
@@ -224,14 +227,14 @@ class _OrderInfoContainerState extends State<OrderInfoContainer> with TickerProv
                           ],
                         ),
                         const SizedBox(height: 10.0),
-                        Text(AppLocalizations.of(context)!.orderScreenDateText, style: labelTextStyle),
+                        Text(S.orderScreenDateText, style: labelTextStyle),
                         Text(
                           _formatIso8601String(order.createdAt),
                           style: valueTextStyle,
                         ),
                         const SizedBox(height: 10.0),
                         Text(
-                          AppLocalizations.of(context)!.orderScreenOrderIdText,
+                          S.orderScreenOrderIdText,
                           style: labelTextStyle,
                         ),
                         Text(
@@ -240,7 +243,7 @@ class _OrderInfoContainerState extends State<OrderInfoContainer> with TickerProv
                         ),
                         const SizedBox(height: 10.0),
                         Text(
-                          AppLocalizations.of(context)!.orderScreenOrderPriceText,
+                          S.orderScreenOrderPriceText,
                           style: labelTextStyle,
                         ),
                         Text(

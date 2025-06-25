@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_z/core/di/di.dart';
 import 'package:project_z/features/product/presentation/bloc/product_screen_bloc.dart';
 import 'package:project_z/features/product/presentation/widgets/widgets.dart';
-import 'package:project_z/shared/consts/colors.dart';
 
 @RoutePage()
 class ProductScreen extends StatelessWidget {
@@ -15,15 +14,15 @@ class ProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: Color.fromRGBO(245,245,247,1),
       body: BlocProvider(
         create: (context) => getIt<ProductScreenBloc>(param1: productId),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: BlocBuilder<ProductScreenBloc, ProductScreenState>(builder: (context, state) {
             return state.when(
-              loading: () => const Scaffold(body: Center(child: CircularProgressIndicator(color: mainColor))),
+              loading: () => Scaffold(body: Center(child: CircularProgressIndicator(color: scheme.primary))),
               loadedProducts: (product, newProducts) {
                 return SingleChildScrollView(
                   child: Column(children: [
@@ -54,7 +53,7 @@ class ProductScreen extends StatelessWidget {
                     ),
                     const Padding(
                       padding: EdgeInsets.only(top: 10),
-                      child: SummaInfoWidget(),
+                      child: ColoredBox(color: Colors.red, child: SizedBox(height: 50, width: 50,),),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 25),

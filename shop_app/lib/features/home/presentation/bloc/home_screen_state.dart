@@ -11,5 +11,5 @@ class HomeScreenState with _$HomeScreenState {
     required List<Product> specialOffer,
   }) = _LoadedDataState;
 
-  const factory HomeScreenState.error(Exception e) = _ErrorState;
+  const factory HomeScreenState.error(DomainError e) = _ErrorState;
 }

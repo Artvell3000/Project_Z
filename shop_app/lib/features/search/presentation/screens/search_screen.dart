@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_z/config/theme/text_styles_extension.dart';
 import 'package:project_z/core/di/di.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/home/presentation/widgets/product_card.dart';
 import 'package:project_z/features/search/presentation/bloc/search_screen/search_screen_bloc.dart';
 import 'package:project_z/features/search/presentation/widgets/widgets.dart';
-import 'package:project_z/l10n/app_localizations.dart';
-import 'package:project_z/shared/consts/text_style_title.dart';
+import 'package:project_z/gen_locales/app_localizations.dart';
 import 'package:project_z/shared/widgets/quantity_widget.dart';
 import 'package:shop_domain/domain/entity/search_filter/search_filter.dart';
 
@@ -81,113 +81,113 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: const Color.fromRGBO(245, 245, 247, 1),
-      child: Scaffold(
-        backgroundColor: const Color.fromRGBO(245,245,247,1),
-        body: BlocProvider(
-          create: (context) => getIt<SearchScreenBloc>(param1: currentFilter),
-          child: Builder(
-            builder: (context) {
-              return SingleChildScrollView(
-                controller: _scrollController,
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Column(children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30.0, bottom: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.searchTitle,
-                            style: titleTextStyle,
-                          ),
-                          BlocBuilder<SearchScreenBloc, SearchScreenState>(
-                            buildWhen: (_, state) =>
-                                state.mapOrNull(
-                                  loaded: (d) => true,
-                                ) ??
-                                false,
-                            builder: (context, state) {
-                              return state.mapOrNull(
-                                    loaded: (d) => QuantityWidget(d.quantity),
-                                  ) ??
-                                  const SizedBox();
-                            },
-                          )
-                        ],
-                      ),
-                    ),
-                    Row(
+
+    final theme = Theme.of(context);
+    final textStyles = theme.extension<AppTextStyles>();
+
+    return Scaffold(
+      body: BlocProvider(
+        create: (context) => getIt<SearchScreenBloc>(param1: currentFilter),
+        child: Builder(
+          builder: (context) {
+            return SingleChildScrollView(
+              controller: _scrollController,
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Column(children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30.0, bottom: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Expanded(
-                            flex: 1,
-                            child: SearchElevatedButton(
-                              imgLeft: 'assets/search/filter.svg',
-                              text: AppLocalizations.of(context)!.searchScreenFilterButtonText,
-                              onClick: (context) => _showFilter(context),
-                            )),
-                        const SizedBox(width: 8.0),
-                        Expanded(
-                            flex: 1,
-                            child: BlocBuilder<SearchScreenBloc, SearchScreenState>(
-                              builder: (context, state) {
-                                return SearchElevatedButton(
-                                  imgRight: 'assets/search/arrow_down.svg',
-                                  text: AppLocalizations.of(context)!.searchScreenAllButtonText,
-                                  isActive: !currentFilter.isEmpty,
-                                  onClick: (context) => _showAll(context),
-                                );
-                              },
-                            )),
+                        Text(
+                          AppLocalizations.of(context)!.searchTitle,
+                          style: textStyles!.heading,
+                        ),
+                        BlocBuilder<SearchScreenBloc, SearchScreenState>(
+                          buildWhen: (_, state) =>
+                              state.mapOrNull(
+                                loaded: (d) => true,
+                              ) ??
+                              false,
+                          builder: (context, state) {
+                            return state.mapOrNull(
+                                  loaded: (d) => QuantityWidget(d.quantity),
+                                ) ??
+                                const SizedBox();
+                          },
+                        )
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: BlocBuilder<SearchScreenBloc, SearchScreenState>(
-                        builder: (context, state) {
-                          return state.map(
-                            error: (d) => Center(child: Text(d.e.toString())),
-                            loading: (d) => const LoadingProductsGrid(),
-                            loaded: (d) {
-                              _isLoading = false;
-                              contextWithBloc = context;
-                              return GridView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    crossAxisSpacing: 4,
-                                    mainAxisSpacing: 4,
-                                    childAspectRatio: 156 / 270),
-                                itemCount: d.products.length + getCountLoadingCard(d.products.length, d.isAllProducts),
-                                itemBuilder: (context, index) {
-                                  if (index >= d.products.length) {
-                                    return const LoadingProductWidget();
-                                  }
-
-                                  final product = d.products[index];
-                                  return GridTile(
-                                    key: ValueKey(product.id),
-                                    child: ProductCard(
-                                      info: product,
-                                    ),
-                                  );
-                                },
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          flex: 1,
+                          child: SearchElevatedButton(
+                            imgLeft: 'assets/search/filter.svg',
+                            text: AppLocalizations.of(context)!.searchScreenFilterButtonText,
+                            onClick: (context) => _showFilter(context),
+                          )),
+                      const SizedBox(width: 8.0),
+                      Expanded(
+                          flex: 1,
+                          child: BlocBuilder<SearchScreenBloc, SearchScreenState>(
+                            builder: (context, state) {
+                              return SearchElevatedButton(
+                                imgRight: 'assets/search/arrow_down.svg',
+                                text: AppLocalizations.of(context)!.searchScreenAllButtonText,
+                                isActive: !currentFilter.isEmpty,
+                                onClick: (context) => _showAll(context),
                               );
                             },
-                          );
-                        },
-                      ),
-                    )
-                  ]),
-                ),
-              );
-            },
-          ),
+                          )),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5.0),
+                    child: BlocBuilder<SearchScreenBloc, SearchScreenState>(
+                      builder: (context, state) {
+                        return state.map(
+                          error: (d) => Center(child: Text(d.e.toString())),
+                          loading: (d) => const LoadingProductsGrid(),
+                          loaded: (d) {
+                            _isLoading = false;
+                            contextWithBloc = context;
+                            return GridView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 4,
+                                  mainAxisSpacing: 4,
+                                  childAspectRatio: 156 / 270),
+                              itemCount: d.products.length + getCountLoadingCard(d.products.length, d.isAllProducts),
+                              itemBuilder: (context, index) {
+                                if (index >= d.products.length) {
+                                  return const LoadingProductWidget();
+                                }
+    
+                                final product = d.products[index];
+                                return GridTile(
+                                  key: ValueKey(product.id),
+                                  child: ProductCard(
+                                    info: product,
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  )
+                ]),
+              ),
+            );
+          },
         ),
       ),
     );

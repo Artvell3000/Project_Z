@@ -1,0 +1,249 @@
+{
+  "@@locale": "ru",
+  
+  "@_navigation": {
+    "description": "Navigation section"
+  },
+  "searchTitle": "Все продукты",
+  "@searchTitle": {
+    "description": "Title for the search tab in bottom navigation"
+  },
+  "basketTitle": "Моя корзина",
+  "@basketTitle": {
+    "description": "Title for the basket tab in bottom navigation"
+  },
+  "ordersTitle": "История покупок",
+  "@ordersTitle": {
+    "description": "Title for the orders history tab in bottom navigation"
+  },
+  "profileTitle": "Моя страница",
+  "@profileTitle": {
+    "description": "Title for the profile tab in bottom navigation"
+  },
+
+  "@_authentication": {
+    "description": "Authentication section"
+  },
+  "authSendCodeTitle": "Ваш номер телефона",
+  "@authSendCodeTitle": {
+    "description": "Title for the phone number input screen"
+  },
+  "authSendCodePhone": "Телефон",
+  "@authSendCodePhone": {
+    "description": "Label for phone number input field"
+  },
+  "registerButtonText": "Зарегистрироваться",
+  "@registerButtonText": {
+    "description": "Text for registration button"
+  },
+  "authSendCodeQuestion1": "Нет аккаунта? ",
+  "@authSendCodeQuestion1": {
+    "description": "First part of the registration prompt"
+  },
+  "authSendCodeQuestion2": "Пройти авторизацию",
+  "@authSendCodeQuestion2": {
+    "description": "Second part of the registration prompt"
+  },
+  "authVerifyCodeTitle": "Введите код",
+  "@authVerifyCodeTitle": {
+    "description": "Title for the verification code input screen"
+  },
+  "authVerifyCodeDescription": "Для подтверждения телефона\nCompanyBot отправил 6-значный код",
+  "@authVerifyCodeDescription": {
+    "description": "Description of the verification process"
+  },
+  "authVerifyCodePS": "Если код не пришёл, вы можете\nзапросить новый через {seconds} секунд",
+  "@authVerifyCodePS": {
+    "description": "Message about requesting a new code",
+    "placeholders": {
+      "seconds": {
+        "type": "int",
+        "example": "120"
+      }
+    }
+  },
+
+  "@_home": {
+    "description": "Home screen section"
+  },
+  "homeGoToAll": "Все",
+  "@homeGoToAll": {
+    "description": "Button text to view all items"
+  },
+  "homeCategoryTitle": "Категории",
+  "@homeCategoryTitle": {
+    "description": "Title for categories section"
+  },
+  "homeNewProductsTitle": "Новые продукты",
+  "@homeNewProductsTitle": {
+    "description": "Title for new products section"
+  },
+  "homeSpecialOfferTitle": "Специальное предложение",
+  "@homeSpecialOfferTitle": {
+    "description": "Title for special offers section"
+  },
+
+  "@_product": {
+    "description": "Product section"
+  },
+  "addToBasketText": "В корзину",
+  "@addToBasketText": {
+    "description": "Text for add to basket button"
+  },
+  "createOrderText": "Заказ",
+  "@createOrderText": {
+    "description": "Text for create order button"
+  },
+  "productDescriptionTitle": "Описание товара",
+  "@productDescriptionTitle": {
+    "description": "Title for product description section"
+  },
+  "productCharacteristicTitle": "Характеристики товара",
+  "@productCharacteristicTitle": {
+    "description": "Title for product characteristics section"
+  },
+  "quantity": "Количество",
+  "@quantity": {
+    "description": "Label for quantity selection"
+  },
+
+  "@_profile": {
+    "description": "Profile section"
+  },
+  "profileFullNameLabel": "Имя и фамилия",
+  "@profileFullNameLabel": {
+    "description": "Label for full name field in profile"
+  },
+  "profilePhoneLabel": "Телефон",
+  "@profilePhoneLabel": {
+    "description": "Label for phone number field in profile"
+  },
+  "profileUserInfoTitle": "Ваши данные",
+  "@profileUserInfoTitle": {
+    "description": "Title for user information section"
+  },
+  "profileGeoTitle": "Ваше местоположение",
+  "@profileGeoTitle": {
+    "description": "Title for location information section"
+  },
+  "profileDistinct": "Район",
+  "@profileDistinct": {
+    "description": "Label for district field"
+  },
+  "profileTown": "Область / Город",
+  "@profileTown": {
+    "description": "Label for city/region field"
+  },
+  "profileAddGeo": "+ Manzil qo’shish",
+  "@profileTown": {
+    "description": "add geo button text"
+  },
+
+  "@_orders": {
+    "description": "Orders section"
+  },
+  "orderScreenDateText": "Дата",
+  "@orderScreenDateText": {
+    "description": "Label for order date"
+  },
+  "orderScreenOrderIdText": "Номер заказа",
+  "@orderScreenOrderIdText": {
+    "description": "Label for order ID"
+  },
+  "orderScreenOrderPriceText": "Стоимость заказа",
+  "@orderScreenOrderPriceText": {
+    "description": "Label for total order price"
+  },
+  "orderScreenProductPriceText": "Цена товара",
+  "@orderScreenProductPriceText": {
+    "description": "Label for individual product price"
+  },
+
+  "@_basket": {
+    "description": "Basket section"
+  },
+  "basketScreenCreateOrderButtonText": "Оформить заказ",
+  "@basketScreenCreateOrderButtonText": {
+    "description": "Text for checkout button"
+  },
+  "basketScreenFinalPriceText": "Итого",
+  "@basketScreenFinalPriceText": {
+    "description": "Label for final price in basket"
+  },
+
+  "@_search": {
+    "description": "Search section"
+  },
+  "searchScreenFilterButtonText": "Фильтры",
+  "@searchScreenFilterButtonText": {
+    "description": "Text for filters button"
+  },
+  "searchScreenAllButtonText": "Все продукты",
+  "@searchScreenAllButtonText": {
+    "description": "Text for all products button"
+  },
+
+  "@_dialogs": {
+    "description": "Alert dialogs section"
+  },
+  "authAlertDialogTitle": "Требуется авторизация",
+  "@authAlertDialogTitle": {
+    "description": "Title for authentication required dialog"
+  },
+  "authAlertDialogContent": "Для получения информации о товаре или совершения покупки необходимо зарегистрироваться. Пожалуйста, войдите в систему, чтобы продолжить.",
+  "@authAlertDialogContent": {
+    "description": "Content text for authentication required dialog"
+  },
+  "authAlertDialogBackButton": "Назад",
+  "@authAlertDialogBackButton": {
+    "description": "Text for back button in auth dialog"
+  },
+  "authAlertDialogContinueButton": "Продолжить",
+  "@authAlertDialogContinueButton": {
+    "description": "Text for continue button in auth dialog"
+  },
+  "productNotFoundAlertTitle": "Товар отсутствует",
+  "@productNotFoundAlertTitle": {
+    "description": "Title for product not found dialog"
+  },
+  "productNotFoundAlertContent": "Извините, запрашиваемый товар отсутствует или был удалён. Пожалуйста, посмотрите другие товары.",
+  "@productNotFoundAlertContent": {
+    "description": "Content text for product not found dialog"
+  },
+  "createOrderAlertDialogTitle": "Создание заказа",
+  "@createOrderAlertDialogTitle": {
+    "description": "Title for create order dialog"
+  },
+  "createOrderAlertDialogBasketText": "В вашей корзине: ",
+  "@createOrderAlertDialogBasketText": {
+    "description": "Label for basket contents in order dialog"
+  },
+  "createOrderAlertDialogFinalPrice": "Итог: ",
+  "@createOrderAlertDialogFinalPrice": {
+    "description": "Label for final price in order dialog"
+  },
+  "changePhoneAlertDialogTitle": "Изменение номера телефона",
+  "@changePhoneAlertDialogTitle": {
+    "description": "Title for change phone number dialog"
+  },
+  "changePhoneAlertDialogContent": "Изменение номера телефона временно недоступно в мобильном приложении. Пожалуйста, воспользуйтесь нашим Telegram-ботом для этой операции.",
+  "@changePhoneAlertDialogContent": {
+    "description": "Content text for change phone number dialog"
+  },
+
+  "@_misc": {
+    "description": "Miscellaneous section"
+  },
+  "locale": "Ру",
+  "@locale": {
+    "description": "Short text for language selector"
+  },
+  "unauthText": "Необходимо войти в систему",
+  "@unauthText": {
+    "description": "Message shown when authentication is required"
+  },
+  "unauthButtonText": "Войти",
+  "@unauthButtonText": {
+    "description": "Text for login button"
+  }
+}

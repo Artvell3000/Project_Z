@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project_z/l10n/app_localizations.dart';
-import 'package:project_z/shared/consts/colors.dart';
-import 'package:project_z/shared/consts/grey_elevated_button_style.dart';
-import 'package:project_z/shared/consts/text_style_title.dart';
+import 'package:project_z/config/theme/button_style_extension.dart';
+import 'package:project_z/config/theme/text_styles_extension.dart';
+import 'package:project_z/gen_locales/app_localizations.dart';
 
 class ShowHasNotProductAlertDialogFunction {
   static const contentTextStyle = TextStyle(
@@ -11,10 +10,16 @@ class ShowHasNotProductAlertDialogFunction {
     color: Color.fromRGBO(129, 129, 129, 1),
   );
 
-  static Future<void> body(BuildContext context) async {
+  Future<void> call(BuildContext context) async {
     await showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
+        final theme = Theme.of(context);
+        final scheme = theme.colorScheme;
+        final textStyles = theme.extension<AppTextStyles>();
+        final buttonStyles = theme.extension<AppButtonStyles>();
+        final S = AppLocalizations.of(context);
+
         return Dialog(
           insetPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 18),
           backgroundColor: Colors.transparent,
@@ -28,19 +33,20 @@ class ShowHasNotProductAlertDialogFunction {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(AppLocalizations.of(context)!.productNotFoundAlertTitle, style: titleTextStyle),
+                Text(S.productNotFoundAlertTitle, style: textStyles!.heading),
                 const SizedBox(height: 10),
-                Text(AppLocalizations.of(context)!.productNotFoundAlertContent, style: contentTextStyle, textAlign: TextAlign.center,),
+                Text(S.productNotFoundAlertContent, style: contentTextStyle, textAlign: TextAlign.center),
                 const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
-                        flex: 140,
-                        child: ElevatedButton(
-                          style: greyButtonStyle,
-                          onPressed: () => Navigator.pop(context, false),
-                          child: Text(AppLocalizations.of(context)!.authAlertDialogBackButton, style: const TextStyle(color: mainColor)),
-                        )),
+                      flex: 140,
+                      child: ElevatedButton(
+                        style: buttonStyles!.secondaryElevatedButton,
+                        onPressed: () => Navigator.pop(context, false),
+                        child: Text(S.authAlertDialogBackButton, style: TextStyle(color: scheme.primary)),
+                      ),
+                    ),
                   ],
                 ),
               ],

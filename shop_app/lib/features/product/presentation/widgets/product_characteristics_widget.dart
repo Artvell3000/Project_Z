@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_z/l10n/app_localizations.dart';
+import 'package:project_z/gen_locales/app_localizations.dart';
 
 const elTextStyle = TextStyle(
   fontSize: 12,

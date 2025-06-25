@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project_z/features/authentication/presentation/bloc/verify_code/authentication_verify_code_bloc.dart';
-
 class PinCodeInputRow extends StatefulWidget {
   const PinCodeInputRow({super.key, required this.toVerify, required this.initWithErrorAnimation, });
 
@@ -68,65 +65,57 @@ class _PinCodeInputRowState extends State<PinCodeInputRow> with TickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthenticationVerifyCodeBloc, AuthenticationVerifyCodeState>(
-      listener: (context, state) {
-        _startAnimation();
-      },
-      listenWhen: (_, state){
-        return state.mapOrNull(inputCode: (d)=> d.afterFail) ?? false;
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: List.generate(6, (index) {
-          return SizedBox(
-            width: 50,
-            height: 50,
-            child: AnimatedBuilder(
-              builder: (context, child) {
-                return TextField(
-                  controller: _controllers[index],
-                  focusNode: _focusNodes[index],
-                  keyboardType: TextInputType.number,
-                  textAlign: TextAlign.center,
-                  maxLength: 1,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: List.generate(6, (index) {
+        return SizedBox(
+          width: 50,
+          height: 50,
+          child: AnimatedBuilder(
+            builder: (context, child) {
+              return TextField(
+                controller: _controllers[index],
+                focusNode: _focusNodes[index],
+                keyboardType: TextInputType.number,
+                textAlign: TextAlign.center,
+                maxLength: 1,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+                decoration: InputDecoration(
+                  counterText: "",
+                  filled: true,
+                  fillColor: _colorAnimation.value,
+                  enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromRGBO(197, 197, 197, 1),
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(12))
                   ),
-                  decoration: InputDecoration(
-                    counterText: "",
-                    filled: true,
-                    fillColor: _colorAnimation.value,
-                    enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color.fromRGBO(197, 197, 197, 1),
-                          width: 1.5,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(12))
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color.fromRGBO(16, 53, 91, 1),
-                          width: 1.5,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(12))
-                    ),
+                  focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color.fromRGBO(16, 53, 91, 1),
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(12))
                   ),
-                  onChanged: (value) {
-                    if (value.length == 1 && index < 5) {
-                      _focusNodes[index + 1].requestFocus();
-                    } else if (value.isEmpty && index > 0) {
-                      _focusNodes[index - 1].requestFocus();
-                    }
-                    _checkAllFieldsFilled();
-                  },
-                );
-              },
-              animation: _controller,
-            ),
-          );
-        }),
-      ),
+                ),
+                onChanged: (value) {
+                  if (value.length == 1 && index < 5) {
+                    _focusNodes[index + 1].requestFocus();
+                  } else if (value.isEmpty && index > 0) {
+                    _focusNodes[index - 1].requestFocus();
+                  }
+                  _checkAllFieldsFilled();
+                },
+              );
+            },
+            animation: _controller,
+          ),
+        );
+      }),
     );
   }
 }

@@ -1,332 +1,235 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:logger/logger.dart';
+import 'package:project_z/config/theme/text_styles_extension.dart';
 import 'package:project_z/core/di/di.dart';
 import 'package:project_z/features/profile/presentation/bloc/profile_screen_bloc.dart';
 import 'package:project_z/features/profile/presentation/widgets/widgets.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
-import 'package:project_z/flutter_app_icons.dart';
-import 'package:project_z/l10n/app_localizations.dart';
+import 'package:project_z/gen_assets/assets.gen.dart';
+import 'package:project_z/gen_locales/app_localizations.dart';
 import 'package:project_z/shared/auth/un_auth_placeholder.dart';
-import 'package:project_z/shared/consts/text_style_title.dart';
+import 'package:project_z/shared/functions/show_alert_dialog/show_cant_change_phone_alert_dialog_function.dart';
 import 'package:project_z/shared/widgets/loading_card.dart';
 
 @RoutePage()
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
-  final loadingWidget =
-  const SizedBox(width: double.infinity, height: 200, child: Center(child: CircularProgressIndicator()));
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textStyles = theme.extension<AppTextStyles>();
+    final S = AppLocalizations.of(context);
+
+    return Scaffold(
+      body: BlocProvider(
+          create: (context) => getIt<ProfileScreenBloc>(),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 30.0, left: 10, right: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(S.profileTitle, style: textStyles!.heading),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: ProfileContainer(
+                    textStyles: textStyles,
+                    title: S.profileUserInfoTitle,
+                    iconTitleProvider: Assets.icons.profile.userInfo.keyName,
+                    label1: S.profileFullNameLabel,
+                    textFormField1: TextFormField(),
+                    label2: S.profilePhoneLabel,
+                    textFormField2: PhoneStub(phone: '', colorScheme: theme.colorScheme,),
+                  ),
+                ),
+                GeoContainer(textStyles: textStyles, S: S)
+              ],
+            ),
+          )),
+    );
+  }
+}
+
+class GeoContainer extends StatefulWidget {
+  const GeoContainer({
+    super.key,
+    required this.textStyles,
+    required this.S, this.town, this.distinct,
+  });
+
+  final AppTextStyles? textStyles;
+  final AppLocalizations S;
+  final String? town;
+  final String? distinct;
+
+  @override
+  State<GeoContainer> createState() => _GeoContainerState();
+}
+
+class _GeoContainerState extends State<GeoContainer> {
+  bool showInfo = false;
+
+  @override
+  void initState() {
+    showInfo = widget.distinct != null || widget.town != null;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocProvider(
-        create: (context) => getIt<ProfileScreenBloc>(),
-        child: BlocListener<ShellScreenBloc, ShellScreenState>(
-          listener: (context, state) {
-            state.mapOrNull(
-                loaded: (d) {
-                  BlocProvider.of<ProfileScreenBloc>(context).add(const ProfileScreenEvent.refresh());
-                }
-            );
-          },
-          child: BlocListener<ProfileScreenBloc, ProfileScreenState>(
-            listener: (context, state) {
-              Logger().i(state.toString());
-            },
-            child: BlocBuilder<ProfileScreenBloc, ProfileScreenState>(
-              builder: (context, state) {
-                final isUnAuth = state.mapOrNull(
-                  needAuth: (d) => true
-                ) ?? false;
-                if(isUnAuth){
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30, bottom: 80),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.profileTitle,
-                                style: titleTextStyle,
-                              ),
-                              const LanguageSwitch()
-                            ],
-                          ),
-                        ),
-                        const UnAuthPlaceholder(),
-                      ],
-                    ),
-                  );
-                }
+    return (showInfo) ? ProfileContainer(
+      textStyles: widget.textStyles,
+      title: widget.S.profileGeoTitle,
+      iconTitleProvider: Assets.icons.shared.geo.keyName,
+      label1: widget.S.profileDistinct,
+      textFormField1: Container(),
+      label2: widget.S.profileTown,
+      textFormField2: Container(),
+    ) : ElevatedButton(onPressed: (){
+      setState(() {
+        showInfo = true;
+      });
+    }, child: Center(child: Text(widget.S.profileAddGeo)));
+  }
+}
 
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Column(children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30, bottom: 20),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.profileTitle,
-                              style: titleTextStyle,
-                            ),
-                            const LanguageSwitch()
-                          ],
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.white),
-                        padding: const EdgeInsets.only(left: 15, right: 15, top: 12, bottom: 19),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                const Icon(CustomIcons.information),
-                                Text(
-                                  AppLocalizations.of(context)!.profileUserInfoTitle,
-                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
-                                )
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 13),
-                              child: Text(
-                                AppLocalizations.of(context)!.profileFullNameLabel,
-                                style: const TextStyle(
-                                  color: Color.fromRGBO(125, 125, 125, 1),
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                            BlocBuilder<ProfileScreenBloc, ProfileScreenState>(
-                              builder: (BuildContext context, ProfileScreenState state) {
-                                return state.whenOrNull(
-                                    loading: () {
-                                      return const SizedBox(
-                                        width: double.infinity,
-                                        height: 50,
-                                        child: LoadingCard(),
-                                      );
-                                    },
-                                    loaded: (profile) {
-                                      return ProfileSurnameTextField(
-                                        context: context,
-                                        name: profile.fullName ?? '',
-                                        onFullNameEntered: (name) {
-                                          BlocProvider.of<ProfileScreenBloc>(context)
-                                              .add(ProfileScreenEvent.refreshFullName(name));
-                                        },
-                                      );
-                                    },
-                                    error: (e) =>
-                                        Center(
-                                          child: Text(e.toString()),
-                                        )) ?? const SizedBox();
-                              },
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: Text(
-                                AppLocalizations.of(context)!.profilePhoneLabel,
-                                style: const TextStyle(
-                                  color: Color.fromRGBO(125, 125, 125, 1),
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                            BlocBuilder<ProfileScreenBloc, ProfileScreenState>(
-                              builder: (BuildContext context, ProfileScreenState state) {
-                                return state.whenOrNull(
-                                    loading: () {
-                                      return const SizedBox(
-                                        width: double.infinity,
-                                        height: 50,
-                                        child: LoadingCard(),
-                                      );
-                                    },
-                                    loaded: (profile) {
-                                      return ProfilePhoneTextField(
-                                        phone: profile.username ?? '',
-                                        onPhoneEntered: (phone) {
-                                          BlocProvider.of<ProfileScreenBloc>(context)
-                                              .add(ProfileScreenEvent.refreshUsername(phone));
-                                        },
-                                      );
-                                    },
-                                    error: (e) =>
-                                        Center(
-                                          child: Text(e.toString()),
-                                        )) ?? const SizedBox();
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      BlocBuilder<ProfileScreenBloc, ProfileScreenState>(
-                        builder: (context, state) {
-                          return state.whenOrNull(
-                            loading: () => const SizedBox(),
-                            loaded: (user) {
-                              return AddGeoContainer(
-                                userIsNull: user == null,
-                                town: user.town ?? '',
-                                district: user.district ?? '',
-                                onDistinctEntered: (distinct) {
-                                  BlocProvider.of<ProfileScreenBloc>(context)
-                                      .add(ProfileScreenEvent.refreshDistrict(distinct));
-                                },
-                                onTownEntered: (town) {
-                                  BlocProvider.of<ProfileScreenBloc>(context).add(ProfileScreenEvent.refreshTown(town));
-                                },
-                              );
-                            },
-                            error: (e) =>
-                                Center(
-                                  child: Text(e.toString()),
-                                ),
+class PhoneStub extends StatefulWidget {
+  const PhoneStub(
+      {super.key, required this.phone, this.textStyles, this.colorScheme});
 
-                          ) ?? const SizedBox();
-                        },
-                      ),
-                    ]),
+  final String phone;
+  final AppTextStyles? textStyles;
+  final ColorScheme? colorScheme;
+
+  @override
+  State<PhoneStub> createState() => _PhoneStubState();
+}
+
+class _PhoneStubState extends State<PhoneStub> {
+  final showAlert = ShowChangePhoneAlertDialogFunction();
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => showAlert(context),
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: const Color(0xFFF5F5F7),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: const Color(0xFFC5C5C5),
+                width: 1,
+              ),
+            ),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 84.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '880 80 80',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400
                   ),
-                );
-              },
+                ),
+              ),
             ),
           ),
-        ),
+          Container(
+                  width: 70,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF5F5F7),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: widget.colorScheme?.primary ?? Colors.red,
+                      width: 1,
+                    ),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    '+998',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: widget.colorScheme?.primary,
+                    ),
+                  ),
+                )
+        ],
       ),
     );
   }
 }
 
-class AddGeoContainer extends StatefulWidget {
-  const AddGeoContainer({
+class ProfileContainer extends StatelessWidget {
+  const ProfileContainer({
     super.key,
-    required this.town,
-    required this.district,
-    required this.onTownEntered,
-    required this.onDistinctEntered,
-    required this.userIsNull,
+    required this.textStyles,
+    required this.title,
+    required this.label1,
+    required this.label2,
+    required this.textFormField1,
+    required this.textFormField2, required this.iconTitleProvider,
   });
 
-  final bool userIsNull;
-  final String town;
-  final String district;
-  final void Function(String town) onTownEntered;
-  final void Function(String distinct) onDistinctEntered;
-
-  @override
-  State<AddGeoContainer> createState() => _AddGeoContainerState();
-}
-
-class _AddGeoContainerState extends State<AddGeoContainer> {
-  bool hasClickedAddGeo = false;
+  final String title;
+  final String label1;
+  final String label2;
+  final Widget textFormField1;
+  final Widget textFormField2;
+  final AppTextStyles? textStyles;
+  final String iconTitleProvider;
 
   @override
   Widget build(BuildContext context) {
-    bool showTextFields = widget.town != '' || widget.district != '' || hasClickedAddGeo;
-    return Padding(
-      padding: const EdgeInsets.only(top: 10),
-      child: Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.white),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 15, right: 15, top: 13, bottom: 15),
-          child: Column(
+    return Container(
+      padding: const EdgeInsets.fromLTRB(
+          14, 12, 14, 19), // Отступы: слева 14, сверху 12, справа 14, снизу 19
+      decoration: BoxDecoration(
+        color: Colors.white, // Цвет фона контейнера
+        borderRadius: BorderRadius.circular(10), // Закругление углов на 10
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  const Icon(CustomIcons.geo),
-                  Text(
-                    AppLocalizations.of(context)!.profileGeoTitle,
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
-                  )
-                ],
+              SvgPicture.asset(
+                iconTitleProvider,
+                width: 20,
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: (!showTextFields)
-                    ? SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          ///проверка auth
-                          //todo
-                        });
-                      },
-                      child: const Text(
-                        '+ Manzil qo’shish',
-                        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: Colors.white),
-                      )),
-                )
-                    : Column(
-                  children: [
-                    ProfileTextField(
-                      town: widget.town,
-                      onEntered: widget.onTownEntered,
-                      label: AppLocalizations.of(context)!.profileTown,
-                      isDistrictSelector: true,
-                      districts: const [
-                        'Toshkent',
-                        'Toshkent viloyati',
-                        'Samarqand',
-                        'Farg’ona',
-                        'Buxoro',
-                        'Xorazm',
-                        'Andijon',
-                        'Navoiy',
-                        'Qashqadaryo',
-                        'Jizzax',
-                        'Surxondaryo',
-                        'Namangan',
-                        'Sirdaryo',
-                        'Xiva'
-                      ],
-                      context: context,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: ProfileTextField(
-                        district: widget.district,
-                        onEntered: widget.onDistinctEntered,
-                        label: AppLocalizations.of(context)!.profileDistinct,
-                        isDistrictSelector: true,
-                        districts: const [
-                          'Olmazor tumani',
-                          'Bektemir tumani',
-                          'Mirobod tumani',
-                          'Mirzo Ulug‘bek tumani',
-                          'Sergeli tumani',
-                          'Chilonzor tumani',
-                          'Shayxontohur tumani',
-                          'Yunusobod tumani',
-                          'Yakkasaroy tumani',
-                          'Yashnobod tumani',
-                          'Uchtepa tumani'
-                        ],
-                        context: context,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+                  padding: const EdgeInsets.only(left: 6),
+                  child: Text(title, style: textStyles?.heading))
             ],
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 13, 0, 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(label1, style: textStyles?.label),
+                SizedBox(height: 40, child: textFormField1)
+              ],
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(label2, style: textStyles?.label),
+              SizedBox(height: 40, child: textFormField2)
+            ],
+          )
+        ],
       ),
     );
   }

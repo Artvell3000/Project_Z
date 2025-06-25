@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_z/shared/consts/text_field_style.dart';
+import 'package:project_z/config/theme/text_styles_extension.dart';
 
 class TextFieldForFullName extends StatefulWidget {
   const TextFieldForFullName({super.key, required this.initText, required this.onNameEntered});
@@ -37,11 +37,34 @@ class _TextFieldForFullNameState extends State<TextFieldForFullName> {
 
   @override
   Widget build(BuildContext context) {
+    final textStyles = Theme.of(context).extension<AppTextStyles>();
     return TextField(
       controller: _controller,
       focusNode: _focusNode,
-      style: textStyleForTextField,
-      decoration: textFieldDecoration,
+      style: textStyles?.textField ?? AppTextStyles.defaultTextField,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: const Color.fromRGBO(245, 245, 247, 1),
+        contentPadding: const EdgeInsets.only(
+          top: 15,
+          left: 15,
+          right: 15
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(
+            color: Color.fromRGBO(197, 197, 197, 1),
+            width: 1,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(
+            color: Color.fromRGBO(197, 197, 197, 1),
+            width: 1,
+          ),
+        ),
+      ),
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:project_z/features/authentication/presentation/screens/authentication_send_code_screen.dart';
+import 'package:project_z/features/authentication/presentation/auth_send_code/auth_send_code_screen.dart';
+import 'package:project_z/features/authentication/presentation/auth_shell/auth_shell_screen.dart';
+import 'package:project_z/features/authentication/presentation/auth_verify_code/auth_verify_code_screen.dart';
 import 'package:project_z/features/authentication/presentation/screens/authentication_verify_code_screen.dart';
 import 'package:project_z/features/features.dart';
 import 'package:project_z/features/shell_widget/presentation/screens/tabs/tabs.dart';
@@ -48,13 +50,14 @@ class AppRouter extends RootStackRouter {
       ],
     ),
 
-    AutoRoute(path: '/auth/send-code', page: AuthenticationSendCodeRoute.page),
+    AutoRoute(page: AuthShellRoute.page, children: [
+      AutoRoute(page: AuthSendCodeRoute.page),
     CustomRoute(
-        path: '/auth/verify-code',
-        page: AuthenticationVerifyCodeRoute.page,
+        page: AuthVerifyCodeRoute.page,
         transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
       durationInMilliseconds: 500,
       reverseDurationInMilliseconds: 500,
     )
+    ])
   ];
 }

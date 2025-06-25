@@ -9,6 +9,7 @@ import 'package:shop_domain/domain/entity/product/product.dart';
 import 'package:shop_domain/domain/repositories/category_repository.dart';
 import 'package:shop_domain/domain/repositories/news_repository.dart';
 import 'package:shop_domain/domain/repositories/product_repository.dart';
+import 'package:shop_domain/error/entity/domain_exception.dart';
 
 
 part 'home_screen_event.dart';
@@ -57,20 +58,19 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
       _newProducts = (await _iProductRepository.getByStatus(newProductStatus)).getOrElse((e)=>throw(e));
       _specialOffer = (await _iProductRepository.getByStatus(specialOfferStatus)).getOrElse((e)=>throw(e));
       _categories = (await _iCategoryRepository.getStructured()).getOrElse((e)=>throw(e));
-      _news = (await _iNewsRepository.get()).getOrElse((e)=>throw(e));
-      Logger().i('$_specialOffer');
+      _news = (await _iNewsRepository.getNews()).getOrElse((e)=>throw(e));
       emit(HomeScreenState.loaded(
           categories: _categories.keys.toList(),
           news: _news.results,
           newProducts: _newProducts.results,
           specialOffer: _specialOffer.results
       ));
-    } on Exception catch (e) {
+    } on DomainError catch (e) {
       _loadError(e, emit);
     }
   }
 
-  void _loadError(e,Emitter<HomeScreenState> emit){
+  void _loadError(DomainError e,Emitter<HomeScreenState> emit){
     emit(HomeScreenState.error(e));
   }
 }

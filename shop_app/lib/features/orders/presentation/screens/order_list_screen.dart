@@ -1,14 +1,13 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_z/config/theme/text_styles_extension.dart';
 import 'package:project_z/core/di/di.dart';
 import 'package:project_z/features/orders/presentation/bloc/order_screen_bloc.dart';
 import 'package:project_z/features/orders/presentation/widgets/widgets.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
-import 'package:project_z/l10n/app_localizations.dart';
+import 'package:project_z/gen_locales/app_localizations.dart';
 import 'package:project_z/shared/auth/un_auth_placeholder.dart';
-import 'package:project_z/shared/consts/colors.dart';
-import 'package:project_z/shared/consts/text_style_title.dart';
 
 @RoutePage()
 class OrderListScreen extends StatefulWidget {
@@ -23,8 +22,13 @@ class _OrderListScreenState extends State<OrderListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final textStyles = theme.extension<AppTextStyles>();
+    final S = AppLocalizations.of(context);
+
+
     return Scaffold(
-      backgroundColor: Color.fromRGBO(245,245,247,1),
       body: BlocProvider(
         create: (context) => getIt<OrderScreenBloc>(),
         child: BlocListener<ShellScreenBloc, ShellScreenState>(
@@ -46,7 +50,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
                   bloc.add(const OrderScreenEvent.refresh());
                   await bloc.stream.first;
                 },
-                color: mainColor,
+                color: scheme.primary,
                 backgroundColor: Colors.white,
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
@@ -59,19 +63,19 @@ class _OrderListScreenState extends State<OrderListScreen> {
                           alignment: Alignment.centerLeft,
                           child: Padding(
                             padding: const EdgeInsets.only(top: 30.0, bottom: 15),
-                            child: Text(AppLocalizations.of(context)!.ordersTitle, style: titleTextStyle),
+                            child: Text(S.ordersTitle, style: textStyles!.heading),
                           ),
                         ),
                         BlocBuilder<OrderScreenBloc, OrderScreenState>(
                             builder: (context, state) => state.map(
                                 needAuth: (d) =>
                                     const Padding(padding: EdgeInsets.only(top: 65.0), child: UnAuthPlaceholder()),
-                                loading: (d) => const SizedBox(
+                                loading: (d) => SizedBox(
                                     width: double.infinity,
                                     height: 200,
                                     child: Center(
                                         child: CircularProgressIndicator(
-                                      color: mainColor,
+                                      color: scheme.primary,
                                     ))),
                                 loaded: (d) => ListView.separated(
                                       physics: const NeverScrollableScrollPhysics(),

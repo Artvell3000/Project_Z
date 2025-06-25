@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:project_z/config/theme/theme.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:project_z/l10n/app_localizations.dart';
+import 'package:project_z/gen_locales/app_localizations.dart';
 
 late AppRouter appRouter;
 
 class MyApp extends StatefulWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();

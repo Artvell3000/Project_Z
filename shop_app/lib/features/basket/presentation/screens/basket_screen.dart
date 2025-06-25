@@ -1,17 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_z/config/theme/text_styles_extension.dart';
 import 'package:project_z/core/di/di.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/basket/presentation/bloc/basket_screen_bloc.dart';
 import 'package:project_z/features/basket/presentation/widgets/widgets.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
-import 'package:project_z/l10n/app_localizations.dart';
+import 'package:project_z/gen_locales/app_localizations.dart';
 import 'package:project_z/shared/auth/un_auth_placeholder.dart';
-import 'package:project_z/shared/consts/colors.dart';
-import 'package:project_z/shared/consts/text_style_title.dart';
 import 'package:project_z/shared/functions/show_alert_dialog/show_auth_alert_dialog_function.dart';
 import 'package:project_z/shared/widgets/quantity_widget.dart';
+import 'package:shop_domain/domain/entity/basket/basket.dart';
 
 @RoutePage()
 class BasketScreen extends StatefulWidget {
@@ -26,6 +26,10 @@ class _BasketScreenState extends State<BasketScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final S = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final textStyles = theme.extension<AppTextStyles>();
+
     return Scaffold(
         backgroundColor: const Color.fromRGBO(245,245,247,1),
         body: BlocProvider(
@@ -47,12 +51,12 @@ class _BasketScreenState extends State<BasketScreen> {
                     needAuth: (d) async {
                       final result = await showAuthDialog(context);
                       if (context.mounted && result != null && result) {
-                        AutoRouter.of(context).push(const AuthenticationSendCodeRoute());
+                        AutoRouter.of(context).push(const AuthShellRoute());
                       }
                     },
                     loaded: (d) async {
                       final bloc = BlocProvider.of<ShellScreenBloc>(context);
-                      bloc.add(ShellScreenEvent.updateBasket(d.basket.items));
+                      bloc.add(ShellScreenEvent.updateBasket(d.basket));
                     },
                     loadedEmpty: (d) async {
                       final bloc = BlocProvider.of<ShellScreenBloc>(context);
@@ -63,7 +67,7 @@ class _BasketScreenState extends State<BasketScreen> {
               child: Builder(
                   builder: (context) {
                     return RefreshIndicator(
-                      color: mainColor,
+                      color: theme.colorScheme.primary,
                       backgroundColor: Colors.white,
                       onRefresh: () async {
                         final bloc = BlocProvider.of<BasketScreenBloc>(context);
@@ -83,12 +87,12 @@ class _BasketScreenState extends State<BasketScreen> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      AppLocalizations.of(context)!.basketTitle,
-                                      style: titleTextStyle,
+                                      S.basketTitle,
+                                      style: textStyles!.heading,
                                     ),
                                     BlocBuilder<BasketScreenBloc, BasketScreenState>(
                                       builder: (context, state) {
-                                        return state.mapOrNull(loaded: (d) => QuantityWidget(d.basket.fullAmount)) ??
+                                        return state.mapOrNull(loaded: (d) => QuantityWidget(d.basket.countProducts())) ??
                                             const SizedBox();
                                       },
                                     )
@@ -100,7 +104,7 @@ class _BasketScreenState extends State<BasketScreen> {
                                   needAuth: (d) =>
                                   const Padding(padding: EdgeInsets.only(top: 60.0), child: UnAuthPlaceholder()),
                                   loaded: (d) {
-                                    final items = d.basket.items;
+                                    final items = d.basket;
                                     return ListView.builder(
                                       shrinkWrap: true,
                                       physics: const NeverScrollableScrollPhysics(),
@@ -130,12 +134,6 @@ class _BasketScreenState extends State<BasketScreen> {
                                 ) ??
                                     const SizedBox();
                               }),
-                              BlocBuilder<BasketScreenBloc, BasketScreenState>(builder: (context, state) {
-                                return state.mapOrNull(
-                                  loaded: (d) => PaymentCard(d.basket),
-                                ) ??
-                                    const SizedBox();
-                              })
                             ],
                           ),
                         ),

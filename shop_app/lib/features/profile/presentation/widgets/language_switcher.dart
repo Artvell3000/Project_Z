@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:logger/logger.dart';
 import 'package:project_z/app/app.dart';
-import 'package:project_z/l10n/app_localizations.dart';
-import 'package:project_z/shared/consts/colors.dart';
+import 'package:project_z/gen_assets/assets.gen.dart';
+import 'package:project_z/gen_locales/app_localizations.dart';
 
 class LanguageSwitch extends StatefulWidget {
   const LanguageSwitch({super.key});
@@ -86,6 +86,9 @@ class _LanguageSwitchState extends State<LanguageSwitch> {
 
   @override
   Widget build(BuildContext context) {
+    final S = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -111,15 +114,15 @@ class _LanguageSwitchState extends State<LanguageSwitch> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SvgPicture.asset('assets/icons/local.svg', height: 25),
+            SvgPicture.asset(Assets.icons.profile.local.keyName , height: 25),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(AppLocalizations.of(context)!.locale,
-                  style: const TextStyle(
+                Text(S.locale,
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
-                    color: mainColor,
+                    color: scheme.primary,
                   ),
                 ),
                 const SizedBox(width: 4),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:project_z/shared/consts/colors.dart';
+import 'package:project_z/config/theme/colors.dart';
 
 class SearchElevatedButton extends StatelessWidget {
   const SearchElevatedButton({
@@ -11,7 +11,7 @@ class SearchElevatedButton extends StatelessWidget {
     this.imgRight,
     this.iconRightSize = 12.0,
     this.iconLeftSize = 9.0,
-    this.activeContentColor = mainColor,
+    this.activeContentColor = AppColors.primary,
     this.contentColor = Colors.white,
     this.spaceBetween = 8.0,
     this.isActive = true

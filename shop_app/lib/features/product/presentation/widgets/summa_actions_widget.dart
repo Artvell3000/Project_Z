@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
-import 'package:project_z/l10n/app_localizations.dart';
-import 'package:project_z/shared/consts/text_style_for_elevation_button.dart';
+import 'package:project_z/gen_locales/app_localizations.dart';
 import 'package:project_z/shared/widgets/loading_button.dart';
 
 class SummaActionsWidget extends StatefulWidget {
@@ -18,6 +17,8 @@ class SummaActionsWidget extends StatefulWidget {
 class _SummaActionsWidgetState extends State<SummaActionsWidget> {
   @override
   Widget build(BuildContext context) {
+    final S = AppLocalizations.of(context);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 11.0, vertical: 15),
       decoration: BoxDecoration(
@@ -58,9 +59,7 @@ class _SummaActionsWidgetState extends State<SummaActionsWidget> {
                         },
                         child: Center(
                             child: Text(
-                              AppLocalizations.of(context)!.addToBasketText,
-                              style: textStyleForElevationButton,
-                              textAlign: TextAlign.center,
+                              S.addToBasketText,
                             )),
                       ),
                     ),
@@ -73,9 +72,7 @@ class _SummaActionsWidgetState extends State<SummaActionsWidget> {
                         },
                         child: Center(
                             child: Text(
-                              AppLocalizations.of(context)!.createOrderText,
-                              style: textStyleForElevationButton,
-                              textAlign: TextAlign.center,
+                              S.createOrderText,
                             )),
                       ),
                     ),

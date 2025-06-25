@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_z/l10n/app_localizations.dart';
-import 'package:project_z/shared/consts/colors.dart';
+import 'package:project_z/gen_locales/app_localizations.dart';
 
 class PartTitleWidget extends StatelessWidget {
   const PartTitleWidget({
@@ -14,6 +13,8 @@ class PartTitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,13 +34,13 @@ class PartTitleWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                AppLocalizations.of(context)!.homeGoToAll,
+                AppLocalizations.of(context).homeGoToAll,
                 style: const TextStyle(fontSize: 14, color: Colors.black),
               ),
-              const Icon(
+              Icon(
                 Icons.chevron_right_rounded,
                 size: 32,
-                color: mainColor,
+                color: scheme.primary,
               ),
             ],
           ),

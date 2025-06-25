@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:auto_route/auto_route.dart';
+import 'package:project_z/config/theme/text_styles_extension.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -7,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:project_z/features/basket/presentation/bloc/basket_screen_bloc.dart';
-import 'package:project_z/shared/consts/text_style_title.dart';
 import 'package:project_z/shared/widgets/discount_widget.dart';
 import 'package:shop_domain/domain/entity/basket/basket.dart';
 
@@ -53,6 +53,9 @@ class _BasketItemWidgetState extends State<BasketItemWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textStyles = theme.extension<AppTextStyles>();
+
     return (_isRemoved) ? const SizedBox() : Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
@@ -87,7 +90,7 @@ class _BasketItemWidgetState extends State<BasketItemWidget> {
                       children: [
                         Text(
                           widget.item.product.formattedFinalPrice,
-                          style: titleTextStyle,
+                          style: textStyles!.heading,
                         ),
                         const SizedBox(width: 8.0),
                         DiscountWidget(value: widget.item.product.discount),

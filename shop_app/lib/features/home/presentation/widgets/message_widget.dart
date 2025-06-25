@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project_z/shared/consts/text_style_for_elevation_button.dart';
 
 class MessageWidget extends StatelessWidget {
   MessageWidget({super.key});
@@ -61,7 +60,6 @@ class MessageWidget extends StatelessWidget {
                 child: const Center(
                   child: Text(
                     'Ariza qoldirish',
-                    style: textStyleForElevationButton,
                   ),
                 ))
           ],

@@ -14,13 +14,12 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  # Локальные пакеты
   shop_domain:
-    path: ../packages/domain/shop_domain
+    path: ../packages/shop_domain
   shop_hive:
-    path: ../packages/data/local/shop_hive
+    path: ../packages/shop_data/shop_hive
   shop_network:
-    path: ../packages/data/network/shop_network
+    path: ../packages/shop_data/shop_network
 
   # Управление состоянием
   flutter_bloc: ^9.1.0
@@ -47,6 +46,7 @@ dependencies:
   intl: any
   flutter_gen: ^5.10.0
   hive_flutter: ^1.1.0
+  freezed_annotation: ^2.4.4
 
 # Зависимости для разработки
 dev_dependencies:
@@ -57,6 +57,7 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   auto_route_generator: ^9.0.0
   injectable_generator: ^2.6.2
+  flutter_gen_runner: ^5.4.0
 
 # Flutter конфигурация
 flutter:
@@ -65,24 +66,23 @@ flutter:
 
   # Ресурсы приложения
   assets:
-    - assets/app_bar/
-    - assets/mock/
-    - assets/mock/news/
-    - assets/mock/categories/
-    - assets/mock/products/
-    - assets/footer/
     - assets/icons/
-    - assets/basket/
-    - assets/order/
-    - assets/search/
-    - assets/authentication/
+    - assets/icons/shared/
+    - assets/icons/bottom_bar/
+    - assets/icons/basket/
+    - assets/icons/profile/
+    - assets/icons/app_bar/
+    - assets/icons/order/
+    - assets/icons/search/
+    - assets/l10n/
+    - assets/img/
+    - assets/img/basket/
+    - assets/img/authentication/
+    - assets/img/mock/
+    - assets/img/footer/
 
   # Конфигурация шрифтов
   fonts:
-    - family: CustomIcons
-      fonts:
-        - asset: assets/icons/icons.ttf
-
     - family: Neometric
       fonts:
         # Regular styles
@@ -146,3 +146,9 @@ flutter:
         - asset: assets/fonts/neometric/Neometric Heavy Italic (Bold Italic).otf
           weight: 900
           style: italic
+
+flutter_gen:
+  output: lib/gen_assets/
+
+  integrations:
+    flutter_svg: true

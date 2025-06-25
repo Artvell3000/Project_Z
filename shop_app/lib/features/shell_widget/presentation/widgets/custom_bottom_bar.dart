@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
-import 'package:project_z/flutter_app_icons.dart';
+import 'package:project_z/gen_assets/assets.gen.dart';
 
 class CustomBottomBar extends StatefulWidget {
   final int currentIndex;
@@ -24,6 +25,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
 
   @override
   Widget build(BuildContext context) {
+    final bottomBarIcons = Assets.icons.bottomBar;
     return Container(
       height: 70,
       decoration: const BoxDecoration(
@@ -41,18 +43,18 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            _buildBarItem(context, 0, CustomIcons.home, 'Home'),
-            _buildBarItem(context, 1, CustomIcons.search, 'Search'),
-            _buildBarItem(context, 2, CustomIcons.basket, 'Basket', isBasket: true),
-            _buildBarItem(context, 3, Icons.shopping_bag, 'Order', iconSize: 30),
-            _buildBarItem(context, 4, CustomIcons.profile, 'Profile',),
+            _buildBarItem(context, 0, bottomBarIcons.home.keyName, 'Home'),
+            _buildBarItem(context, 1, bottomBarIcons.search.keyName, 'Search'),
+            _buildBarItem(context, 2, bottomBarIcons.basket.keyName, 'Basket', isBasket: true),
+            _buildBarItem(context, 3, bottomBarIcons.order.keyName, 'Order', iconSize: 30),
+            _buildBarItem(context, 4, bottomBarIcons.user.keyName, 'Profile',),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildBarItem(BuildContext context, int index, IconData icon, String label, {
+  Widget _buildBarItem(BuildContext context, int index, String icon, String label, {
     bool isBasket = false,
     double iconSize = 25
   }) {
@@ -73,9 +75,9 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
+              SvgPicture.asset(
                 icon,
-                size: iconSize,
+                width: iconSize,
                 color: isSelected ? const Color.fromRGBO(16, 53, 91, 1) : const Color.fromRGBO(150, 155, 159, 1),
               ),
               Text(

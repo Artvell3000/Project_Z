@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_z/shared/consts/text_style_title.dart';
+import 'package:project_z/config/theme/text_styles_extension.dart';
 import 'package:shop_domain/domain/entity/category/category.dart';
 
 class CatalogWidget extends StatefulWidget {
@@ -49,11 +49,16 @@ class _CatalogWidgetState extends State<CatalogWidget> {
 
   @override
   Widget build(BuildContext context) {
+
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final textStyles = theme.extension<AppTextStyles>();
+
     return Column(
       children: [
-        const Align(
+        Align(
           alignment: Alignment.centerLeft,
-          child: Text('Kategoriyalar', style: titleTextStyle),
+          child: Text('Kategoriyalar', style: textStyles!.heading),
         ),
         const SizedBox(height: 5,),
         SizedBox(

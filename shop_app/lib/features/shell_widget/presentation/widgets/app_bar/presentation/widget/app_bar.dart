@@ -4,8 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:project_z/core/di/di.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
 import 'package:project_z/features/shell_widget/presentation/widgets/app_bar/presentation/bloc/app_bar_bloc.dart';
-import 'package:project_z/flutter_app_icons.dart';
-import 'package:project_z/shared/consts/colors.dart';
+import 'package:project_z/gen_assets/assets.gen.dart';
 
 class GeoText extends StatelessWidget {
   const GeoText(this.geo, {super.key});
@@ -123,6 +122,8 @@ class _ShopAppBarState extends State<ShopAppBar> {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
@@ -142,7 +143,7 @@ class _ShopAppBarState extends State<ShopAppBar> {
         mainAxisSize: MainAxisSize.min,
         children: [
           ColoredBox(
-            color: mainColor,
+            color: scheme.primary,
             child: SizedBox(
               height: MediaQuery.of(context).padding.top + 30,
               width: double.infinity,
@@ -154,11 +155,7 @@ class _ShopAppBarState extends State<ShopAppBar> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(
-                        CustomIcons.geo,
-                        color: Colors.white,
-                        size: 15,
-                      ),
+                      SvgPicture.asset(Assets.icons.shared.geo.keyName, color: Colors.white, width: 15,),
                       const Padding(
                         padding: EdgeInsets.only(left: 5),
                         child: Text(

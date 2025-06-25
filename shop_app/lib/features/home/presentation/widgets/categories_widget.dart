@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/home/presentation/bloc/home_screen_bloc.dart';
 import 'package:project_z/features/home/presentation/widgets/part_title_widget.dart';
-import 'package:project_z/l10n/app_localizations.dart';
+import 'package:project_z/gen_locales/app_localizations.dart';
 import 'package:project_z/shared/widgets/loading_card.dart';
 import 'package:shop_domain/domain/entity/category/category.dart';
 import 'package:shop_domain/domain/entity/search_filter/search_filter.dart';

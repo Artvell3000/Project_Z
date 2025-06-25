@@ -33,7 +33,7 @@ class _ProjectZShellScreenState extends State<ProjectZShellScreen> {
             needAuth: (d) async {
               showAuthDialod(context).then((response){
                 if(response!=null && response && context.mounted){
-                  AutoRouter.of(context).push(const AuthenticationSendCodeRoute());
+                  AutoRouter.of(context).push(const AuthShellRoute());
                 }
               });
             },

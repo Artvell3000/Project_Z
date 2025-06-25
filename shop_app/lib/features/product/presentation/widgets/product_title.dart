@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_z/shared/consts/text_style_title.dart';
+import 'package:project_z/config/theme/text_styles_extension.dart';
 import 'package:project_z/shared/widgets/quantity_widget.dart';
 
 class ProductTitle extends StatelessWidget {
@@ -11,6 +11,7 @@ class ProductTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textStyle = Theme.of(context).extension<AppTextStyles>()!.heading;
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -21,7 +22,7 @@ class ProductTitle extends StatelessWidget {
           child: Text(
             title,
             overflow: TextOverflow.ellipsis,
-            style: titleTextStyle,
+            style: textStyle,
           ),
         ),
         QuantityWidget(quantity)

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_z/l10n/app_localizations.dart';
+import 'package:project_z/gen_locales/app_localizations.dart';
+
 
 class QuantityWidget extends StatelessWidget {
   const QuantityWidget(this._quantity, {
@@ -10,7 +11,7 @@ class QuantityWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final quantityStr =  AppLocalizations.of(context)!.quantity;
+    final quantityStr =  AppLocalizations.of(context).quantity;
     return Container(
       height: 30,
       decoration: ShapeDecoration(

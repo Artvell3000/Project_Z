@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:project_z/shared/consts/text_style_title.dart';
 
 class PriceFromToWidget extends StatefulWidget {
   const PriceFromToWidget({super.key, required this.onChangedInterval, this.initFrom, this.initTo});
@@ -83,7 +82,7 @@ class _PriceFromToWidgetState extends State<PriceFromToWidget> {
   }
 }
 class _PriceTextField extends StatelessWidget {
-  const _PriceTextField({super.key, required this.hint, required this.controller, required this.focusNode});
+  const _PriceTextField({required this.hint, required this.controller, required this.focusNode});
   final String hint;
   final TextEditingController controller;
   final FocusNode focusNode;

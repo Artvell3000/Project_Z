@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/shell_widget/presentation/bloc/shell_screen_bloc.dart';
-import 'package:project_z/flutter_app_icons.dart';
-import 'package:project_z/l10n/app_localizations.dart';
+import 'package:project_z/gen_locales/app_localizations.dart';
 import 'package:project_z/shared/functions/show_alert_dialog/show_has_not_product_alert_dialog_function.dart';
 import 'package:project_z/shared/widgets/loading_card.dart';
 import 'package:shop_domain/domain/entity/product/product.dart';
@@ -22,9 +21,12 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
+
+  final _showHasNotProductAlert = ShowHasNotProductAlertDialogFunction();
+
   Future<void> _onCreateOrderClick(BuildContext context) async {
     if (widget.info.quantity == 0) {
-      ShowHasNotProductAlertDialogFunction.body(context);
+      _showHasNotProductAlert(context);
       return;
     }
 
@@ -34,7 +36,7 @@ class _ProductCardState extends State<ProductCard> {
 
   void _onAddToBasketClick(BuildContext context) {
     if (widget.info.quantity == 0) {
-      ShowHasNotProductAlertDialogFunction.body(context);
+      _showHasNotProductAlert(context);
       return;
     }
 
@@ -120,7 +122,7 @@ class _ProductCardState extends State<ProductCard> {
                           flex: 100,
                           child: ButtonForProductCard(
                               child: Text(
-                                AppLocalizations.of(context)!.createOrderText,
+                                AppLocalizations.of(context).createOrderText,
                                 style: const TextStyle(
                                   color: Colors.white,
                                 ),
@@ -142,10 +144,7 @@ class _ProductCardState extends State<ProductCard> {
                             return ButtonForProductCard(
                                 isLoading: isLoading,
                                 onClick: () => _onAddToBasketClick(context),
-                                child: const Icon(
-                                  CustomIcons.basket,
-                                  color: Colors.white,
-                                ));
+                                child: ColoredBox(color: Colors.red, child: SizedBox(width: 10, height: 10,),));
                           },
                         ),
                       ),
@@ -254,7 +253,7 @@ class LoadingProductWidget extends StatelessWidget {
 }
 
 class _StatusWidget extends StatelessWidget {
-  const _StatusWidget(this._status, {super.key});
+  const _StatusWidget(this._status);
 
   final String _status;
 

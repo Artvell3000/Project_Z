@@ -5,7 +5,7 @@ import 'package:project_z/core/routing/router.dart';
 import 'package:project_z/features/home/presentation/widgets/part_title_widget.dart';
 import 'package:project_z/features/home/presentation/widgets/product_card.dart';
 import 'package:project_z/features/product/presentation/bloc/product_screen_bloc.dart';
-import 'package:project_z/l10n/app_localizations.dart';
+import 'package:project_z/gen_locales/app_localizations.dart';
 import 'package:shop_domain/domain/entity/product/product.dart';
 
 class NewProductsWidget extends StatelessWidget {
@@ -20,7 +20,7 @@ class NewProductsWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: PartTitleWidget(
-              title: AppLocalizations.of(context)!.homeNewProductsTitle, onTapMore: () {}),
+              title: AppLocalizations.of(context).homeNewProductsTitle, onTapMore: () {}),
         ),
         BlocBuilder<ProductScreenBloc, ProductScreenState>(
           builder: (context, state) {
